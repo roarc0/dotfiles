@@ -3,6 +3,10 @@ export ENV_HOME="$(
   pwd -P
 )"
 
+export XKB_DEFAULT_LAYOUT=us
+export XKB_DEFAULT_VARIANT=altgr-intl
+#export XKB_DEFAULT_OPTIONS=
+
 export ANDROID_HOME="$HOME/.local/android/sdk"
 export JAVA_HOME="/usr/lib/jvm/default-java/"
 export GOPATH="$HOME/.local/go"
