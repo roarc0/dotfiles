@@ -6,8 +6,8 @@
 }
 
 #waybar {
-  color: @base04;
-  background: @base01;
+  color: @primary;
+  background: @background;
 }
 
 #tags {
@@ -52,7 +52,7 @@
 }
 
 #tags button.focused.occupied {
-  color: @base02;
+  color: @secondary;
   background-color: @base01;
   border: 2px solid @base01;
 }
@@ -65,7 +65,7 @@
 
 #tray * {
   padding: 0 6px;
-  border-left: 1px solid @base00;
+  border-left: 1px solid @background;
 }
 
 #tray *:first-child {

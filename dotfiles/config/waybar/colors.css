@@ -1,9 +1,10 @@
-@define-color base00 #282828;
-@define-color base01 #3c3c3c;
+@define-color background #2f2f2f;
+@define-color primary #30d769;
+@define-color secondary #9340c9;
+@define-color base01 #2c2c2c;
 @define-color base02 #4d4d4d;
-@define-color base03 #626262;
-@define-color base04 #9360fb;
-@define-color base05 #e9e9e9;
+@define-color base03 #525252;
+@define-color base05 #929292;
 @define-color base06 #f1f2f8;
 @define-color base07 #f7f7fb;
 @define-color base08 #ea51b2;
