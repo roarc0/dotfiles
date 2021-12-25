@@ -22,7 +22,6 @@ export GIT_TERMINAL_PROMPT=1
 export EDITOR=vim
 export VISUAL=$EDITOR
 export SYSTEMD_EDITOR=$EDITOR
-export DISPLAY=:0
 export MERGETOOL=meld
 unset SSH_ASKPASS
 

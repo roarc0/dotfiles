@@ -31,6 +31,7 @@
   box-shadow: inherit;
   text-shadow: inherit;
   background: @base02;
+  color: @primary;
 }
 
 #tags button.focused {

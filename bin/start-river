@@ -3,6 +3,14 @@
 export MOZ_ENABLE_WAYLAND=1
 export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=river
+#export GTK_USE_PORTAL=0
+export XKB_DEFAULT_LAYOUT=us
+export XKB_DEFAULT_VARIANT=altgr-intl
+#export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
+
+systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+hash dbus-update-activation-environment 2>/dev/null && dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+systemctl --user import-environment
 
 timestamp=$(date +%F-%R)
 exec dbus-run-session river -log-level debug > /tmp/river-${timestamp}.log 2>&1
