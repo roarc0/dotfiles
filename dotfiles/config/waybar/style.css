@@ -1,7 +1,8 @@
 @import "./colors.css";
 
 * {
-  transition: none;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
   box-shadow: none;
 }
 
@@ -27,21 +28,9 @@
   border: 2px solid @base02;
 }
 
-#tags button:hover {
-  box-shadow: inherit;
-  text-shadow: inherit;
-  background: @base02;
-  color: @primary;
-}
-
-#tags button.focused {
-  color: @base02;
-  background-color: @base01;
-  border: 2px solid @base02;
-}
-
 #tags button.occupied {
-  border: 2px solid @base01;
+  border: 2px solid @secondary;
+  color: @secondary;
 }
 
 #tags button.urgent {
@@ -53,9 +42,22 @@
 }
 
 #tags button.focused.occupied {
-  color: @secondary;
+  color: @primary;
   background-color: @base01;
-  border: 2px solid @base01;
+}
+
+#tags button.focused {
+  color: @primary;
+  background-color: @base01;
+  border: 2px solid @primary;
+}
+
+#tags button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  background: @base02;
+  color: @primary;
+  border: 2px solid @primary;
 }
 
 #tray {

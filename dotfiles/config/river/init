@@ -3,7 +3,7 @@ mod="Mod4"
 
 # Set background and border color
 riverctl background-color 0x424242
-riverctl border-color-focused 0x2e8b57 #9370db
+riverctl border-color-focused 0x2ecb57 #9370db
 riverctl border-color-urgent 0xdc143c
 riverctl border-color-unfocused 0x60587a
 riverctl border-width 2
