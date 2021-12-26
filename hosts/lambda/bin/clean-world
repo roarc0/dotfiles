@@ -1,0 +1,24 @@
+#!/bin/sh
+. $ENV_HOME/scripts/functions.sh
+
+version="0.1.0"
+
+echoc 31 "clean_world $version... by hexec (alessandro.rosetti@gmail.com)"
+
+c=0
+world=$(cat /var/lib/portage/world)
+num=$(echo $world | tr -s ' ' '\n' | wc -l)
+
+echoc 31 "$num packages found in world.\n"
+
+for p in $world; do
+    c=$(($c + 1))
+    echoc 32 "[$c/$num] $p                                          "
+    equery d $p >/dev/null
+    res=$?
+    echo -e "\E[2A"
+    if [[ $res -eq 0 ]]; then
+        echo -e "$p                                                 "
+        equery d $p
+    fi
+done

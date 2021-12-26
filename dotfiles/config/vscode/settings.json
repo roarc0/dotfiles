@@ -1,0 +1,139 @@
+{
+    "window.titleBarStyle": "custom",
+    "editor.rename.enablePreview": false,
+    "editor.linkedEditing": true,
+    "editor.formatOnSave": true,
+    "editor.fontSize": 17,
+    "editor.scrollBeyondLastLine": false,
+    "editor.suggestSelection": "first",
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.pinnedTabSizing": "shrink",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "One Monokai",
+    "sync.autoDownload": true,
+    "sync.autoUpload": true,
+    "sync.forceDownload": true,
+    "sync.forceUpload": true,
+    "sync.quietSync": true,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "vsicons.dontShowNewVersionMessage": true,
+    "C_Cpp.intelliSenseEngine": "Disabled",
+    "C_Cpp.updateChannel": "Insiders",
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.clang_format_path": "/usr/bin/clang-format",
+    "clangd.onConfigChanged": "restart",
+    "clangd.path": "/home/roarc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/13.0.0/clangd_13.0.0/bin/clangd",
+    "clangd.restartAfterCrash": true,
+    "clangd.checkUpdates": true,
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+    "go.useLanguageServer": true,
+    "go.goroot": "/snap/go/current",
+    "go.inferGopath": true,
+    "go.gocodeAutoBuild": true,
+    "go.formatTool": "gofmt",
+    "go.lintOnSave": "workspace",
+    "go.vetOnSave": "workspace",
+    "go.autocompleteUnimportedPackages": true,
+    "go.toolsManagement.autoUpdate": true,
+    "[go.mod]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+        },
+    },
+    "go.delveConfig": {
+        "dlvLoadConfig": {
+            "followPointers": true,
+            "maxVariableRecurse": 1,
+            "maxStringLen": 64,
+            "maxArrayValues": 64,
+            "maxStructFields": -1
+        },
+        "apiVersion": 2,
+        "showGlobalVariables": false
+    },
+    "go.languageServerExperimentalFeatures": {
+        "diagnostics": true
+    },
+    "go.lintTool": "golint",
+    "go.testFlags": [
+        "-v"
+    ],
+    "gopls": {
+        "usePlaceholders": true,
+        "staticcheck": true,
+    },
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [
+            80
+        ],
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": false
+    },
+    "html.format.indentHandlebars": true,
+    "[html]": {
+        "editor.defaultFormatter": "lonefy.vscode-JS-CSS-HTML-formatter",
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "python.languageServer": "Default",
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "jshint.options": {
+        "esversion": 9
+    },
+    "liveServer.settings.donotVerifyTags": true,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "go.coverOnTestPackage": false,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "vs-kubernetes": {
+        "vscode-kubernetes.helm-path.linux": "/home/roarc/.vs-kubernetes/tools/helm/linux-amd64/helm",
+        "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.vs-kubernetes/tools/kubectl/kubectl",
+        "vscode-kubernetes.minikube-path.linux": "/home/roarc/.vs-kubernetes/tools/minikube/linux-amd64/minikube"
+    },
+    "redhat.telemetry.enabled": true,
+    "workbench.startupEditor": "none",
+    "cmake.configureOnOpen": false,
+    "cSpell.userWords": [
+        "Debugf",
+        "grpc",
+        "Infof",
+        "structs",
+        "Tracef",
+        "Warnf"
+    ],
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "java.checkstyle.properties": {
+        "basedir": "${workspaceFolder}"
+    },
+    "java.format.settings.url": "${workspaceFolder}/resources/edc-checkstyle-config.xml",
+    "window.zoomLevel": 1,
+    "C_Cpp.addNodeAddonIncludePaths": true,
+    "C_Cpp.autocompleteAddParentheses": true,
+    "C_Cpp.clang_format_sortIncludes": true,
+    "bracket-pair-colorizer-2.depreciation-notice": false,
+}

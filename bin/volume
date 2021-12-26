@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+vol=$1
+[ $vol -gt 170 ] && vol=170
+echo "setting volume to $vol"
+pactl set-sink-volume 0 $vol%
+pactl set-sink-volume 1 $vol%

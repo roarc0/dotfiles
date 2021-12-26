@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+import glob
+import random
+import sys
+import os
+
+wallpath = os.getenv("HOME") + "/pictures/*.*"
+if len(sys.argv[1:]) != 0:
+    wallpath=sys.argv[1]
+
+walls = glob.glob(wallpath)
+
+print(random.choice(walls))

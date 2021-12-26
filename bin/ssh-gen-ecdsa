@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+if [ "$#" -ne 1 ]; then
+    echo "specify key name"
+    exit 1
+fi
+ssh-keygen -t ecdsa -f ~/.ssh/id_ecdsa_$1

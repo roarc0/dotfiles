@@ -1,0 +1,2 @@
+#!/bin/sh
+tg-notify "login failed: $PAM_SERVICE $PAM_TYPE $PAM_USER $PAM_TTY"

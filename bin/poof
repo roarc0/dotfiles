@@ -1,0 +1,27 @@
+#!/bin/sh
+# description: poweroff if host is down
+
+. $ENV_HOME/scripts/functions.sh
+
+run_as_root $@
+
+COUNT=0
+THRESHOLD=5
+SLEEP_TIME=4
+IP="$1"
+
+ewarn "shutdown the system when host \"$IP\" becomes unreachable."
+while [ $COUNT -lt $THRESHOLD ]; do
+	while ping -c 1 $IP &>/dev/null; do
+		COUNT=0
+		einfo "host $IP is up"
+		sleep $SLEEP_TIME
+	done
+	COUNT=$((COUNT + 1))
+	ewarn "host $IP is down: $COUNT/$THRESHOLD"
+	sleep $SLEEP_TIME
+done
+
+ewarn "power off!"
+sleep $SLEEP_TIME
+systemctl poweroff

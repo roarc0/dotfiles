@@ -1,0 +1,21 @@
+set $background   #100620
+
+set $unfocus_1      #201530
+set $unfocus_2      #201530
+set $unfocus_text   #7c53a7
+set $focus_1    #616161
+set $focus_2    #301540
+set $focus_text #6cc74c
+
+set $alarm        #f0354b
+set $alarm_text   #e0f5fb
+
+set $bfocus_1      #24e54b
+set $bfocus_2      #44a54b
+set $bfocus_text   #bc23e7
+set $bunfocus_1    #616161
+set $bunfocus_2    #221242
+set $bunfocus_text #24e554
+
+#set $alpha f5
+

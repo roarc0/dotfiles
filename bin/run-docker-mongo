@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+IMAGE=mongo
+NAME=mongo
+docker pull $IMAGE:latest
+docker stop $NAME || true
+docker rm $NAME || true
+docker run -d --rm --network default --name $NAME -p 27017:27017 $IMAGE

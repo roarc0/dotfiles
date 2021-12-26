@@ -1,0 +1,25 @@
+#!/bin/sh
+. $ENV_HOME/scripts/functions.sh
+run_as_root
+
+DEV_LVM="/dev/sdc2"
+DEV_BOOT="/dev/sdc1"
+DEV_ROOT="/dev/dm-2"
+ROOT="/mnt/arch"
+
+if [ ! -e $DEV_ROOT ]; then
+    cryptsetup luksOpen $DEV_LVM lvm
+fi
+
+umount $DEV_BOOT &>/dev/null
+umount $DEV_ROOT &>/dev/null
+
+mkdir $ROOT &>/dev/null
+mount $DEV_ROOT $ROOT &>/dev/null
+mount $DEV_BOOT $ROOT/boot &>/dev/null
+mount -o rbind /dev $ROOT/dev/ &>/dev/null
+mount -o bind /sys $ROOT/sys/ &>/dev/null
+mount -t proc none $ROOT/proc/ &>/dev/null
+cp /etc/resolv.conf $ROOT/etc/ &>/dev/null
+
+chroot $ROOT /bin/bash

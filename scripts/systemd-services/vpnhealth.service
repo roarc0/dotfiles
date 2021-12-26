@@ -1,0 +1,10 @@
+[Unit]
+Description=vpnhealth
+Wants=vpnhealth.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/vpnhealth.sh
+
+[Install]
+WantedBy=multi-user.target

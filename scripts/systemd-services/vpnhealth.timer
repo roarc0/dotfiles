@@ -1,0 +1,11 @@
+[Unit]
+Description=vpnhealth
+Requires=vpnhealth.service
+
+[Timer]
+Unit=vpnhealth.service
+OnCalendar=*-*-* *:20:*
+AccuracySec=10min
+
+[Install]
+WantedBy=timers.target

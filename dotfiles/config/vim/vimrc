@@ -1,0 +1,362 @@
+set shell=zsh
+runtime macros/matchit.vim
+let $PATH='/usr/local/bin:' . $PATH
+:au FocusLost * :wa "Save on focus lost
+let g:session_autoload = 'no'
+
+setlocal spell spelllang=en_us
+set title
+set titlestring=VIM:\ %-25.55F\ %a%r%m titlelen=70
+set clipboard=unnamedplus
+set autoread
+set autochdir
+set autowrite
+set ttyfast
+set lazyredraw
+set ttimeout
+set ttimeoutlen=100
+set notimeout
+set splitbelow
+set splitright
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+set nocompatible  " Use Vim settings, rather then Vi settings
+set nobackup
+set nowritebackup
+set noswapfile
+set directory=/tmp/
+"set backup
+"set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+"set backupskip=/tmp/*,/private/tmp/*
+"set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+"set writebackup
+set history=500
+set ruler         " show the cursor position all the time
+set showcmd       " display incomplete commands
+set incsearch     " do incremental searching
+set hlsearch      " highlight matches
+set scrolloff=5
+set noexpandtab
+"set smartindent
+"set smarttab
+"set copyindent
+set autoindent
+set preserveindent
+"set softtabstop=2
+"set shiftwidth=2
+"set tabstop=4
+set lbr
+set linebreak
+set wrap
+set nolist
+set listchars=tab:»·,nbsp:_,trail:·
+set list
+set showmode
+set nowrap
+set number
+set numberwidth=5
+set encoding=utf-8
+set ffs=unix,dos,mac
+set wildmenu            " autocomplete :e
+set wildmode=longest,list,full
+set wildignore+=.hg,.git,.svn,*~
+set wildignore+=*.aux,*.out,*.toc
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest
+set wildignore+=*.spl,*.sw?,*.DS_Store,*.luac,*.pyc,*.orig,*.class
+set completeopt=menuone,menu,longest
+set completeopt+=longest
+set showmatch           " show [] matches
+set mat=2               " blink
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
+set cursorline
+au WinLeave * set nocursorline nocursorcolumn
+au WinEnter * set cursorline
+
+set magic  " regex
+set noerrorbells
+set novisualbell
+
+" collapse {} wip-todo
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+set foldcolumn=1         " extra left margin
+set foldlevel=1
+
+" Persistent undo
+set undodir=~/.vim/undo/
+set undofile
+set undolevels=1000
+set undoreload=10000
+
+hi Normal ctermbg=none
+set colorcolumn=81
+set laststatus=2
+set statusline=\ "
+set statusline+=%f\ " file name
+set statusline+=[
+set statusline+=%{strlen(&ft)?&ft:'none'}, " filetype
+set statusline+=%{&fileformat}] " file format
+set statusline+=%h%1*%m%r%w%0* " flag
+set statusline+=%= " right align
+set statusline+=%-14.(%l,%c%V%)\ %<%P " offsetset linespace=0
+set linespace=0
+
+" Fuzzy finder: ignore stuff that can't be opened, and generated files
+let g:fuzzy_ignore = "*.png;*.PNG;*.JPG;*.jpg;*.GIF;*.gif;vendor/**;coverage/**;tmp/**;rdoc/**"
+
+colorscheme monokai
+
+augroup configgroup
+    autocmd!
+    autocmd FileType text setlocal textwidth=78
+    autocmd FileType markdown setlocal spell
+    autocmd VimEnter * highlight clear SignColumn
+    autocmd BufWritePre *.c,*.h,*cpp,*.php,*.py,*.js,*.txt,*.hs,*.java,*.md
+                \:call <SID>StripTrailingWhitespaces()
+    autocmd FileType c,cpp,java,php,py autocmd BufWritePre <buffer> :%s/\s\+$//e
+    autocmd FileType java setlocal noexpandtab
+    autocmd FileType java setlocal list
+    autocmd FileType java setlocal listchars=tab:+\ ,eol:-
+    autocmd FileType java setlocal formatprg=par\ -w80\ -T4
+    autocmd FileType python setlocal commentstring=#\ %s
+    autocmd FileType *.hs,haskell setlocal expandtab
+    autocmd BufEnter *.cls setlocal filetype=java
+    autocmd BufEnter *.zsh-theme setlocal filetype=zsh
+    autocmd BufEnter Makefile setlocal noexpandtab
+    autocmd BufEnter *.sh setlocal tabstop=2
+    autocmd BufEnter *.sh setlocal shiftwidth=2
+    autocmd BufEnter *.sh setlocal softtabstop=2
+augroup END
+
+au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
+
+" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+" Remaps
+let mapleader = ","
+nmap <leader>w :w!<cr>
+nmap <leader>z ZZ<cr>
+nmap <leader>q ZQ<cr>
+nmap <Leader>s :source $MYVIMRC
+nmap <Leader>v :e $MYVIMRC
+nnoremap <leader>h :nohlsearch<CR>
+" brutal save with sudo
+command W w !sudo tee % > /dev/null
+
+" shame on me
+if has('mouse')
+  set mouse=a
+endif
+
+if has("gui_running")
+    set guioptions-=T
+    set guioptions-=e
+    set t_Co=256
+    set guitablabel=%M\ %t
+endif
+
+" Key to insert mode with paste using F2 key
+map <F2> :set paste<CR>
+" Leave paste mode on exit
+au InsertLeave * set nopaste
+nmap du :wincmd w<cr>:normal u<cr>:wincmd w<cr>
+
+" Command aliases
+cabbrev tp tabprev
+cabbrev tn tabnext
+cabbrev tf tabfirst
+cabbrev tl tablast
+
+nnoremap gV `[v`]
+
+"map j gj
+"map k gk
+"inoremap jk <esc>
+"inoremap kj <esc>
+nnoremap . :
+
+" search next/previous -- center in page
+nmap n nzz
+nmap N Nzz
+nmap * *Nzz
+nmap # #nzz
+
+map <space> /
+map <c-space> ?
+
+vmap <C-c> "+y
+vmap <C-v> p
+
+nnoremap B ^
+nnoremap E $
+"nnoremap $ <nop>
+"nnoremap ^ <nop>
+
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+map <C-n> :cn<CR>
+map <C-p> :cp<CR>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+map <silent> <leader><cr> :noh<cr>
+
+map <leader>bd :Bclose<cr>
+map <leader>ba :1,1000 bd!<cr>
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tq :tabclose<cr>
+map <leader>tm :tabmove
+map <leader>t<leader> :tabnext
+
+nnoremap <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <leader>ez :vsp ~/.zshrc<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" replace visually
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+nnoremap <leader>s :mksession<CR>
+
+" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+" functions
+
+" toggle between number and relativenumber
+function! ToggleNumber()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set number
+    else
+        set relativenumber
+    endif
+endfunc
+
+" strips trailing whitespace at the end of files. this
+" is called on buffer write in the autogroup above.
+function! <SID>StripTrailingWhitespaces()
+    " save last search & cursor position
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
+" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+" plugins
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'rking/ag.vim'
+Plugin 'easymotion/vim-easymotion' 
+Plugin 'scrooloose/nerdtree'
+map <F10> :NERDTreeToggle<CR>
+map <F9> :NERDTreeFind<CR>
+set modifiable
+
+Plugin 'scrooloose/nerdcommenter' " 10,cc 10,cv
+Plugin 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+"map <Leader>s :SyntasticToggleMode<CR>
+
+
+Plugin 'vim-airline/vim-airline'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+"set guifont=Liberation\ Mono\ for\ Powerline\ 10
+set t_Co=256
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:bufferline_echo = 0
+Plugin 'vim-airline/vim-airline-themes'
+
+"Plugin 'airblade/vim-gitgutter'
+"let g:gitgutter_realtime = 0
+"let g:gitgutter_eager = 0
+"let g:gitgutter_highlight_lines = 1
+"let g:gitgutter_enabled = 1
+
+"Plugin 'ctrlpvim/ctrlp.vim.git'
+"let g:ctrlp_map = '<c-p>'
+"let g:ctrlp_cmd = 'CtrlP'
+"set runtimepath^=~/.vim/bundle/ctrlp.vim
+"let g:ctrlp_match_window = 'bottom,order:ttb'
+"let g:ctrlp_switch_buffer = 0
+"let g:ctrlp_working_path_mode = 0
+"let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-markdown'
+"Plugin 'tpope/vim-commentary'
+"Plugin 'tpope/vim-rails'
+"Plugin 'tpope/vim-sensible.git'
+
+"Plugin 'Valloric/YouCompleteMe'
+"let g:ycm_global_ycm_extra_conf = ~/.vim/ycm_extra_conf.py
+"let g:ycm_key_list_select_completion=[]
+"let g:ycm_key_list_previous_completion=[]
+"Plugin 'lilydjwg/colorizer'
+"Plugin 'KabbAmine/vCoolor.vim'
+"Plugin 'chrisbra/Colorizer'
+"map <leader>c :ColorHighlight
+
+Plugin 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+Plugin 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+hi IndentGuidesOdd  ctermbg=black
+hi IndentGuidesEven ctermbg=darkgrey
+
+Plugin 'Shougo/neocomplcache.vim'
+
+call vundle#end()
+
+nnoremap <F6> <C-W>w
+nnoremap <S-F6> <C-W>W
+nnoremap <leader>a :Ag
+
+filetype plugin indent on
+syntax on
+set omnifunc=syntaxcomplete#Complete
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags

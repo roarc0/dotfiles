@@ -1,0 +1,6 @@
+[Unit]
+Description=Update dyndns
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/usr/local/bin/duck.sh'

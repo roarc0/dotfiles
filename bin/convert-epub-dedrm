@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+declare css=page_styles.css
+zip -d "$1" META-INF/encryption.xml
+zip -d "$1" fonts/\*
+#
+# remove references to fonts/* in the $css file.
+unzip -qc "$1" $css | sed '/@font-face/{:a /}/d; N; ba}' > $css
+zip "$1" $css && rm $css

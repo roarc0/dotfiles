@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+DUCK_LOG="/tmp/duck.log"
+echo url="https://www.duckdns.org/update?domains=$1&token=$2&ip=" | curl -k -s -o $DUCK_LOG -K -
+OUTCOME=$(cat $DUCK_LOG)
+echo "update $HOST duckdns : $OUTCOME"
+rm $DUCK_LOG

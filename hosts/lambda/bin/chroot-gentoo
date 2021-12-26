@@ -1,0 +1,20 @@
+#!/bin/sh
+. $ENV_HOME/scripts/functions.sh
+run_as_root $@
+
+ROOTDIR="$1"
+
+#mkdir $ROOTDIR &>/dev/null
+#mount $ROOTDIR &>/dev/null
+cd $ROOTDIR
+
+mount -o rbind /dev $ROOTDIR/dev/ &>/dev/null
+mount -o bind /sys $ROOTDIR/sys/ &>/dev/null
+mount -t proc none $ROOTDIR/proc/ &>/dev/null
+
+cp /etc/resolv.conf etc/resolv.conf &>/dev/null
+
+chroot . /bin/bash -x <<'EOF'
+. /etc/profile
+export PS1="(chroot) $PS1"
+EOF

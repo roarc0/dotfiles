@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+WGET="wget -q --show-progress"
+JARS="$HOME/.local/jar"
+mkdir -p $JARS >/dev/null
+
+JAR="$JARS/bfg.jar"
+
+if [ ! -f $JAR ];then
+$WGET -O $JAR https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar
+fi
+
+java -jar $JAR $@

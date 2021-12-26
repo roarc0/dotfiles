@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import logging
+from gi.repository import Gio
+from argparse import ArgumentParser
+
+log = logging.getLogger("iconize")
+log.setLevel(logging.INFO)
+
+homedir = os.environ['HOME'] + '/'
+icondir = os.environ['ENV_HOME'] + '/dotfiles/local/share/icons/'
+configfile = icondir + '/icons.json'
+
+def check_params(fpath, ipath):
+    if not fpath.startswith('/'):
+        fpath = homedir + fpath
+    if not ipath.startswith('/'):
+        ipath = icondir + ipath
+
+    if not ipath.endswith(('.svg', '.png')):
+        if os.path.exists(ipath + '.svg'):
+            ipath += '.svg'
+        elif os.path.exists(ipath + '.png'):
+            ipath += '.png'
+
+    if not os.path.exists(ipath):
+        print("icon " + ipath + " does not exist")
+        return (None, None)
+
+    if not os.path.exists(fpath):
+        print("path " + fpath + " does not exist")
+        return (None, None)
+
+    return (fpath, ipath)
+
+def set_icon(fpath, ipath):
+    (fpath, ipath) = check_params(fpath, ipath)
+
+    if fpath is None:
+        return False
+
+    folder = Gio.File.new_for_path(fpath)
+    icon = Gio.File.new_for_path(ipath)
+
+    print('setting icon ' + ipath + ' to ' + fpath)
+    info = folder.query_info('metadata::custom-icon', 0, None)
+
+    if icon is not None:
+        icon_uri = icon.get_uri()
+        info.set_attribute_string('metadata::custom-icon',
+                                  icon_uri)
+    else:
+        info.set_attribute('metadata::custom-icon',
+                           Gio.FileAttributeType.INVALID, '')
+
+    folder.set_attributes_from_info(info, 0, None)
+    return True
+
+def load_db(filename):
+    if not os.path.exists(filename):
+        create_db()
+
+    with open(filename) as f:
+        data = json.load(f)
+    return data
+
+def save_db(filename, data):
+    with open(filename, "w") as f:
+        f.write(json.dumps(data, indent=4, sort_keys=True))
+
+def set_all_icons():
+    data = load_db(configfile)
+    for folder in data['folders']:
+        set_icon(folder['path'], folder['icon'])
+
+def create_db():
+    config = {}
+    config['folders'] = []
+    save_db(configfile, config)
+
+def add_icon(fpath, ipath):
+    del_icon(fpath)
+    print('adding icon ' + ipath + ' to ' + fpath)
+    data = load_db(configfile)
+    data['folders'].append({'path': fpath, 'icon': ipath})
+    save_db(configfile, data)
+
+def del_icon(fpath):
+    data = load_db(configfile)
+    elems = [elem for elem in data['folders'] if elem['path'] == fpath]
+    for elem in elems:
+        print('removing icon from ' + fpath)
+        data['folders'].remove(elem)
+    save_db(configfile, data)
+
+def do_add(args):
+    fpath = args.fpath
+    if fpath.startswith(homedir):
+        fpath = fpath[len(homedir):]
+
+    add_icon(fpath, args.ipath)
+    set_icon(fpath, icondir + args.ipath)
+
+def do_del(args):
+    del_icon(args.fpath)
+
+def do_set(args):
+    set_all_icons()
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument("-f", "--folder", dest="fpath", default="",
+                        help="folder path", metavar="FILE")
+    parser.add_argument("-i", "--icon", dest="ipath", default="",
+                        help="icon name")
+    parser.add_argument("-C", "--config", dest="config", default='config.json',
+                        help="config", metavar="FILE")
+    parser.add_argument("-a", "--action", dest="action", default='set',
+                        help="[set, add]")
+    args = parser.parse_args()
+
+    if args.fpath and args.action == 'set':
+        args.action = 'add'
+
+    # try:
+    globals()[f'do_{args.action}'](args)
+    # except Exception as e:
+    #    print('error executing action: ' + str(e))
+    #    sys.exit(1)
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+arp -na | grep -i "b8:27:eb"
+arp -na | grep -i "dc:a6:32"

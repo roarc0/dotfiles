@@ -1,0 +1,12 @@
+[Unit]
+Description=Run duck each hour
+
+[Timer]
+#OnCalendar=daily
+#OnCalendar=*-*-* 4:00:00
+#Persistent=true
+OnBootSec=2min
+OnUnitActiveSec=30min
+
+[Install]
+WantedBy=timers.target

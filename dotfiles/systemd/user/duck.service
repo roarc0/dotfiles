@@ -1,0 +1,6 @@
+[Unit]
+Description=Update dyndns
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/home/$USER/env/bin/duckdns'

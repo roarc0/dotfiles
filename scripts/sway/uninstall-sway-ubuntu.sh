@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+apt remove libwayland-dev \
+libegl1-mesa-dev \
+libgles2-mesa-dev \
+libdrm-dev \
+libgbm-dev \
+libinput-dev \
+libxkbcommon-dev \
+libgudev-1.0-dev \
+libpixman-1-dev \
+libsystemd-dev \
+libpng-dev \
+libavutil-dev \
+libavcodec-dev \
+libavformat-dev \
+libxcb-composite0-dev \
+libxcb-dri3-dev \
+libxcb-icccm4-dev \
+libxcb-image0-dev \
+libxcb-render0-dev \
+libxcb-xfixes0-dev \
+libxkbcommon-dev \
+libxcb-xinput-dev \
+libx11-xcb-dev \
+libjson-c-dev \
+libpango1.0-dev \
+libcairo2-dev \
+libgdk-pixbuf2.0-dev \
+scdoc foot foot-terminfo suckless-tools sway-backgrounds swaybg

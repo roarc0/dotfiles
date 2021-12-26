@@ -1,0 +1,29 @@
+export ZSH="/home/roarc/.oh-my-zsh"
+ZSH_THEME="fino"
+# ZSH_THEME_RANDOM_CANDIDATES=( "fino" "rkj" "bria" )
+
+# CASE_SENSITIVE="true"
+# HYPHEN_INSENSITIVE="true"
+DISABLE_UPDATE_PROMPT="true"
+export UPDATE_ZSH_DAYS=7
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
+# DISABLE_AUTO_TITLE="true"
+# ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+HIST_STAMPS="dd/mm/yyyy"
+
+plugins=(git git-extras gitignore colorize zsh-syntax-highlighting zsh-completions zsh-autosuggestions docker docker-compose golang rust cargo gcloud helm kubectl minikube mongocli npm sudo vscode)
+
+source $ZSH/oh-my-zsh.sh
+
+#zsh-completions
+fpath=(~/.oh-my-zsh/plugins/zsh-completions/src $fpath)
+
+#zsh-autosuggest
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#cc00cc"
+bindkey '^ ' autosuggest-accept # ctrl+space
+
+source ~/env/init.sh

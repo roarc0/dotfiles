@@ -1,0 +1,39 @@
+{
+    "folders": [{
+            "icon": "tmp",
+            "path": "tmp"
+        },
+        {
+            "icon": "git",
+            "path": "repos"
+        },
+        {
+            "icon": "eye",
+            "path": "workspace"
+        },
+        {
+            "icon": "sandbox",
+            "path": "dev"
+        },
+        {
+            "icon": "sync",
+            "path": "sync"
+        },
+        {
+            "icon": "syncthing",
+            "path": "sync/scheme"
+        },
+        {
+            "icon": "settings",
+            "path": "env"
+        },
+        {
+            "icon": "tmp",
+            "path": "dev/tmp"
+        },
+        {
+            "icon": "sandbox",
+            "path": "dev/sandbox/"
+        }
+    ]
+}

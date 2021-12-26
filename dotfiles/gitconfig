@@ -1,0 +1,62 @@
+[user]
+	email = alessandro.rosetti@gmail.com
+	name = Alessandro Rosetti
+
+[core]
+	editor = nvim
+
+[diff]
+    tool = meld
+[difftool]
+    prompt = false
+[difftool "meld"]
+    cmd = meld $LOCAL $REMOTE
+
+[merge]
+	tool = meld
+[mergetool "meld"]
+    cmd = meld $LOCAL $MERGED $REMOTE --output $MERGED
+    #cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+
+[credential]
+    helper = cache --timeout=8600
+
+[alias]
+    co = checkout
+    cob = checkout -b
+    f = fetch -p
+    s = status
+    c = commit
+    p = push
+    b = branch
+    ba = branch -a
+    bd = branch -d
+    bD = branch -D
+    dc = diff --cached
+    sl = stash list
+    sa = stash apply
+    sd = stash drop
+    st = status -sb
+    ll = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    plog = log --graph --pretty='format:%C(red)%d%C(reset) %C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'
+    qlog = log --graph --pretty=format:'%Cblue%h %Cred%cD %Creset%cn %Cgreen%s%Creset' --date-order
+    tlog = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
+    a = add -p
+    rank = shortlog -sn --no-merges
+    bdm = !git branch --merged | grep -v '*' | xargs -n 1 git branch -d # remove all merged branches
+
+[rerere]
+    enabled = true
+
+[pull]
+	rebase = true
+
+# enforce SSH
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[url "git@gitlab.com:"]
+  insteadOf = https://gitlab.com/
+[url "git@bitbucket.org:"]
+  insteadOf = https://bitbucket.org/
+

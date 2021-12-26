@@ -1,0 +1,7 @@
+#!/bin/sh
+
+epubs=$(ls | grep -i .epub)
+
+for i in $epubs ;do
+	ebook-convert $i "$(echo $i | sed 's/.epub/.mobi/')"
+done

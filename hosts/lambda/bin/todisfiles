@@ -1,0 +1,7 @@
+#!/bin/sh
+. $ENV_HOME/scripts/functions.sh
+. /etc/portage/make.conf
+
+mv $1 ${DISTDIR}
+sudo chown portage:portage ${DISTDIR}/$1
+sudo chmod 774 ${DISTDIR}/$1

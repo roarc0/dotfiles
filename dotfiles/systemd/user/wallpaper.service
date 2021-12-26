@@ -1,0 +1,9 @@
+[Unit]
+Description=random wallpaper
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'DISPLAY=:0 /usr/bin/feh --bg-fill "$(find /home/*/pictures/rot|shuf|head -n 1)"'
+
+[Install]
+WantedBy=default.target

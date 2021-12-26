@@ -1,0 +1,14 @@
+#!/bin/sh
+$ENV_HOME/scripts/functions.sh
+MERGETOOL=meld
+
+echo "Arch Linux etc-update"
+
+find /etc/ -type f -iname '*.pacnew' | while read file; do
+       echo $file
+       file_pacnew=$(echo "$file" | sed 's#.pacnew$##')
+       $MERGETOOL $file_pacnew $file
+done
+
+read -p "remove merged pacnew (y/n)? "
+[ "$REPLY" == "y" ] && sudo find /etc/ -iname '*.pacnew' -delete

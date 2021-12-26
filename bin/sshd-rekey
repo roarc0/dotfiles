@@ -1,0 +1,4 @@
+#!/bin/sh
+sudo ssh-keygen -t dsa -N "" -f /etc/ssh/ssh_host_dsa_key
+sudo ssh-keygen -t rsa -N "" -f /etc/ssh/ssh_host_rsa_key
+sudo ssh-keygen -t ecdsa -N "" -f /etc/ssh/ssh_host_ecdsa_key

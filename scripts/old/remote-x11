@@ -1,0 +1,21 @@
+#!/bin/sh
+
+SSH_PID=''
+VNC_PORT=5900
+HOST=$1
+
+#set -e
+#function cleanup {
+#    echo "killing ssh connection (sshd pid:$SSH_PID)"
+#    kill -9 $SSH_PID
+#}
+#trap cleanup EXIT
+
+#X11VNC='x11vnc -ncache 3 -ncache_cr -scale 1024x576 -noalphablend -alpharemove -noxdamage -localhost -display :0'
+X11VNC='x11vnc -scale 1024x576 -noalphablend -alpharemove -noxdamage -localhost -display :0'
+
+ssh -t -L $VNC_PORT:localhost:$VNC_PORT $HOST "killall -9 x11vnc ; sleep 3 ; $X11VNC"
+#SSH_PID=$?
+#echo "ssh connection (sshd pid:$SSH_PID)"
+
+#vinagre localhost:$VNC_PORT

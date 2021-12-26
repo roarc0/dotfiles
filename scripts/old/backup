@@ -1,0 +1,33 @@
+#!/bin/sh
+. ${ENV_HOME}/.env
+. ${ENV_HOME}/scripts/functions.sh
+run_as_root $@
+
+do_backup() {
+	DATE=$(date +%Y-%m-%d)
+	SRC="/"
+	DEST="$1"
+	RSYNC_OPTS="-ahz --delete --delete-excluded --stats"
+	RSYNC_EXCLUDE="--exclude-from=${ENV_HOME}/data/excluded.txt"
+	LOGFILE="$DEST/rsync_$(hostname).log"
+
+	mount /boot &>/dev/null
+	mount $2 &>/dev/null
+
+	ionice -c 3 -p $$ &>/dev/null
+	renice +12 -p $$ &>/dev/null
+
+	einfo "backup started ... $DEST"
+	rm -f $DEST/rsync.log
+	rsync $RSYNC_OPTS $RSYNC_EXCLUDE $SRC $DEST/backup_$(hostname) >>$LOGFILE
+	RET=$?
+
+	einfo "backup terminated successfuly"
+	${ENV_HOME}/bin/telegram_notify "$(cat $LOGFILE)"
+	if [ $RET -eq 0 ]; then
+		${ENV_HOME}/bin/tg-notify "backup terminated successfuly - $DATE"
+	fi
+	umount $1
+}
+
+do_backup "$BACKUP_LOCAL" "$BACKUP_MOUNT"

@@ -1,0 +1,10 @@
+[Unit]
+Description=nethealth
+Wants=nethealth.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/nethealth.sh
+
+[Install]
+WantedBy=multi-user.target

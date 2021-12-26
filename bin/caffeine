@@ -1,0 +1,15 @@
+#!/bin/sh
+cur=$(gsettings get org.gnome.desktop.session idle-delay | cut -d ' ' -f2)
+
+if [ -z "$1" ]; then
+    if [ "$cur" -eq "0" ]; then
+        new="300"
+    else
+        new="0"
+    fi
+else
+    new="$1"
+fi
+
+notify-send "Caffeine: setting idle time to ${new} (was ${cur})"
+gsettings set org.gnome.desktop.session idle-delay "$new"

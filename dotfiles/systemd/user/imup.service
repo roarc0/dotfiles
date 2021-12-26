@@ -1,0 +1,11 @@
+[Unit]
+Description=I'm up
+After=network-online.target
+
+[Service]
+Type=idle
+ExecStart=/bin/bash -c "/home/$USER/env/bin/tg_notify $HOSTNAME is up"
+
+[Install]
+WantedBy=default.target
+

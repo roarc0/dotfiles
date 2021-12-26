@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+rename .FLAC .flac *.FLAC >/dev/null
+rename .Flac .flac *.Flac >/dev/null
+
+if command_exists parallel; then
+    parallel ffmpeg -i {} -qscale:a 0 {.}.mp3 ::: *.flac
+else
+    for a in ./*.flac; do
+        ffmpeg </dev/null -i "$a" -qscale:a 0 "${a[@]/%flac/mp3}"
+    done
+fi
+

@@ -1,0 +1,5 @@
+#!/bin/sh
+sudo grpck
+sudo grpck -s
+sudo pwck
+sudo pwck -s

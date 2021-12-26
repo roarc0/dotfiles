@@ -1,0 +1,8 @@
+#
+# This file is parsed by pam_env module
+#
+# Syntax: simple "KEY=VAL" pairs on separate lines
+EDITOR=vim
+export XKB_DEFAULT_LAYOUT=it,us
+export XKB_DEFAULT_VARIANT=,altgr-intl
+export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle

@@ -1,0 +1,2 @@
+#!/bin/sh
+inotify_exec.sh $1 plantuml $1

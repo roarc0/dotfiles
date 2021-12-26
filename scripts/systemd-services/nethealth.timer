@@ -1,0 +1,11 @@
+[Unit]
+Description=healthcheck
+Requires=healthcheck.service
+
+[Timer]
+Unit=healthcheck.service
+OnCalendar=*-*-* *:20:*
+AccuracySec=10min
+
+[Install]
+WantedBy=timers.target

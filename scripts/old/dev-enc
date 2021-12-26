@@ -1,0 +1,122 @@
+#!/bin/sh
+
+DEV="$1"
+NAME="disk"
+NEWFS="ext4"
+CYPHER="aes-cbc-essiv:sha256"
+KEYSIZE="256"
+
+echoc ()
+{
+  echo -e "\E["$1"m$2\E[0m";
+}
+
+yesno()
+{
+  read -p "$1 [y/n] " -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]] ; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+ask()
+{
+  ask_result=""
+  read -p "$1 " ask_result
+}
+
+################################################################################
+
+if [ $UID -ne 0 ]; then
+    echoc 31 "Please run as root.";
+    exit 1;
+fi
+
+if [ -e $DEV ] && [ "$DEV" != "" ];then
+    echoc 32 "device \"$DEV\" is valid"
+else
+    echoc 31 "device \"$DEV\" is not valid"
+    exit 1
+fi
+
+if ! yesno "Do you really want to continue? drive \"$DEV\" will be destroyed" ;then
+  exit 0
+fi
+
+BBCHK=false
+if yesno "Do you want to execute a badblock check?" ;then
+  BBCHK=true
+fi
+
+RNDFILL=false
+if yesno "Do you to fill your drive with random data?" ;then
+  RNDFILL=true
+  if ! which pv > /dev/null 2>&1; then
+    echoc 31 "This operation is slow, if you install \"pv\" you'll be able to see the progress of random filling."
+  fi
+fi
+
+## ask gpg,keyfile,or passphrase.
+if yesno "Do you to change cypher/key-size? -> cypher: $CYPHER  keysize: $KEYSIZE" ;then
+  #if yesno "Do you want to specify the cypher manually?" ;then
+    ask "Enter a valid cypher configuration:"
+    CYPHER=$ask_result
+  #else
+  #  echo "write one of these "
+  #  echo "1) AES-CBC...."
+  #  echo "2) SERPENT_CBC..."
+  #  ask "Enter a number: "
+  #  NUM=$ask_result
+  #  if num between 1 and x ok
+  #  else default
+  #fi
+
+  ask "Enter a valid key size:" #TODO check value
+  KEYSIZE=$ask_result
+fi
+
+################################################################################
+
+echoc 31 "Starting in 5s"
+sleep 5
+
+
+if $BBCHK ; then
+  echoc 31 ">> chk badblocks"
+  badblocks -c 10240 -s -w -t random -v $DEV
+  echo "done"
+fi
+
+# kill -USR1 $pid_of_dd
+# causes output of copied bytes by dd :P
+if $RNDFILL ; then
+  echoc 31 ">> randfill"
+  if which pv > /dev/null 2>&1; then
+    dd if=/dev/urandom | pv | dd of=$DEV bs=16M
+  else
+    dd if=/dev/urandom of=$DEV bs=16M
+  fi
+  echo "done"
+fi
+
+modprobe dm-crypt dm-mod serpent sha256 blowfish aes
+
+echoc 31 "cryptsetup: create -> cypher: $CYPHER  keysize: $KEYSIZE"
+cryptsetup --verify-passphrase --cipher $CYPHER --key-size $KEYSIZE luksFormat $DEV
+
+echoc 31 "cryptsetup: dump"
+cryptsetup luksDump $DEV
+
+echoc 31 "cryptsetup: open"
+cryptsetup luksOpen $DEV $NAME
+
+#dmsetup info system
+
+#dd if=/dev/zero of=/dev/mapper/$NAME
+#pv -tpreb /dev/zero | dd of=/dev/mapper/$NAME bs=128M
+
+echoc 31 "mkfs: $NEWFS"
+mkfs.$NEWFS /dev/mapper/$NAME

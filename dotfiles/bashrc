@@ -1,0 +1,29 @@
+[ -z "$PS1" ] && return
+
+if [ "$PS1" ]; then
+    complete -cf sudo
+fi
+
+shopt -s histappend
+HISTSIZE=1000
+HISTFILESIZE=2000
+shopt -s checkwinsize
+export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+export HISTCONTROL=ignoreboth
+shopt -s histappend
+shopt -s checkwinsize
+
+export LC_NUMERIC="POSIX"
+export EDITOR="/usr/bin/vim"
+export PAGER=less
+export BROWSER=chromium
+export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
+export SHELL=/usr/bin/bash
+unset SSH_ASKPASS
+
+eval ~/env/init.sh
+
+if [ "$(tty)" = "/dev/tty1" ]; then
+	sway
+	exit 0
+fi

@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+OUTPUT=$1
+shift
+/usr/bin/gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=$OUTPUT -dBATCH $*
+
