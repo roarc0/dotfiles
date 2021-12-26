@@ -21,7 +21,7 @@ export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
 export SHELL=/usr/bin/bash
 unset SSH_ASKPASS
 
-eval ~/env/init.sh
+eval ~/env/profile
 
 if [ "$(tty)" = "/dev/tty1" ]; then
 	sway

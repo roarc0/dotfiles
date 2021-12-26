@@ -26,4 +26,4 @@ fpath=(~/.oh-my-zsh/plugins/zsh-completions/src $fpath)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#cc00cc"
 bindkey '^ ' autosuggest-accept # ctrl+space
 
-source ~/env/init.sh
+source ~/env/profile

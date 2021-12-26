@@ -2,7 +2,7 @@
 
 set -e
 
-. init.sh
+. profile
 
 echoc 31 "Environment setup ..."
 if [ "$USER" = "root" ]; then

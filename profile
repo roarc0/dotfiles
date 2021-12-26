@@ -28,6 +28,7 @@ if [ -f "$ENV_FILE" ]; then
 fi
 
 . $ENV_HOME/scripts/aliases.sh
+. $ENV_HOME/scripts/docker.sh
 . $ENV_HOME/scripts/functions.sh
 
 export HOST=$(hostname)
