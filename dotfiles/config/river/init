@@ -116,6 +116,10 @@ riverctl csd-filter-add app-id "gedit"
 
 riverctl default-layout rivertile
 
+#exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+#exec hash dbus-update-activation-environment 2>/dev/null && \
+#     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec export GTK_USE_PORTAL=0
 exec waybar &
 
 exec rivertile -view-padding 4 -outer-padding 4

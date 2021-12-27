@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+git clone --recursive --branch dev git@github.com:arosetti/arosetti.github.io.git
+
