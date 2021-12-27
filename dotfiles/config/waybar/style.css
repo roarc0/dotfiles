@@ -1,4 +1,4 @@
-@import "./base16-waybar/colors/base16-default-dark.css";
+@import "./colors.css";
 
 * {
   transition: none;
@@ -10,26 +10,51 @@
   background: @base01;
 }
 
-#workspaces {
-  margin: 0 4px;
-}
-
-#workspaces button {
-  margin: 4px 0;
+#tags {
+  margin-top: 4px;
+  margin-left: 4px;
+  margin: 4px 2px;
   padding: 0 6px;
-  color: @base05;
-}
-
-#workspaces button.visible {
-}
-
-#workspaces button.focused {
   border-radius: 4px;
+  padding: 1px;
   background-color: @base02;
 }
 
-#workspaces button.urgent {
-  color: rgba(238, 46, 36, 1);
+#tags button {
+  margin: 1px;
+  padding: 1px;
+  color: @base01;
+  border: 2px solid @base02;
+}
+
+#tags button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  background: @base02;
+}
+
+#tags button.focused {
+  color: @base02;
+  background-color: @base01;
+  border: 2px solid @base02;
+}
+
+#tags button.occupied {
+  border: 2px solid @base01;
+}
+
+#tags button.urgent {
+  border: 2px solid @base05;
+}
+
+#tags button.occupied.urgent {
+  border: 2px solid @base05; 
+}
+
+#tags button.focused.occupied {
+  color: @base02;
+  background-color: @base01;
+  border: 2px solid @base01;
 }
 
 #tray {
@@ -50,9 +75,9 @@
 #mode, #battery, #cpu, #memory, #network, #pulseaudio, #idle_inhibitor, #backlight, #custom-storage, #custom-spotify, #custom-weather, #custom-mail, #clock, #temperature {
   margin: 4px 2px;
   padding: 0 6px;
-  background-color: @base02;
   border-radius: 4px;
   min-width: 20px;
+  background-color: @base02;
 }
 
 #pulseaudio.muted {
@@ -72,3 +97,4 @@
 #temperature.critical {
   color: @base0F;
 }
+

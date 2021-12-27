@@ -26,7 +26,7 @@
   },
   "cpu": {
     "format": "cpu{usage:3}%",
-    "interval": 1,
+    "interval": 2,
     "states": {
       "warning": 50,
       "critical": 90
@@ -35,7 +35,7 @@
   },
   "memory": {
     "format": "mem {}%",
-    "interval": 1,
+    "interval": 2,
     "states": {
       "warning": 50,
       "critical": 90
@@ -44,7 +44,7 @@
   },
   "temperature": {
     "format": "{temperatureC}°C",
-    "interval": 1,
+    "interval": 5,
     "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
     "critical-threshold": 75,
     "tooltip": false
