@@ -1,103 +1,114 @@
 @import "./colors.css";
-
 * {
-  transition-duration: 300ms;
-  transition-timing-function: ease;
-  box-shadow: none;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+    box-shadow: none;
 }
 
 #waybar {
-  color: @primary;
-  background: @background;
+    color: @primary;
+    background: @background;
 }
 
 #tags {
-  margin-top: 4px;
-  margin-left: 4px;
-  margin: 4px 2px;
-  padding: 0 6px;
-  border-radius: 4px;
-  padding: 1px;
-  background-color: @base02;
+    margin-top: 4px;
+    margin-left: 4px;
+    margin: 4px 2px;
+    padding: 0 6px;
+    border-radius: 4px;
+    padding: 1px;
+    background-color: @base02;
 }
 
 #tags button {
-  margin: 1px;
-  padding: 1px;
-  color: @base01;
-  border: 2px solid @base02;
+    margin: 1px;
+    padding: 1px;
+    color: @base01;
+    border: 2px solid @base02;
 }
 
 #tags button.occupied {
-  border: 2px solid @secondary;
-  color: @secondary;
+    border: 2px solid @secondary;
+    color: @secondary;
 }
 
 #tags button.urgent {
-  border: 2px solid @base05;
+    border: 2px solid @base05;
 }
 
 #tags button.occupied.urgent {
-  border: 2px solid @base05; 
+    border: 2px solid @base05;
 }
 
 #tags button.focused.occupied {
-  color: @primary;
-  background-color: @base01;
+    color: @primary;
+    background-color: @base01;
 }
 
 #tags button.focused {
-  color: @primary;
-  background-color: @base01;
-  border: 2px solid @primary;
+    color: @primary;
+    background-color: @base01;
+    border: 2px solid @primary;
 }
 
 #tags button:hover {
-  box-shadow: inherit;
-  text-shadow: inherit;
-  background: @base02;
-  color: @primary;
-  border: 2px solid @primary;
+    box-shadow: inherit;
+    text-shadow: inherit;
+    background: @base02;
+    color: @primary;
+    border: 2px solid @primary;
 }
 
 #tray {
-  margin: 4px 16px 4px 4px;
-  border-radius: 4px;
-  background-color: @base02;
+    margin: 4px 16px 4px 4px;
+    border-radius: 4px;
+    background-color: @base02;
 }
 
 #tray * {
-  padding: 0 6px;
-  border-left: 1px solid @background;
+    padding: 0 6px;
+    border-left: 1px solid @background;
 }
 
 #tray *:first-child {
-  border-left: none;
+    border-left: none;
 }
 
-#mode, #battery, #cpu, #memory, #network, #pulseaudio, #idle_inhibitor, #backlight, #custom-storage, #custom-spotify, #custom-weather, #custom-mail, #clock, #temperature {
-  margin: 4px 2px;
-  padding: 0 6px;
-  border-radius: 4px;
-  min-width: 20px;
-  background-color: @base02;
-}
-
-#pulseaudio.muted {
-  color: @base0F;
-}
-
-#pulseaudio.bluetooth {
-  color: @base0C;
+#mode,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#idle_inhibitor,
+#backlight,
+#custom-storage,
+#custom-spotify,
+#custom-weather,
+#custom-mail,
+#clock,
+#temperature {
+    margin: 4px 2px;
+    padding: 0 6px;
+    border-radius: 4px;
+    min-width: 20px;
+    background-color: @base02;
 }
 
 #clock {
-  margin-left: 12px;
-  margin-right: 4px;
-  background-color: transparent;
+    margin-left: 12px;
+    margin-right: 4px;
+    background-color: transparent;
 }
 
 #temperature.critical {
-  color: @base0F;
+    color: @base0F;
 }
 
+#pulseaudio.muted {
+    color: @base0F;
+}
+
+#pulseaudio.bluetooth {
+    color: @base0C;
+}
