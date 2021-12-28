@@ -1,5 +1,5 @@
 #!/bin/sh
-su -c '
+sudo env "PATH=$PATH" sh -c '
 apt update &&
 apt full-upgrade &&
 apt autoremove --purge &&

@@ -1,6 +1,7 @@
 #!/bin/sh
-su -c 'emerge --sync
-emerge -uaDNv --exclude chromium --autounmask --autounmask-write --with-bdeps=y --backtrack=10 --keep-going world
+sudo env "PATH=$PATH" sh -c '
+emerge --sync
+emerge -uaDNv --autounmask --autounmask-write --with-bdeps=y --backtrack=10 --keep-going world
 etc-update
 pwck
 grpck
