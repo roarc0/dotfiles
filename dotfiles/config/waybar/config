@@ -1,15 +1,17 @@
 {
-    // "layer": "top",
-    // "position": "bottom", // position (top|bottom|left|right)
-    // "height": 30, // removed for auto height
-    // "width": 1280,
-    "spacing": 4,
+    //"layer": "top",
+    //"position": "bottom", // top|bottom|left|right
+    //"height": 30, // removed for auto height
+    //"width": 1280,
+    //"spacing": 4,
     "modules-left": [
         "river/tags"
     ],
-    "modules-center": [],
+    //"modules-center": [],
     "modules-right": [
         "pulseaudio",
+        "idle_inhibitor",
+        "keyboard-state",
         "network",
         "custom/storage",
         "cpu",
@@ -17,17 +19,15 @@
         "battery",
         "backlight",
         "temperature",
-        "idle_inhibitor",
-        "keyboard-state",
         "clock"
     ],
     "pulseaudio": {
         //"scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format": "{icon} {volume}% {format_source}",
+        "format-bluetooth": " {volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
+        //"format-source": " {volume}%",
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
@@ -71,18 +71,17 @@
     "memory": {
         "format": "  {}%",
         "interval": 5,
-        "max-length": 10,
+        //"max-length": 20,
         "states": {
             "warning": 50,
             "critical": 90
         },
         "tooltip": true
     },
-    
     "battery": {
         //"bat": "BAT0",
         "states": {
-            // "good": 95,
+            //"good": 95,
             "warning": 30,
             "critical": 15
         },
@@ -96,9 +95,6 @@
         "interval": 30,
         "tooltip": false
     },
-    //"battery#bat2": {
-    //    "bat": "BAT2"
-    //},
     "backlight": {
         "device": "intel_backlight",
         "format": "{percent}% {icon}",

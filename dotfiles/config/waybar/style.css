@@ -1,9 +1,35 @@
 @import "./colors.css";
+
 * {
+    border: none;
+    /*font-family: Roboto;*/
+    font-size: 14px;
+    min-height: 0;
     transition-duration: 300ms;
     transition-timing-function: ease;
     box-shadow: none;
 }
+
+window#waybar {
+    background-color: rgba(43, 48, 59, 0.8);
+    border-bottom: 2px solid rgba(100, 114, 125, 0.2);
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/*
+window#waybar.empty {
+    background-color: transparent;
+}
+window#waybar.solo {
+    background-color: #FFFFFF;
+}
+*/
 
 #waybar {
     color: @primary;
@@ -111,4 +137,28 @@
 
 #pulseaudio.bluetooth {
     color: @base0C;
+}
+
+#language {
+    background: #00b093;
+    color: #740864;
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state {
+    background: #97e1ad;
+    color: #000000;
+    padding: 0 0px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state > label {
+    padding: 0 5px;
+}
+
+#keyboard-state > label.locked {
+    background: rgba(0, 0, 0, 0.2);
 }
