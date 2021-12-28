@@ -1,5 +1,5 @@
 #!/bin/sh
-su -c '
+su $(USER) -c '
 apt update &&
 apt full-upgrade &&
 apt autoremove --purge &&
