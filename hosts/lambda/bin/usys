@@ -1,5 +1,5 @@
 #!/bin/sh
-emerge --sync
+su -c 'emerge --sync
 emerge -uaDNv --exclude chromium --autounmask --autounmask-write --with-bdeps=y --backtrack=10 --keep-going world
 etc-update
 pwck
@@ -9,6 +9,5 @@ update-ca-certificates
 eclean-dist -d
 emerge --depclean -av
 perl-cleaner --all
-#emerge -av @preserved-rebuild
-flatpak update
-flatpak uninstall --unused
+flatpak-update
+'

@@ -1,0 +1,5 @@
+#!/bin/sh
+sudo flatpak update &&
+sudo flatpak uninstall --unused &&
+flatpak --user update &&
+flatpak --user uninstall --unused
