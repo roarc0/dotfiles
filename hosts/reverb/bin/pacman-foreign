@@ -1,0 +1,2 @@
+#!/bin/sh
+pacman -Qqet | grep -v "$(pacman -Qqg base)" | grep -v "$(pacman -Qqm)"

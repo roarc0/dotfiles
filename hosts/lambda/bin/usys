@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 emerge --sync
 emerge -uaDNv --exclude chromium --autounmask --autounmask-write --with-bdeps=y --backtrack=10 --keep-going world
 etc-update

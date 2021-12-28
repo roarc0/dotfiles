@@ -37,9 +37,11 @@ fi
 export HOST=$(hostname)
 HOST_HOME="$ENV_HOME/hosts/$HOST"
 if [ -n "$HOST" -a -d $HOST_HOME ]; then
-  export PATH="$PATH:$HOST_HOME/bin"
-  if [ -f $HOST_HOME/init.sh ]; then
-    . $HOST_HOME/init.sh
+  if [ -d $HOST_HOME/bin ]; then
+    export PATH="$PATH:$HOST_HOME/bin"
+  fi
+  if [ -f $HOST_HOME/profile ]; then
+    . $HOST_HOME/profile
   fi
 fi
 

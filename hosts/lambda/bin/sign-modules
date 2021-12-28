@@ -1,9 +1,7 @@
 #!/bin/sh
-
 KEY_SIZE="sha256"
-
-SRC_DIR="/home/$USER/src/repos/linux-git"
-SIGN_SCRIPT="$SRC_DIR/scripts/sign-file"
+SRC_DIR="/usr/src/linux"
+SIGN_SCRIPT="$SRC_DIR/../sign-file"
 KEY_PRIV="$SRC_DIR/certs/signing_key.pem"
 KEY_X509="$SRC_DIR/certs/signing_key.x509"
 MODULES_DIR="/lib64/modules/`uname -r`"

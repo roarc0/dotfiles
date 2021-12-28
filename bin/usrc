@@ -113,7 +113,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-echoc 31 "System src updater $version... by hexec (alessandro.rosetti@gmail.com)"
+echoc 31 "System src updater $version... by roarc (alessandro.rosetti@gmail.com)"
 
 if [ $reset_flag == yes ]; then
   opt_reset $reset_opt

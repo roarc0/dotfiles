@@ -4,7 +4,6 @@
 
 REMOTE="transmission-remote -n ${TRANSMISSION_AUTH}"
 DEST="${SMB_SHARED}"
-INCLMOV="~/inc.txt"
 MAXACTIVE="8"
 
 substr() {
@@ -14,32 +13,17 @@ substr() {
     return 0
 }
 
-tmove() {
-    while read p; do
-        echo $p
-        substr $1 $p
-    done <$INCLMOV
-}
-
 action_move() {
     LIST="$($REMOTE -l | tail --lines=+2 | grep 100% | grep -v Stopped | awk '{ print $1; }')"
     for ID in $LIST; do
         NAME="$($REMOTE --torrent $ID --info | grep Name:)"
         einfo ">>> $ID: ${NAME#*Name: }"
-
-        if [[ ${NAME,,} == *"eastenders"* ]]; then
-            $REMOTE --torrent $ID --move "$DEST/eastenders" >/dev/null
-        else
-            if [ $FLAG_INTERACTIVE -eq 1 ]; then
-                ask "move to \"$DEST\""
-            elif
-                # name in filter.txt
-            fi
-
-            if [ $? == 0 ];then
-                $REMOTE --torrent $ID --move "$DEST" >/dev/null
+        if [ $FLAG_INTERACTIVE -eq 1 ]; then
+            ask "move to \"$DEST\""
         fi
-    fi
+        if [ $? == 0 ];then
+            $REMOTE --torrent $ID --move "$DEST" >/dev/null
+        fi
         $REMOTE --torrent $ID --remove >/dev/null
     done
 }

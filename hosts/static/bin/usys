@@ -1,0 +1,7 @@
+#!/bin/sh
+sudo apt update && \
+sudo apt full-upgrade && \
+sudo apt autoremove --purge && \
+sudo snap refresh && snap-remove-old && \
+sudo flatpak update && sudo flatpak uninstall --unused && \
+flatpak --user update && flatpak --user uninstall --unused

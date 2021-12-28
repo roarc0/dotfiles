@@ -3,7 +3,7 @@
 
 version="0.1.0"
 
-echoc 31 "clean_world $version... by hexec (alessandro.rosetti@gmail.com)"
+echoc 31 "clean_world $version... by roarc (alessandro.rosetti@gmail.com)"
 
 c=0
 world=$(cat /var/lib/portage/world)

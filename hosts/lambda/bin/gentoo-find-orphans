@@ -4,7 +4,7 @@
 VERSION="0.2.0"
 LOGTO="~/orphans.log"
 
-echoc 31 "Orphaned file finder $VERSION... by hexec (alessandro.rosetti@gmail.com)"
+echoc 31 "Orphaned file finder $VERSION... by roarc (alessandro.rosetti@gmail.com)"
 
 if [ $UID -ne 0 ]; then
     echoc 31 "Please run as root."

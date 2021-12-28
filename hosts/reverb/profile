@@ -1,0 +1,2 @@
+alias usys='aurman -Syu --noconfirm'
+alias mkernel="su -c \"make -j5 ; make modules_install ; cp arch/x86/boot/bzImage /boot/vmlinuz-linux-$(USER) ; grub-mkconfig -o /boot/grub/grub.cfg ; mkinitcpio -p linux-$(USER) cd -\""

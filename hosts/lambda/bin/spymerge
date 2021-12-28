@@ -4,7 +4,7 @@ run_as_root $@
 
 VERSION="0.1.1"
 
-echo -e "Spymerge $VERSION hexec (alessandro.rosetti@gmail.com)\n"
+echo -e "Spymerge $VERSION roarc (alessandro.rosetti@gmail.com)\n"
 
 ELOG="/var/tmp/"
 LAST=$(find $ELOG -mmin -1 -type f -name "build.log" -print 2>/dev/null)

@@ -1,0 +1,2 @@
+#!/bin/sh
+su -c 'rm -f /var/lib/pacman/db.lck'

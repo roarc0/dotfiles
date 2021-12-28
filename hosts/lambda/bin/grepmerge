@@ -1,4 +1,2 @@
 #!/bin/sh
-
 sudo emerge -av1O --keep-going `qlist -IC $1`
-
