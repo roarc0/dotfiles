@@ -1,2 +1,7 @@
 #!/bin/sh
+if [ pidof wf-recorder ];then
+ pkill wf-recorder
+ exit 0
+fi
+
 wf-recorder
