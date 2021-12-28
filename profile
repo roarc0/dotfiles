@@ -19,7 +19,7 @@ export PATH="${CARGOPATH}/bin:$PATH"
 export PATH="/snap/bin:$PATH"
 
 export GIT_TERMINAL_PROMPT=1
-export EDITOR=vim
+export EDITOR=nvim
 export VISUAL=$EDITOR
 export SYSTEMD_EDITOR=$EDITOR
 export MERGETOOL=meld
