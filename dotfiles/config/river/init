@@ -9,7 +9,8 @@ riverctl border-color-unfocused 0x60587a
 riverctl border-width 2
 
 riverctl map normal $mod+Shift S spawn ~/env/bin/start-fuzzel
-riverctl map normal $mod P spawn 'grim -g "$(slurp)" - | wl-copy'
+riverctl map normal $mod+Shift x spawn ~/env/bin/start-lockscreen
+riverctl map normal $mod P spawn ~/env/bin/screenshot_sel
 
 # Set keyboard repeat rate
 riverctl set-repeat 50 300

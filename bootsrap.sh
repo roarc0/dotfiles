@@ -34,4 +34,4 @@ done
 
 . scripts/setup-oh-my-zsh.sh
 
-setup-folder-icons.py
+setup-folder-icons
