@@ -15,9 +15,9 @@
         "clock"
     ],
     "clock": {
-        "format": " {:%a  ·  %d-%m  ·  %H:%M}",
+        "format": "   {:%a  ·  %d-%m  ·  %H:%M}",
         "interval": 1,
-        "tooltip": true
+        "tooltip": false
     },
     "network": {
         "format-wifi": "  {essid} {signalStrength}%",
