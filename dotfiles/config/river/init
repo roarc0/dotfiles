@@ -8,7 +8,7 @@ riverctl border-color-urgent 0xdc143c
 riverctl border-color-unfocused 0x60587a
 riverctl border-width 2
 
-riverctl map normal $mod+Shift S spawn ~/env/bin/start-fuzzel
+riverctl map normal $mod+Shift S spawn ~/env/bin/start-launcher
 riverctl map normal $mod+Shift x spawn ~/env/bin/start-lockscreen
 riverctl map normal $mod P spawn ~/env/bin/screenshot_sel
 
@@ -114,5 +114,5 @@ riverctl csd-filter-add app-id "gedit"
 riverctl default-layout rivertile
 
 exec waybar &
-exec swaybg -i ~/pictures/wallpaper.png -m fill &
+exec swaybg -i ~/pictures/wm/wallpaper.png -m fill &
 exec rivertile -view-padding 3 -outer-padding 3

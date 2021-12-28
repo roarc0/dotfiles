@@ -6,8 +6,8 @@ set $editor vim
 set $browser firefox
 set $Browser Firefox
 
-set $wallpaper ~/pictures/wallpaper.png
-set $locker swaylock -i $conf/res/lock.png
+set $wallpaper ~/pictures/wm/wallpaper.png
+set $locker swaylock -i ~/pictures/wm/lockscreen.png
 set $wallpaperchange $conf/scripts/bg.sh
 
 set $mod Mod4

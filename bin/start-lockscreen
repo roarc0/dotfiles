@@ -1,2 +1,2 @@
 #!/bin/sh
-swaylock
+swaylock -i ~/pictures/wm/lockscreen.png
