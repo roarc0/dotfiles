@@ -20,35 +20,24 @@
         "tooltip": true
     },
     "network": {
-        "format": "{icon}",
-        "format-alt": "{ipaddr}/{cidr} {icon}",
-        "format-alt-click": "click-right",
-        "format-icons": {
-            "wifi": [
-                "睊",
-                "直",
-                ""
-            ],
-            "ethernet": [
-                ""
-            ],
-            "disconnected": [
-                ""
-            ]
-        },
+        "format-wifi": "  {essid} {signalStrength}%",
+        "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "Disconnected",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
         "on-click": "alacritty -e nmtui",
-        "tooltip": false
+        "tooltip": true
     },
     "custom/storage": {
-        "format": "{} ",
-        "format-alt": "{percentage}% ",
+        "format": "  {}",
+        "format-alt": "  {percentage}%",
         "format-alt-click": "click-right",
         "return-type": "json",
         "interval": 60,
         "exec": "~/.config/waybar/modules/storage.sh"
     },
     "cpu": {
-        "format": " cpu {usage:3}%",
+        "format": "  {usage:3}%",
         "interval": 5,
         "states": {
             "warning": 50,
@@ -57,7 +46,7 @@
         "tooltip": true
     },
     "memory": {
-        "format": " mem {}%",
+        "format": "  {}%",
         "interval": 5,
         "max-length": 10,
         "states": {
