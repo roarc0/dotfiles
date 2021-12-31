@@ -6,7 +6,7 @@ alias udnv="sudo emerge -uDNv --backtrack=5 --keep-going world"
 
 alias wmerge="watch -c genlop -ce"
 alias fmerge="sudo tail -f /var/log/emerge-fetch.log"
-alias lmerge='cat /var/log/emerge.log | grep "completed emerge"'
+alias lmerge='sudo cat /var/log/emerge.log | grep "completed emerge"'
 alias nmerge="sudo emerge -1av $(find /var/db/pkg/ -mindepth 2 -maxdepth 3 -name \*9999 | awk -F \/ '{printf "=%s/%s ", $5, $6}')"
 
 alias copyconf='su -c "zcat /proc/config.gz > /usr/src/linux/.config"'
