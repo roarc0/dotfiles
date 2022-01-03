@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "$1" ]; then
   echo usage: $0 network-interface
@@ -8,23 +8,19 @@ if [ -z "$1" ]; then
   exit
 fi
 
-show_speed() {
-  IF=$1
-  SEC=1
-  ((CONV = 1024 * $SEC))
-
-  R1=$(cat /sys/class/net/$1/statistics/rx_bytes)
-  T1=$(cat /sys/class/net/$1/statistics/tx_bytes)
-  sleep $SEC
-  R2=$(cat /sys/class/net/$1/statistics/rx_bytes)
-  T2=$(cat /sys/class/net/$1/statistics/tx_bytes)
-  ((TBPS = $T2 - $T1))
-  ((RBPS = $R2 - $R1))
-  ((TKBPS = $TBPS / $CONV))
-  ((RKBPS = $RBPS / $CONV))
-  echo "$1: tx $TKBPS kB/s rx $RKBPS kB/s"
+print_network() {
+ logfile="${XDG_CACHE_HOME:-/tmp}/net-speed"
+ [ -f "$logfile" ] || echo "0 0 0" > "$logfile"
+ read -r rxprev txprev utimeprev < "$logfile"
+ read utime rest </proc/uptime
+ rx=$(cat /sys/class/net/$1/statistics/rx_bytes)
+ tx=$(cat /sys/class/net/$1/statistics/tx_bytes)
+ echo "$rx $tx $utime" > "$logfile"
+ rxs="$(bc <<< "($rx - $rxprev) / ($utime-$utimeprev)")"
+ txs="$(bc <<< "($tx - $txprev) / ($utime-$utimeprev)")"
+ rxsh="$(numfmt --to=iec --padding=10 --suffix=B/s --format="%.2f" $rxs)"
+ txsh="$(numfmt --to=iec --padding=10 --suffix=B/s --format="%.2f" $txs)"
+ echo " $rxsh  $txsh"
 }
 
-while :; do
-  show_speed $1
-done
+echo "$(print_network $1)"
