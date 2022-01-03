@@ -18,8 +18,8 @@ print_network() {
  echo "$rx $tx $utime" > "$logfile"
  rxs="$(bc <<< "($rx - $rxprev) / ($utime-$utimeprev)")"
  txs="$(bc <<< "($tx - $txprev) / ($utime-$utimeprev)")"
- rxsh="$(numfmt --to=iec --padding=10 --suffix=B/s --format="%.2f" $rxs)"
- txsh="$(numfmt --to=iec --padding=10 --suffix=B/s --format="%.2f" $txs)"
+ rxsh="$(numfmt --to=iec --padding=10 --suffix=B/s --format="%.2f" $rxs | sed -e "s/.00B/B/")"
+ txsh="$(numfmt --to=iec --padding=10 --suffix=B/s --format="%.2f" $txs | sed -e "s/.00B/B/")"
  echo " $rxsh  $txsh"
 }
 
