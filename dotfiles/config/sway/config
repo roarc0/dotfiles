@@ -1,10 +1,10 @@
 set $conf ~/.config/sway
 
 set $font pango:Roboto Mono 10, FontAwesome5Free 10, FontAwesome5Brands 10
-set $term alacritty
-set $editor vim
-set $browser firefox
-set $Browser Firefox
+set $term foot
+set $editor nvim
+set $browser google-chrome
+set $Browser google-chrome
 
 set $wallpaper ~/pictures/wm/wallpaper.png
 set $locker swaylock -i ~/pictures/wm/lockscreen.png
@@ -16,7 +16,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $bar_height 22
+set $bar_height 24
 
 ###### includes ######
 include $conf/config.d/colors
@@ -67,9 +67,8 @@ assign [class="Telegram"] $ws3
 assign [class="$Browser"] $ws2
 
 for_window [class="(?i).*zenity"] floating enable, move position center
-#for_window [window_type="dialog"] floating enable
-#for_window [class="(?i)nautilus"] floating enable
-
+for_window [window_type="dialog"] floating enable
+for_window [app_id="zoom"] floating enable
 
 ###### theme ######
 #<colorclass>           <border>      <background> <text>        <indicator> <child_border>
