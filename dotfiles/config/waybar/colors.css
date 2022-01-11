@@ -1,6 +1,10 @@
 @define-color background #2f2f2f;
 @define-color primary #30d769;
 @define-color secondary #9340c9;
+
+@define-color mode #dd1111;
+@define-color window @primary;
+
 @define-color base01 #2c2c2c;
 @define-color base02 #4d4d4d;
 @define-color base03 #525252;
@@ -15,3 +19,19 @@
 @define-color base0D #62d6e8;
 @define-color base0E #b45bcf;
 @define-color base0F #00f769;
+
+@define-color light #ebdbb2;
+@define-color dark #282828;
+@define-color warning #fabd2f;
+@define-color critical #cc241d;
+@define-color workspaces #458588;
+@define-color workspacesfocused #83a598;
+@define-color sound #d3869b;
+@define-color network #b16286;
+@define-color memory #8ec07c;
+@define-color cpu #98971a;
+@define-color temp #b8bb26;
+@define-color layout #689d6a;
+@define-color battery #fabd2f;
+@define-color date #282828;
+@define-color time #ebdbb2;

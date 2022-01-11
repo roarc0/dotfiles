@@ -5,9 +5,13 @@
     //"width": 1280,
     //"spacing": 4,
     "modules-left": [
-        "river/tags"
+        "river/tags",
+        "sway/workspaces",
+        "sway/window",
+        "sway/mode"
     ],
-    //"modules-center": [],
+    "modules-center": [
+    ],
     "modules-right": [
         "custom/net-speed",
         "network",
@@ -18,6 +22,7 @@
         "backlight",
         "temperature",
         "idle_inhibitor",
+        "sway/language",
         "keyboard-state",
         "pulseaudio",
         "custom/weather",
@@ -27,12 +32,48 @@
         "num-tags": 9,
         "tag-labels": [ "一", "二", "三", "四", "五", "六", "七", "八", "九" ]
     },
+    "sway/language": {
+        "format": " {}",
+        "min-length": 5,
+        "tooltip": false
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>",
+        "tooltip": false
+    },
+    "sway/window": {
+        "format": " {}",
+        "max-length": 80,
+        "tooltip": false
+    },
+    "sway/workspaces": {
+        "all-outputs": true,
+        "current-only": false,
+        "disable-scroll": false,
+        "format": "{name}",
+        "persistent_workspaces": {
+            "1:1": [],
+            "2:2": [],
+            "3:3": [],
+            "4:4": [],
+            "5:5": [],
+            "6:6": [],
+            "7:7": [],
+            "8:8": [],
+            "9:9": []
+        },
+        "format-icons": {
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
     "pulseaudio": {
-        //"scroll-step": 1, // %, can be a float
-        "format": "{icon} {volume}% {format_source}",
-        "format-bluetooth": " {volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        //"scroll-step": 1,
+        "format": "{icon} {volume}%", //{format_source}",
+        //"format-bluetooth": " {volume}% {icon} {format_source}",
+        //"format-bluetooth-muted": " {icon} {format_source}",
+        //"format-muted": " {format_source}",
         //"format-source": " {volume}%",
         "format-source-muted": "",
         "format-icons": {
@@ -95,7 +136,6 @@
     "memory": {
         "format": "  {}%",
         "interval": 5,
-        //"max-length": 20,
         "states": {
             "warning": 50,
             "critical": 90
@@ -126,7 +166,7 @@
         "format-alt-click": "click-right",
         "format-icons": [
             "",
-            ""
+            ""
         ],
         "on-scroll-down": "light -A 1",
         "on-scroll-up": "light -U 1"
@@ -142,7 +182,7 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
+            "activated": "",
             "deactivated": ""
         },
         "tooltip": false
@@ -166,11 +206,22 @@
     },
     "clock": {
         "format": "   {:%a  ·  %d-%m  ·  %H:%M}",
-        "interval": 1,
+        "interval": 10,
         "tooltip": false
-    }
-    //"tray": {
-    //    "icon-size": 21,
-    //    "spacing": 10
-    //},
+    },
+    "clock#time": {
+        "interval": 10,
+        "format": "{:%H:%M}",
+        "tooltip": false
+    },
+    "clock#date": {
+        "interval": 20,
+        "format": "{:%e %b %Y}",
+        "tooltip-format": "{:%e %B %Y}",
+        "tooltip": true
+    },
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
 }
