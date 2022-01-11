@@ -1,6 +1,6 @@
 set $conf ~/.config/sway
 
-set $font pango:Roboto Mono 10, FontAwesome5Free 10, FontAwesome5Brands 10
+set $font pango:Roboto Mono 12, FontAwesome5Free 12, FontAwesome5Brands 12
 set $term foot
 set $editor nvim
 set $browser google-chrome
@@ -18,51 +18,47 @@ set $up k
 set $right l
 set $bar_height 24
 
+gaps inner 3
+
 ###### includes ######
 include $conf/config.d/colors
 include $conf/config.d/autostart
 include $conf/config.d/inputs
 
-#outputs
-#swaymsg -t get_outputs
-# output * bg #2b303b solid_color
-# modes: fill stretch
+#outputs: swaymsg -t get_outputs
 output * bg $wallpaper fill
 #output eDP-1 resolution 1920x1080 position 0,0
-#output DP-1 resolution 1360x768 position 1920,0
-#output HDMI-A-1 resolution 1920x1080 position 3840,0
-#workspace 1 output eDP-1
-#workspace 1 output DP-1
+#output HDMI-A-1 resolution 1920x1080 position 1920,0
+output eDP-1 res 1920x1080 pos 0 0
+output HDMI-A-1 res 1920x1080 pos 0 0
 
 set $menu dmenu_run -i -sb \"$background\" -sf \"$focus_text\" -nb \"$background\" -nf \"$unfocus_text\" -fn \"$font\"
 
-set $ws1 1:一
-set $ws2 2:二
-set $ws3 3:三
-set $ws4 4:四
-set $ws5 5:五
-set $ws6 6:六
-set $ws7 7:七
-set $ws8 8:八
-set $ws9 9:九
-set $ws0 10:十
+set $ws1 1:1
+set $ws2 2:2
+set $ws3 3:3
+set $ws4 4:4
+set $ws5 5:5
+set $ws6 6:6
+set $ws7 7:7
+set $ws8 8:8
+set $ws9 9:9
+set $ws0 10:10
 
 font $font
 focus_follows_mouse yes
 #workspace_auto_back_and_forth yes
-#hide_edge_borders both
-#new_window pixel 0
-#new_float pixel 1
-for_window [class="Termite"] border normal
-for_window [class="Chromium" title="Chromium"] border none
+hide_edge_borders both
+
+for_window [class="foot"] border none
+for_window [class="alacritty"] border none
 for_window [class="$Browser"] border none
 for_window [class="Telegram"] border none
 for_window [class="^.*"] border none
 
-#bindsym End [class="Chromium-browser-chromium"] focus
+bindsym End [class="*Telegram*"] focus
 bindsym F12 [class="$Browser"] focus
-bindsym End [class="Telegram"] focus
-#bindsym F12 [class="Vlc"] focus
+bindsym F11 [class="mpv"] focus
 assign [class="Telegram"] $ws3
 assign [class="$Browser"] $ws2
 
@@ -83,30 +79,36 @@ client.urgent           $unfocus_2  $unfocus_2 $alarm_text   $alarm $unfocus_2
 
 ###### bar ######
 bar {
+    swaybar_command waybar
     id bar1
-    #tray_output all
-    #tray_padding 3
-    #icon_theme
-    position top
-    font $font
-    height $bar_height
-    strip_workspace_numbers yes
-    workspace_buttons yes
-    status_command i3status -c $conf/i3status.conf
-    separator_symbol |
-
-    colors {
-        statusline $unfocus_text
-        background $background
-        separator  #333333
-        #<colorclass>      <border>    <background> <text>      <indicator> <child_border>
-        focused_workspace  $bfocus_1   $bfocus_2   $bfocus_text
-        active_workspace   $bunfocus_1 $bunfocus_2 $bfocus_text
-        inactive_workspace $bunfocus_2 $bunfocus_2 $bfocus_text
-        urgent_workspace   $bunfocus_2 $alarm      $alarm_text
-        #binding_mode      $color $color $color
-    }
 }
+
+#bar {
+#    swaybar_command waybar
+#    id bar1
+#    position top
+#    font $font
+#    #tray_output all
+#    #tray_padding 3
+#    #icon_theme
+#    height $bar_height
+#    strip_workspace_numbers yes
+#    workspace_buttons yes
+#    #status_command i3status -c $conf/i3status.conf
+#    separator_symbol |
+#
+#    colors {
+#        statusline $unfocus_text
+#        background $background
+#        separator  #333333
+#        #<colorclass>      <border>    <background> <text>      <indicator> <child_border>
+#        focused_workspace  $bfocus_1   $bfocus_2   $bfocus_text
+#        active_workspace   $bunfocus_1 $bunfocus_2 $bfocus_text
+#        inactive_workspace $bunfocus_2 $bunfocus_2 $bfocus_text
+#        urgent_workspace   $bunfocus_2 $alarm      $alarm_text
+#        #binding_mode      $color $color $color
+#    }
+#}
 
 ###### keybinds ######
 floating_modifier $mod normal
@@ -158,7 +160,6 @@ bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
 
-
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
@@ -203,16 +204,11 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3? This will end your X session.' -b 'Exit' 'swaymsg exit'"
-#bindsym $mod+Shift+e exec sh -c '[ $(echo "N\y" | $menu -sb "#ff6600" -i -p "Do you want to exit i3 session?") = "y" ] && swaymsg exit'
 bindsym $mod+Pause mode "system"
 mode "system" {
-    bindsym l exec "killall i3-nagbar", exec --no-startup-id $locker, mode "default"
     bindsym e exec --no-startup-id swaymsg exit, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl suspend && $locker, mode "default"
     bindsym Shift+h exec --no-startup-id systemctl hibernate && $locker, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym s exec --no-startup-id systemctl poweroff -i, mode "default"
-    bindsym Return exec "killall i3-nagbar" , mode "default"
-    bindsym Escape exec "killall i3-nagbar" , mode "default"
 }
