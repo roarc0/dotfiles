@@ -1,0 +1,27 @@
+export XKB_DEFAULT_LAYOUT=us
+export XKB_DEFAULT_VARIANT=altgr-intl
+#export XKB_DEFAULT_OPTIONS=
+
+export ANDROID_HOME="$HOME/.local/android/sdk"
+export JAVA_HOME="/usr/lib/jvm/default-java/"
+export GOPATH="$HOME/.local/go"
+
+export CARGOPATH="$HOME/.cargo"
+if [ -f "$HOME/.cargo/env" ] ; then
+    source "$HOME/.cargo/env"
+fi
+
+if [ -d "$HOME/.local/bin" ] ; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+export PATH="${GOPATH}/bin:$PATH"
+export PATH="${CARGOPATH}/bin:$PATH"
+export PATH="/snap/bin:$PATH"
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+export GIT_TERMINAL_PROMPT=1
+export EDITOR=nvim
+export VISUAL=$EDITOR
+export SYSTEMD_EDITOR=$EDITOR
+export MERGETOOL=meld
+unset SSH_ASKPASS

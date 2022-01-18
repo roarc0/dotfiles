@@ -2,7 +2,7 @@
 
 set -e
 
-. profile
+. env.sh
 
 echoc 31 "Environment setup ..."
 if [ "$USER" = "root" ]; then
@@ -15,6 +15,7 @@ mkdir -p $HOME/.local/share/{icons,fonts} >/dev/null 2>&1 || true
 install_link "$ENV_HOME/dotfiles/local/share/icons" "$HOME/.local/share/icons"
 install_link "$ENV_HOME/dotfiles/local/share/fonts" "$HOME/.local/share/fonts"
 
+install_link "$ENV_HOME/dotfiles/profile" "$HOME/.profile"
 install_link "$ENV_HOME/dotfiles/zshrc" "$HOME/.zshrc"
 install_link "$ENV_HOME/dotfiles/bashrc" "$HOME/.bashrc"
 install_link "$ENV_HOME/dotfiles/gitconfig" "$HOME/.gitconfig"

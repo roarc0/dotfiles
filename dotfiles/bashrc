@@ -14,16 +14,7 @@ shopt -s histappend
 shopt -s checkwinsize
 
 export LC_NUMERIC="POSIX"
-export EDITOR="/usr/bin/vim"
 export PAGER=less
-export BROWSER=chromium
 export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
-export SHELL=/usr/bin/bash
-unset SSH_ASKPASS
 
-eval ~/env/profile
-
-if [ "$(tty)" = "/dev/tty1" ]; then
-	sway
-	exit 0
-fi
+eval ~/env/env.sh
