@@ -8,7 +8,6 @@ set $Browser google-chrome
 
 set $wallpaper ~/pictures/wm/wallpaper.png
 set $locker swaylock -i ~/pictures/wm/lockscreen.png
-set $wallpaperchange $conf/scripts/bg.sh
 
 set $mod Mod4
 set $sup Mod1
@@ -78,37 +77,7 @@ client.unfocused        $unfocus_2  $unfocus_2 $unfocus_text $alarm $unfocus_2
 client.urgent           $unfocus_2  $unfocus_2 $alarm_text   $alarm $unfocus_2
 
 ###### bar ######
-bar {
-    swaybar_command waybar
-    id bar1
-}
-
-#bar {
-#    swaybar_command waybar
-#    id bar1
-#    position top
-#    font $font
-#    #tray_output all
-#    #tray_padding 3
-#    #icon_theme
-#    height $bar_height
-#    strip_workspace_numbers yes
-#    workspace_buttons yes
-#    #status_command i3status -c $conf/i3status.conf
-#    separator_symbol |
-#
-#    colors {
-#        statusline $unfocus_text
-#        background $background
-#        separator  #333333
-#        #<colorclass>      <border>    <background> <text>      <indicator> <child_border>
-#        focused_workspace  $bfocus_1   $bfocus_2   $bfocus_text
-#        active_workspace   $bunfocus_1 $bunfocus_2 $bfocus_text
-#        inactive_workspace $bunfocus_2 $bunfocus_2 $bfocus_text
-#        urgent_workspace   $bunfocus_2 $alarm      $alarm_text
-#        #binding_mode      $color $color $color
-#    }
-#}
+include $conf/config.d/waybar
 
 ###### keybinds ######
 floating_modifier $mod normal
@@ -118,8 +87,8 @@ bindsym $mod+Shift+x exec $locker
 bindsym Pause exec $locker
 bindsym $mod+d exec $menu
 #bindsym $mod+v exec $browser
-bindsym $mod+c exec $wallpaperchange
-bindsym Print exec $conf/scripts/screen.sh
+bindsym Print exec screenshot
+bindsym Shift+Print exec screenshot_sel
 
 bindsym $mod+Shift+a exec "pavucontrol"
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%

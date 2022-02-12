@@ -1,0 +1,25 @@
+bar {
+    id bar1
+    position top
+    font $font
+    #tray_output all
+    #tray_padding 3
+    #icon_theme
+    height $bar_height
+    strip_workspace_numbers yes
+    workspace_buttons yes
+    status_command i3status -c $conf/i3status.conf
+    separator_symbol |
+
+    colors {
+        statusline $unfocus_text
+        background $background
+        separator  #333333
+        #<colorclass>      <border>    <background> <text>      <indicator> <child_border>
+        focused_workspace  $bfocus_1   $bfocus_2   $bfocus_text
+        active_workspace   $bunfocus_1 $bunfocus_2 $bfocus_text
+        inactive_workspace $bunfocus_2 $bunfocus_2 $bfocus_text
+        urgent_workspace   $bunfocus_2 $alarm      $alarm_text
+        #binding_mode      $color $color $color
+    }
+}
