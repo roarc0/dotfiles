@@ -10,6 +10,7 @@ if [ -f $ENV_FILE ]; then
   . $ENV_FILE
 fi
 
+. ~/.profile
 . $ENV_HOME/scripts/aliases.sh
 . $ENV_HOME/scripts/docker.sh
 . $ENV_HOME/scripts/functions.sh
