@@ -1,6 +1,7 @@
 set $conf ~/.config/sway
 
 set $font pango:Roboto Mono 12, FontAwesome5Free 12, FontAwesome5Brands 12
+
 set $term foot
 set $editor nvim
 set $browser google-chrome
@@ -15,7 +16,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $bar_height 24
+set $bar_height 26
 
 gaps inner 3
 
@@ -25,11 +26,13 @@ include $conf/config.d/autostart
 include $conf/config.d/inputs
 
 #outputs: swaymsg -t get_outputs
+set $laptop eDP-1
 output * bg $wallpaper fill
-#output eDP-1 resolution 1920x1080 position 0,0
-#output HDMI-A-1 resolution 1920x1080 position 1920,0
-output eDP-1 res 1920x1080 pos 0 0
+output $laptop res 1920x1080 pos 0 0
 output HDMI-A-1 res 1920x1080 pos 0 0
+
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
 
 set $menu dmenu_run -i -sb \"$background\" -sf \"$focus_text\" -nb \"$background\" -nf \"$unfocus_text\" -fn \"$font\"
 
@@ -87,8 +90,8 @@ bindsym $mod+Shift+x exec $locker
 bindsym Pause exec $locker
 bindsym $mod+d exec $menu
 #bindsym $mod+v exec $browser
-bindsym Print exec screenshot
-bindsym Shift+Print exec screenshot_sel
+bindsym Print exec ~/env/bin/screenshot
+bindsym Shift+Print exec ~/env/bin/screenshot_sel
 
 bindsym $mod+Shift+a exec "pavucontrol"
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
