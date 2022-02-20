@@ -4,9 +4,6 @@ set $font pango:Roboto Mono 12, FontAwesome5Free 12, FontAwesome5Brands 12
 
 set $term foot
 set $editor nvim
-set $browser google-chrome
-set $Browser google-chrome
-
 set $wallpaper ~/pictures/wm/wallpaper.png
 set $locker swaylock -i ~/pictures/wm/lockscreen.png
 
@@ -52,17 +49,22 @@ focus_follows_mouse yes
 #workspace_auto_back_and_forth yes
 hide_edge_borders both
 
+set $telegram ^.*elegram.*$
+set $chrome ^.*chrom.*$
+set $firefox ^.*firefox.*$
+set $browser $chrome
+
 for_window [class="foot"] border none
 for_window [class="alacritty"] border none
-for_window [class="$Browser"] border none
-for_window [class="Telegram"] border none
-for_window [class="^.*"] border none
+for_window [class="$firefox"] border none
+for_window [class="$chrome"] border none
+for_window [app_id="$telegram"] border none
 
-bindsym End [class="*Telegram*"] focus
-bindsym F12 [class="$Browser"] focus
+bindsym End [class="$browser"] focus
+bindsym F12 [app_id="$telegram"] focus
 bindsym F11 [class="mpv"] focus
-assign [class="Telegram"] $ws3
-assign [class="$Browser"] $ws2
+assign [app_id="$telegram"] $ws3
+assign [class="$browser"] $ws2
 
 for_window [class="(?i).*zenity"] floating enable, move position center
 for_window [window_type="dialog"] floating enable
