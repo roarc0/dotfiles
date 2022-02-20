@@ -11,7 +11,7 @@
     "workbench.editor.pinnedTabSizing": "shrink",
     "workbench.settings.editor": "json",
     "workbench.iconTheme": "vscode-icons",
-    "workbench.colorTheme": "One Monokai",
+    "workbench.colorTheme": "Dracula",
     "workbench.startupEditor": "none",
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter.notebook.ipynb"
@@ -20,6 +20,7 @@
     "editor.fontSize": 17,
     "editor.fontLigatures": true,
     "editor.lineHeight": 22,
+    "editor.wordWrap": "wordWrapColumn",
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.formatOnType": false,
@@ -49,6 +50,7 @@
     "explorer.autoReveal": true,
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
+    "explorer.openEditors.visible": 0,
     "terminal.explorerKind": "external",
     "terminal.integrated.fontSize": 12,
     "terminal.integrated.enableShellIntegration": true,
@@ -168,21 +170,28 @@
     "eslint.validate": [
         "typescript"
     ],
+    "emmet.triggerExpansionOnTab": true,
     "emmet.includeLanguages": {
         "postcss": "css",
         "javascript": "javascriptreact",
-        "markdown": "javascriptreact"
+        "typescript": "typescriptreact",
+        "vue": "html",
+        "markdown": "markdown",
+        "html": "html"
     },
     "emmet.syntaxProfiles": {
         "postcss": "css"
     },
-    "emmet.triggerExpansionOnTab": true,
     "java.checkstyle.properties": {
         "basedir": "${workspaceFolder}"
     },
     "markdown.preview.scrollEditorWithPreview": true,
     "markdown.preview.scrollPreviewWithEditor": true,
     "python.languageServer": "Default",
+    "[python]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
     "[dockerfile]": {
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
@@ -191,5 +200,13 @@
         "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.vs-kubernetes/tools/kubectl/kubectl",
         "vscode-kubernetes.minikube-path.linux": "/home/roarc/.vs-kubernetes/tools/minikube/linux-amd64/minikube"
     },
-    "redhat.telemetry.enabled": false
+    "redhat.telemetry.enabled": false,
+    "emojisense.languages": {
+        "markdown": true,
+        "plaintext": {
+            "markupCompletionsEnabled": false,
+            "emojiDecoratorsEnabled": false
+        },
+        "scminput": true
+    }
 }
