@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-
-set -e
-
 . env.sh
+set -e
 
 echoc 31 "Environment setup ..."
 if [ "$USER" = "root" ]; then
@@ -12,6 +10,7 @@ fi
 mkdir $HOME/{workspace,dev,repos,tmp,sync} >/dev/null 2>&1 || true
 mkdir -p $HOME/.local/share/{icons,fonts} >/dev/null 2>&1 || true
 
+install_link "$ENV_HOME/dotfiles/profile" "$HOME/.profile"
 install_link "$ENV_HOME/dotfiles/local/share/icons" "$HOME/.local/share/icons"
 install_link "$ENV_HOME/dotfiles/local/share/fonts" "$HOME/.local/share/fonts"
 
