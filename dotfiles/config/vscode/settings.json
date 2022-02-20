@@ -134,29 +134,24 @@
     "scss.lint.important": "warning",
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.validate": true,
-    "javascript.format.enable": true,
+    "javascript.format.enable": false,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "javascript.preferences.importModuleSpecifier": "non-relative",
-    "javascript.format.insertSpaceAfterConstructor": true,
-    "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+    "javascript.format.semicolons": "remove",
     "[javascript]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-    "typescript.format.semicolons": "remove",
-    "typescript.tsdk": "node_modules/typescript/lib",
     "typescript.preferences.includePackageJsonAutoImports": "on",
     "typescript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.format.semicolons": "remove",
+    "typescript.format.enable": false,
     "[typescript]": {
-        "editor.autoIndent": "full",
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "[typescriptreact]": {
-        "editor.autoIndent": "full",
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "editor.codeActionsOnSave": {
