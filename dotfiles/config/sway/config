@@ -15,8 +15,6 @@ set $up k
 set $right l
 set $bar_height 26
 
-gaps inner 3
-
 ###### includes ######
 include $conf/config.d/colors
 include $conf/config.d/autostart
@@ -48,6 +46,7 @@ font $font
 focus_follows_mouse yes
 #workspace_auto_back_and_forth yes
 hide_edge_borders both
+gaps inner 3
 
 set $telegram ^.*elegram.*$
 set $chrome ^.*chrom.*$
