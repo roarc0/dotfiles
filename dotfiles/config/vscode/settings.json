@@ -6,7 +6,7 @@
     "sync.forceDownload": true,
     "sync.forceUpload": true,
     "sync.quietSync": true,
-    "sync.gist": "fbea71818e9605fefa7f093860aaf43d",
+    //"sync.gist": "fbea71818e9605fefa7f093860aaf43d",
     "workbench.editor.enablePreview": false,
     "workbench.editor.pinnedTabSizing": "shrink",
     "workbench.settings.editor": "json",
@@ -38,7 +38,13 @@
         "**/.classpath": true,
         "**/.project": true,
         "**/.settings": true,
-        "**/.factorypath": true
+        "**/.factorypath": true,
+        "**/node_modules/*/**": true
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true
     },
     "explorer.autoReveal": true,
     "explorer.confirmDragAndDrop": false,
@@ -148,11 +154,12 @@
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "[typescriptreact]": {
+        "editor.autoIndent": "full",
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true,
-        "addMissingImports": true
+        "source.addMissingImports": true
     },
     "eslint.format.enable": true,
     "eslint.alwaysShowStatus": true,
