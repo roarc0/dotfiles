@@ -1,23 +1,32 @@
 {
     "window.titleBarStyle": "custom",
     "window.zoomLevel": 1,
+    "window.title": "${rootPath}${separator}${appName}",
     "sync.autoDownload": true,
     "sync.autoUpload": true,
     "sync.forceDownload": true,
     "sync.forceUpload": true,
     "sync.quietSync": true,
-    //"sync.gist": "fbea71818e9605fefa7f093860aaf43d",
     "workbench.editor.enablePreview": false,
+    "workbench.editor.showTabs": true,
     "workbench.editor.pinnedTabSizing": "shrink",
     "workbench.settings.editor": "json",
     "workbench.iconTheme": "vscode-icons",
-    "workbench.colorTheme": "Dracula",
     "workbench.startupEditor": "none",
+    "workbench.editor.centeredLayoutAutoResize": true,
+    "workbench.list.automaticKeyboardNavigation": false,
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter.notebook.ipynb"
     },
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#00000077",
+        "editor.lineHighlightBackground": "#00000033",
+        "editor.lineHighlightBorder": "#aaaaaa33",
+        "editor.selectionBackground": "#222",
+    },
     "editor.rename.enablePreview": false,
     "editor.fontSize": 17,
+    "editor.fontFamily": "'Droid Sans Mono'",
     "editor.fontLigatures": true,
     "editor.lineHeight": 22,
     "editor.wordWrap": "wordWrapColumn",
@@ -55,6 +64,8 @@
     "terminal.integrated.fontSize": 12,
     "terminal.integrated.enableShellIntegration": true,
     "vsicons.dontShowNewVersionMessage": true,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "diffEditor.renderSideBySide": true,
     "cSpell.userWords": [
         "grpc",
         "Debugf",
@@ -203,5 +214,6 @@
             "emojiDecoratorsEnabled": false
         },
         "scminput": true
-    }
+    },
+    "workbench.colorTheme": "One Monokai"
 }
