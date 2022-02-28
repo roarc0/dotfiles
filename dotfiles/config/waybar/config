@@ -114,7 +114,7 @@
         "format": "{}",
         //"return-type": "json",
         "interval": 5,
-        "exec": "~/.config/waybar/modules/net-speed.sh"
+        "exec": "~/env/bin/net-speed wlan0"
     },
     "custom/storage": {
         "format": "  {}",
