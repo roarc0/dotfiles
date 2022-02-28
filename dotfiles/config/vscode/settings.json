@@ -29,12 +29,14 @@
     "editor.fontFamily": "'Droid Sans Mono'",
     "editor.fontLigatures": true,
     "editor.lineHeight": 22,
-    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 80,
+    "editor.wrappingStrategy": "advanced",
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
     "editor.formatOnType": false,
     "editor.tabSize": 2,
-    "editor.scrollBeyondLastLine": true,
+    "editor.scrollBeyondLastLine": false,
     "editor.cursorBlinking": "phase",
     "editor.linkedEditing": true,
     "editor.suggestSelection": "first",
@@ -55,6 +57,10 @@
         "**/.git/objects/**": true,
         "**/.git/subtree-cache/**": true,
         "**/node_modules/*/**": true
+    },
+    "files.associations": {
+        "*.js": "javascriptreact",
+        "*.ts": "typescriptreact"
     },
     "explorer.autoReveal": true,
     "explorer.confirmDragAndDrop": false,
@@ -139,7 +145,7 @@
     "html.format.endWithNewline": false,
     "css.lint.important": "warning",
     "[css]": {
-        "editor.suggest.insertMode": "replace"
+        // "editor.suggest.insertMode": "replace"
     },
     "stylelint.enable": true,
     "scss.lint.important": "warning",
