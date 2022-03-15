@@ -6,7 +6,7 @@ import os
 
 wallpath = os.getenv("HOME") + "/pictures/*.*"
 if len(sys.argv[1:]) != 0:
-    wallpath=sys.argv[1]
+    wallpath = sys.argv[1]
 
 walls = glob.glob(wallpath)
 

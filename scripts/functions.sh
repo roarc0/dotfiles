@@ -2,13 +2,11 @@ INDENT="%1s"
 GOOD=$(printf '\033[32;01m')
 WARN=$(printf '\033[33;01m')
 BAD=$(printf '\033[31;01m')
-HILITE=$(printf '\033[36;01m')
-BRACKET=$(printf '\033[34;01m')
 NORMAL=$(printf '\033[0m')
 
 ask() {
   while true; do
-    read "$1? (y/n) " yn
+    read -r "$1? (y/n) " yn
     case $yn in
     [Yy]*)
       return 0
@@ -42,7 +40,7 @@ eerror() {
 run_as_root() {
   if [ $EUID -ne 0 ]; then
     if [ -t 1 ]; then
-      sudo "$0" "$@"
+      sudo "$0" "$*"
     fi
     exit
   fi

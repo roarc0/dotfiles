@@ -1,7 +1,7 @@
 #!/bin/sh
 einfo "downloading PKGBUILD"
 #curl -o $1/PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=$1 &>/dev/null
-curl -o pkg.tar.gz https://aur.archlinux.org/cgit/aur.git/snapshot/$1.tar.gz &>/dev/null
+curl -o pkg.tar.gz https://aur.archlinux.org/cgit/aur.git/snapshot/"$1".tar.gz &>/dev/null
 tar -xvf pkg.tar.gz
 rm pkg.tar.gz
 echo "execute: makepkg PKGBUILD --skippgpcheck --install --needed"

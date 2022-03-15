@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-. $ENV_HOME/scripts/functions.sh
+. "$ENV_HOME"/scripts/functions.sh
 
 version="0.4.0"
 
@@ -34,14 +34,14 @@ update() {
 opt_reset() {
   param=${*//\'/}
   if [ -d "$param/.git" ]; then
-    URL=$(cat $param/.git/config | grep "url = " | awk '{print $3}')
-    echo $URL
+    URL=$(cat "$param"/.git/config | grep "url = " | awk '{print $3}')
+    echo "$URL"
   fi
 
   ask "Are you sure you want to delete and reset repo \"$param\" "
   if [ $? == 1 ]; then
-    rm -rf $param
-    git clone --depth 1 $URL
+    rm -rf "$param"
+    git clone --depth 1 "$URL"
   fi
 }
 
@@ -58,7 +58,7 @@ opt_update() {
     exit 1
   fi
 
-  cd $param
+  cd "$param" || exit
   echoc 31 "Directories found: "
   ls -d */
   echoc 31 "\nUpdating...\n"
@@ -68,15 +68,15 @@ opt_update() {
     if [[ "${dir}" != "linux/" ]]; then
       echoc 32 "--------------------------------"
       echoc 32 ">> $dir"
-      cd $dir
+      cd "$dir" || exit
       if [ -d "src" ]; then
-        cd "src"
+        cd "src" || exit
         update
       fi
       update
     fi
   done
-  cd - >/dev/null
+  cd - >/dev/null || exit
 }
 
 reset_flag=no
@@ -87,7 +87,7 @@ if ! options=$(getopt -o r:hc: -l reset:,help,clean: -- "$@"); then
   exit 1
 fi
 
-set -- $options
+set -- "$options"
 
 while [ $# -gt 0 ]; do
   case $1 in
@@ -116,9 +116,9 @@ done
 echoc 31 "System src updater $version... by roarc (alessandro.rosetti@gmail.com)"
 
 if [ $reset_flag == yes ]; then
-  opt_reset $reset_opt
+  opt_reset "$reset_opt"
 elif [ $clean_flag == yes ]; then
-  opt_clean $clean_opt
+  opt_clean "$clean_opt"
 else
-  opt_update $1
+  opt_update "$1"
 fi

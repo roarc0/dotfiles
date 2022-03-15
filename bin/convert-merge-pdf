@@ -2,4 +2,4 @@
 
 OUTPUT=$1
 shift
-gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=$OUTPUT -dBATCH $*
+gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE="$OUTPUT" -dBATCH "$*"

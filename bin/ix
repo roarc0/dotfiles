@@ -11,7 +11,7 @@ ix() {
             return
             ;;
         d)
-            $echo curl $opts -X DELETE ix.io/$OPTARG
+            $echo curl $opts -X DELETE ix.io/"$OPTARG"
             return
             ;;
         i)
@@ -27,12 +27,12 @@ ix() {
         local filename="$1"
         shift
         [ "$filename" ] && {
-            curl $opts -F f:1=@"$filename" "$*" ix.io/$id
+            curl "$opts" -F f:1=@"$filename" "$*" ix.io/"$id"
             return
         }
         echo "^C to cancel, ^D to send."
     }
-    curl $opts -F f:1='<-' "$*" ix.io/$id
+    curl "$opts" -F f:1='<-' "$*" ix.io/"$id"
 }
 
-ix $*
+ix "$@"

@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 TARGET_FILE="$1"
 shift
-COMMAND="$@"
+COMMAND="$*"
 
-while true ;do
+while true; do
   echo "monitoring    : \"$TARGET_FILE\""
   echo "on change run : \"$COMMAND\""
-  eval $COMMAND
+  eval "$COMMAND"
   inotifywait -q --recursive \
     --event modify,move,create,delete \
-    $TARGET_FILE
+    "$TARGET_FILE"
 done

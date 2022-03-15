@@ -1,5 +1,6 @@
-#!/bin/sh
-. $ENV_HOME/scripts/functions.sh
+#!/usr/bin/env bash
+
+. "$ENV_HOME"/scripts/functions.sh
 run_as_root
 
 DEV_LVM="/dev/sdc2"

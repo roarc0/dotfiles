@@ -10,4 +10,3 @@ else
         ffmpeg </dev/null -i "$a" -qscale:a 0 "${a[@]/%flac/mp3}"
     done
 fi
-

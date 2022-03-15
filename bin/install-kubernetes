@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 if command -v minikube &>/dev/null; then
- minikube version
+  minikube version
 fi
 MINIKUBE="$HOME/.local/bin/minikube"
-curl --progress-bar -L https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -o $MINIKUBE
-chmod +x $MINIKUBE
+curl --progress-bar -L https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -o "$MINIKUBE"
+chmod +x "$MINIKUBE"
 minikube version
 
 if command -v kubectl &>/dev/null; then
- kubectl version
+  kubectl version
 fi
 KUBECTL="$HOME/.local/bin/kubectl"
-curl --progress-bar -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o $KUBECTL
-chmod +x $KUBECTL
+curl --progress-bar -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o "$KUBECTL"
+chmod +x "$KUBECTL"
 kubectl version

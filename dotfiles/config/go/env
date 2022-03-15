@@ -1,2 +1,3 @@
 GOBIN="/home/$USER/.local/go/bin"
 GOPATH="/home/$USER/.local/go"
+GOROOT="/home/$USER/.local/goroot"

@@ -1,8 +1,6 @@
 #!/bin/bash
 shopt -s globstar nullglob dotglob
-for f in **/*.svg ; do
+for f in **/*.svg; do
   echo -e "$f => ${f%.*}.pdf \n"
-  inkscape -D -z --file=$f --export-pdf=${f%.*}.pdf #--export-latex
+  inkscape -D -z --file="$f" --export-pdf="${f%.*}".pdf #--export-latex
 done
-
-

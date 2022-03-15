@@ -2,5 +2,5 @@
 shopt -s globstar nullglob dotglob
 for f in **/*.svg; do
   echo -e "$f => ${f%.*}.png \n"
-  convert -background none $f ${f%.*}.png
+  convert -background none "$f" "${f%.*}".png
 done

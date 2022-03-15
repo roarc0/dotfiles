@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo pacman -S --asdeps $@
+sudo pacman -S --asdeps "$*"

@@ -44,6 +44,11 @@
     "editor.unicodeHighlight.invisibleCharacters": true,
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.shellcheck": true,
+        "source.fixAll.eslint": true,
+        "source.addMissingImports": true
+    },
     "files.autoSave": "onFocusChange",
     "files.insertFinalNewline": false,
     "files.trimTrailingWhitespace": true,
@@ -173,10 +178,6 @@
     "[typescriptreact]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true,
-        "source.addMissingImports": true
-    },
     "eslint.format.enable": true,
     "eslint.alwaysShowStatus": true,
     "eslint.useESLintClass": true,
@@ -230,5 +231,11 @@
     "cSpell.minWordLength": 4,
     "cSpell.allowCompoundWords": true,
     "cSpell.diagnosticLevel": "Information",
-    "workbench.editor.untitled.hint": "hidden"
+    "workbench.editor.untitled.hint": "hidden",
+    "shellcheck.run": "onType",
+    "shellcheck.exclude": [
+        "2148",
+        "1091",
+        "1090"
+    ]
 }

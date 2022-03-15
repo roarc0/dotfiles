@@ -3,7 +3,7 @@
 
 actions="digest"
 if [ $# -gt 0 ]; then
-	actions=$@
+	actions=$*
 fi
 
 if [ ! -f profiles/repo_name ]; then
@@ -15,5 +15,5 @@ repo_name="$(cat profiles/repo_name)"
 einfo "Running recursively \"ebuild * $actions\" on ${repo_name} overlay"
 for e in */*/*.ebuild; do
 	einfo "$e"
-	ebuild $e $actions >/dev/null
+	ebuild "$e" "$actions" >/dev/null
 done

@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo pacman -S --asexplicit $@
+sudo pacman -S --asexplicit "$*"
