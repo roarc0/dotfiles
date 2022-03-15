@@ -10,8 +10,7 @@
         "sway/window",
         "sway/mode"
     ],
-    "modules-center": [
-    ],
+    "modules-center": [],
     "modules-right": [
         "custom/net-speed",
         "network",
@@ -30,7 +29,17 @@
     ],
     "river/tags": {
         "num-tags": 9,
-        "tag-labels": [ "一", "二", "三", "四", "五", "六", "七", "八", "九" ]
+        "tag-labels": [
+            "一",
+            "二",
+            "三",
+            "四",
+            "五",
+            "六",
+            "七",
+            "八",
+            "九"
+        ]
     },
     "sway/language": {
         "format": " {}",
@@ -83,7 +92,11 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": [
+                "",
+                "",
+                ""
+            ]
         },
         "on-click": "pavucontrol"
     },
@@ -114,7 +127,7 @@
         "format": "{}",
         //"return-type": "json",
         "interval": 5,
-        "exec": "~/env/bin/net-speed wlan0"
+        "exec": "$HOME/env/bin/net-speed wlan0"
     },
     "custom/storage": {
         "format": "  {}",
@@ -122,7 +135,7 @@
         "format-alt-click": "click-right",
         "return-type": "json",
         "interval": 60,
-        "exec": "~/.config/waybar/modules/storage.sh"
+        "exec": "$HOME/.config/waybar/modules/storage.sh"
     },
     "cpu": {
         "format": "  {usage:3}%",
@@ -155,7 +168,13 @@
         "format-alt": "{time} {icon}",
         //"format-good": "",
         //"format-full": "",
-        "format-icons": ["", "", "", "", ""],
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
         "interval": 30,
         "tooltip": false
     },

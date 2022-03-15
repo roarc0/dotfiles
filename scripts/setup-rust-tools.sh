@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 cargo install tokei
 #libfontconfig-dev libxkbcommon-dev
 cargo install alacritty

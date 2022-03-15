@@ -1,2 +1,2 @@
-GOBIN=/home/roarc/.local/go/bin
-GOPATH=/home/roarc/.local/go
+GOBIN="/home/$USER/.local/go/bin"
+GOPATH="/home/$USER/.local/go"

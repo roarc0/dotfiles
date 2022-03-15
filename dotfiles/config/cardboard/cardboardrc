@@ -5,11 +5,11 @@ mod=alt
 cutter config mouse_mod $mod
 
 cutter bind $mod+shift+e quit
-cutter bind $mod+shift+r exec $HOME/.config/cardboard/cardboardrc
+cutter bind $mod+shift+r exec "$HOME/.config/cardboard/cardboardrc"
 cutter bind $mod+return exec foot
 cutter bind $mod+space exec ulauncher
-cutter bind $mod+s exec $HOME/env/bin/screenshot
-cutter bind $mod+shift+s exec $HOME/env/bin/screenshot_sel
+cutter bind $mod+s exec "$HOME/env/bin/screenshot"
+cutter bind $mod+shift+s exec "$HOME/env/bin/screenshot_sel"
 
 cutter bind $mod+left focus left
 cutter bind $mod+right focus right
@@ -25,8 +25,8 @@ cutter bind $mod+w close
 cutter bind $mod+tab focus cycle
 
 for i in $(seq 1 6); do
-	cutter bind $mod+$i workspace switch $(( i - 1 ))
-	cutter bind $mod+ctrl+$i workspace move $(( i - 1 ))
+	cutter bind $mod+"$i" workspace switch $((i - 1))
+	cutter bind $mod+ctrl+"$i" workspace move $((i - 1))
 done
 
 cutter bind $mod+shift+space toggle_floating

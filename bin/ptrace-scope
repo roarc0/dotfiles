@@ -1,4 +1,4 @@
 #!/usr/bin/env
-
+echo "setting ptrace scope"
 echo 0|sudo tee /proc/sys/kernel/yama/ptrace_scope
 

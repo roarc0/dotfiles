@@ -10,20 +10,20 @@ IFS=$'\n' && options=($(tmux list-sessions -F "#S" 2>/dev/null) "New Session" "z
 echo "Available sessions"
 echo "------------------"
 echo " "
-select opt in "${options[@]}"
-do
+select opt in "${options[@]}"; do
     case $opt in
-        "New Session")
-            read -rp "Enter new session name: " SESSION_NAME
-            tmux new -s "$SESSION_NAME"
-            break
-            ;;
-        "zsh")
-            zsh --login
-            break;;
-        *)
-            tmux attach-session -t "$opt"
-            break
-            ;;
+    "New Session")
+        read -rp "Enter new session name: " SESSION_NAME
+        tmux new -s "$SESSION_NAME"
+        break
+        ;;
+    "zsh")
+        zsh --login
+        break
+        ;;
+    *)
+        tmux attach-session -t "$opt"
+        break
+        ;;
     esac
 done

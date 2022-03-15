@@ -1,11 +1,11 @@
 #!/bin/sh
 ZMB=$(ps -aux | awk '{ print $8 " " $2 }' | grep -w Z | awk '{ print $2 }')
 
-if [ -z ${ZMB} ]; then
+if [ -z "${ZMB}" ]; then
 	echo "no zombies!"
 else
 	echo "zombies: \"$ZMB\""
 	for zombie in $ZMB; do
-		kill -9 $zombie
+		kill -9 "$zombie"
 	done
 fi

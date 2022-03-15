@@ -1,2 +1,2 @@
-#!/usr/bin/env bash
-rsync -avh --delete /media/$USER/NIKON\ D3500/DCIM/ $HOME/sync/photo/sync
+#!/bin/sh
+rsync -avh --delete /media/"$USER"/NIKON\ D3500/DCIM/ "$HOME"/sync/photo/sync

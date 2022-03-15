@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 echo "merged branches to be removed : "
-git branch --merged | egrep -v "(^\*|master|staging)"
+git branch --merged | grep -E -v "(^\*|main|master)"
 
 read -p "remove branches ? [y/N] " -r
-if [[ $REPLY =~ ^[Yy]$ ]];then
-  git branch --merged | egrep -v "(^\*|master|staging)" | xargs git branch -d
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  git branch --merged | grep -E -v "(^\*|main|master)" | xargs git branch -d
 fi

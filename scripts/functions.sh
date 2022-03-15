@@ -65,13 +65,13 @@ has_command() {
 }
 
 install_link() {
-  if [ -h $2 ]; then
+  if [ -h "$2" ]; then
     echo "unlink  $2"
     unlink "$2" >/dev/null
-  elif [ -e $2 ]; then
+  elif [ -e "$2" ]; then
     echo "backup $2 => $2.bak"
     mv "$2" "$2.bak"
   fi
   echo "link $1 => $2"
-  ln -sf $1 $2
+  ln -sf "$1" "$2"
 }

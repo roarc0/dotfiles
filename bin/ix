@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 ix() {
     local opts
@@ -19,6 +19,7 @@ ix() {
             local id="$OPTARG"
             ;;
         n) opts="$opts -F read:1=$OPTARG" ;;
+        *) ;;
         esac
     done
     shift $(($OPTIND - 1))
@@ -26,12 +27,12 @@ ix() {
         local filename="$1"
         shift
         [ "$filename" ] && {
-            curl $opts -F f:1=@"$filename" $* ix.io/$id
+            curl $opts -F f:1=@"$filename" "$*" ix.io/$id
             return
         }
         echo "^C to cancel, ^D to send."
     }
-    curl $opts -F f:1='<-' $* ix.io/$id
+    curl $opts -F f:1='<-' "$*" ix.io/$id
 }
 
 ix $*

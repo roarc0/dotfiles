@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091
+
 . env.sh
 set -e
 
@@ -27,9 +29,9 @@ install_link "$ENV_HOME/dotfiles/config/user-dirs.locale" "$HOME/.config/user-di
 install_link "$ENV_HOME/dotfiles/config/vscode/settings.json" "$HOME/.config/Code/User/settings.json" || true
 
 DOTFILES="$ENV_HOME/dotfiles"
-for SRC in $DOTFILES/config/*; do
-  DEST="$HOME/.config/$(basename $SRC)"
-  install_link $SRC $DEST
+for SRC in "$DOTFILES"/config/*; do
+  DEST="$HOME/.config/$(basename "$SRC")"
+  install_link "$SRC" "$DEST"
 done
 
 . scripts/setup-oh-my-zsh.sh

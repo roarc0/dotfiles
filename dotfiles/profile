@@ -1,27 +1,36 @@
+# shellcheck disable=SC1091,SC2148
+
 export XKB_DEFAULT_LAYOUT=us
 export XKB_DEFAULT_VARIANT=altgr-intl
 #export XKB_DEFAULT_OPTIONS=
 
 export ANDROID_HOME="$HOME/.local/android/sdk"
+
 export JAVA_HOME="/usr/lib/jvm/default-java/"
-export GOPATH="$HOME/.local/go"
+export _JAVA_AWT_WM_NONREPARENTING=1
 
-export CARGOPATH="$HOME/.cargo"
-if [ -f "$HOME/.cargo/env" ] ; then
-    source "$HOME/.cargo/env"
+export CARGOPATH="$HOME/local/cargo"
+if [ -f "$CARGOPATH/env" ]; then
+    source "$CARGOPATH/env"
 fi
-
-if [ -d "$HOME/.local/bin" ] ; then
-    export PATH="$HOME/.local/bin:$PATH"
-fi
-export PATH="${GOPATH}/bin:$PATH"
 export PATH="${CARGOPATH}/bin:$PATH"
+
+export GOPATH="$HOME/.local/go"
+export PATH="${GOPATH}/bin:$PATH"
+
+export GOROOT="$HOME/.local/goroot"
+export PATH="${GOROOT}/bin:$PATH"
+
 export PATH="/snap/bin:$PATH"
 
-export _JAVA_AWT_WM_NONREPARENTING=1
+if [ -d "$HOME/.local/bin" ]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
 export GIT_TERMINAL_PROMPT=1
 export EDITOR=nvim
 export VISUAL=$EDITOR
 export SYSTEMD_EDITOR=$EDITOR
 export MERGETOOL=meld
+
 unset SSH_ASKPASS

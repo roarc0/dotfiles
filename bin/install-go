@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -e
+
+VERSION=${1:-1.17.8}
+PLATFORM=${2:-linux-amd64}
+
+if [ -z "$GOROOT" ] || [ -z "$GOPATH" ]; then
+    echo "Please set GOROOT and GOPATH in your environment."
+    exit 1
+fi
+
+TMP_DIR=$(mktemp -d)
+trap 'rm -rf -- "$TMP_DIR"' EXIT
+
+GO_TAR="$TMP_DIR/go.tar.gz"
+PACKAGE_NAME="go$VERSION.$PLATFORM.tar.gz"
+echo "Downloading $PACKAGE_NAME ..."
+curl -# -f -o "$GO_TAR" https://storage.googleapis.com/golang/$PACKAGE_NAME
+if [ $? -ne 0 ]; then
+    echo "Download failed!"
+    exit 1
+fi
+
+if [ -d "$GOROOT" ]; then
+    echo "The Go install directory ($GOROOT) already exists."
+    read -p "Shall I delete it? [y/n] " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+    fi
+    rm -rf "$GOROOT"
+fi
+
+mkdir -p "${GOPATH}"
+mkdir -p "$GOROOT"
+tar -C "$GOROOT" --strip-components=1 -xzf "$GO_TAR"
+
+echo -e "\nGo $VERSION was installed into $GOROOT."

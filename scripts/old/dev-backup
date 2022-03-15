@@ -1,7 +1,7 @@
 #!/bin/sh
 
 BLK="1048576"
-date=`date +"%d-%m-%y"`
+date=$(date +"%d-%m-%y")
 FNAME="backup-$date.gz.tmp"
 FNAME2="backup-$date.gz"
 
@@ -10,7 +10,7 @@ lsblk
 
 #-b) backup
 echo -e "\nThis command will create a gzipped backup image of the desired disk device"
-read  -p "Select the correct device, for example : \"sdb\" > " DEVICE
+read -p "Select the correct device, for example : \"sdb\" > " DEVICE
 echo -e "\n"
 
 if [ -ne /dev/$DEVICE ]; then
@@ -22,14 +22,14 @@ MSG="Running backup command: /dev/$DEVICE to $FNAME, please wait..."
 
 if which pv >/dev/null; then
     if which dialog >/dev/null; then
-        (pv -B $BLK -n /dev/$DEVICE | gzip > $FNAME) 2>&1 | dialog --gauge "$MSG" 10 70 0
+        (pv -B $BLK -n /dev/$DEVICE | gzip >$FNAME) 2>&1 | dialog --gauge "$MSG" 10 70 0
     else
         echo "$MSG"
-        (pv -B $BLK -n /dev/$DEVICE | gzip > $FNAME)
+        (pv -B $BLK -n /dev/$DEVICE | gzip >$FNAME)
     fi
 else
     echo "$MSG"
-    sudo dd if=/dev/$DEVICE bs=$BLK | gzip > $FNAME
+    sudo dd if=/dev/$DEVICE bs=$BLK | gzip >$FNAME
 fi
 
 mv $FNAME $FNAME2

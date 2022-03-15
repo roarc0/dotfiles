@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
-. ${ENV_HOME}/.env
+#!/bin/sh
+. "${ENV_HOME}"/.env
 
 URL="https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage"
 TIMEOUT="10"
-TEXT="$@"
+TEXT="$*"
 
-wget -q -T $TIMEOUT -O /dev/null --post-data="chat_id=${TELEGRAM_CHATID}&disable_web_page_preview=1&text=$TEXT" $URL >/dev/null 2>&1 &
+wget -q -T $TIMEOUT -O /dev/null --post-data="chat_id=${TELEGRAM_CHATID}&disable_web_page_preview=1&text=$TEXT" "$URL" >/dev/null 2>&1 &

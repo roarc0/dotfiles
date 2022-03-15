@@ -3,12 +3,12 @@
 rename .MP3 .mp3 *.MP3
 rename .Mp3 .mp3 *.Mp3
 
-NAME=`echo "$1" | cut -d'.' -f1`
-IMG_EXTENSION=`echo "$1" | cut -d'.' -f2`
+NAME=$(echo "$1" | cut -d'.' -f1)
+IMG_EXTENSION=$(echo "$1" | cut -d'.' -f2)
 IMG=""
 
-if [ $IMG_EXTENSION = "bmp" ] ; then
-    NAME=`echo "$1" | cut -d'.' -f1`
+if [ "$IMG_EXTENSION" = "bmp" ]; then
+    NAME=$(echo "$1" | cut -d'.' -f1)
     convert "$NAME.bmp" "$NAME.jpg"
     rm "$NAME.bmp"
     IMG="$NAME.jpg"
@@ -20,9 +20,9 @@ SAVEIFS=$IFS
 IFS=$(echo -en "\b")
 echo $IFS
 FILES=*.mp3
-for f in $FILES ;do
-    eyeD3  --remove-images "$f"
-    eyeD3  --add-image=$IMG:FRONT_COVER "$f"
+for f in $FILES; do
+    eyeD3 --remove-images "$f"
+    eyeD3 --add-image=$IMG:FRONT_COVER "$f"
 done
 IFS=$SAVEIFS
 

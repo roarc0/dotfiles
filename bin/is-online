@@ -3,10 +3,10 @@
 check_online() {
   host="${1:-8.8.8.8}"
   while :; do
-    ping -n -c 1 -w 5 ${host} >/dev/null 2>&1 && return 0
+    ping -n -c 1 -w 5 "${host}" >/dev/null 2>&1 && return 0
     echo "nope $1 offline!"
     sleep 3
   done
 }
 
-check_online $1
+check_online "$1"

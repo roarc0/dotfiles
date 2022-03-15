@@ -12,6 +12,7 @@
     "workbench.editor.pinnedTabSizing": "shrink",
     "workbench.settings.editor": "json",
     "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "One Monokai",
     "workbench.startupEditor": "none",
     "workbench.editor.centeredLayoutAutoResize": true,
     "workbench.list.automaticKeyboardNavigation": false,
@@ -73,8 +74,9 @@
     "diffEditor.ignoreTrimWhitespace": true,
     "diffEditor.renderSideBySide": true,
     "cSpell.userWords": [
-        "grpc",
         "Debugf",
+        "fsnotify",
+        "grpc",
         "Infof",
         "Tracef",
         "Warnf"
@@ -215,11 +217,18 @@
     "redhat.telemetry.enabled": false,
     "emojisense.languages": {
         "markdown": true,
+        "json": true,
         "plaintext": {
             "markupCompletionsEnabled": false,
             "emojiDecoratorsEnabled": false
         },
         "scminput": true
     },
-    "workbench.colorTheme": "One Monokai"
+    "cSpell.language": "en-GB",
+    "cSpell.enabled": true,
+    "cSpell.checkLimit": 10000,
+    "cSpell.minWordLength": 4,
+    "cSpell.allowCompoundWords": true,
+    "cSpell.diagnosticLevel": "Information",
+    "workbench.editor.untitled.hint": "hidden"
 }

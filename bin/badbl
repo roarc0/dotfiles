@@ -1,22 +1,21 @@
 #!/bin/sh
 
-DEV=$(basename $1)
-BLOCKS=$(cat /proc/partitions| grep $DEV| awk 'NR==1{ print $3 } ')
+DEV=$(basename "$1")
+BLOCKS=$(cat /proc/partitions | grep "$DEV" | awk 'NR==1{ print $3 } ')
 SIZE=1024
 NB=4
-BSIZE=$(( SIZE * NB ))
+BSIZE=$((SIZE * NB))
 
 echo "total 1k blocks: $BLOCKS"
-BLOCKS=$(( BLOCKS / NB - 1 ))
+BLOCKS=$((BLOCKS / NB - 1))
 echo "total ${NB}k blocks: $BLOCKS"
 
 START=0
-if [ -n $2 ]; then
-    START=$(echo "$BLOCKS * $2"| bc)
-    START=$(printf "%.0f" $START )
+if [ -n "$2" ]; then
+    START=$(echo "$BLOCKS * $2" | bc)
+    START=$(printf "%.0f" "$START")
 fi
 echo "start block: $START"
 
-sudo umount ${1}1 || true
-sudo badblocks -nsv -b $BSIZE  -p 1 -c 32768 -o badblocks-$DEV.txt $1 $BLOCKS $START
-
+sudo umount "${1}" || true
+sudo badblocks -nsv -b $BSIZE -p 1 -c 32768 -o "badblocks-$DEV.txt" "$1" $BLOCKS "$START"

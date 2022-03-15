@@ -51,7 +51,7 @@ opt_clean() {
 
 opt_update() {
   param=${*//\'/}
-  if [ -d $param ]; then
+  if [ -d "$param" ]; then
     echoc 31 "updating $param\n"
   else
     echoc 31 "Directory \"$param\" not found"

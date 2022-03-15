@@ -4,7 +4,7 @@
 
 REMOTE="transmission-remote -n ${TRANSMISSION_AUTH}"
 
-INCLMOV="~/inc.txt"
+INCLMOV="$HOME/inc.txt"
 MAXACTIVE="8"
 
 substr() {

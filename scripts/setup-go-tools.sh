@@ -1,4 +1,8 @@
+#!/usr/bin/env sh
+
 go install github.com/gohugoio/hugo@latest
+
+go install github.com/knipferrc/branch-cleaner@latest
 
 go install github.com/square/certstrap@latest
 
@@ -13,7 +17,7 @@ go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 go install github.com/grpc-ecosystem/grpc-health-probe@latest
 go install github.com/swaggo/swag/cmd/swag@latest
 
-go install github.com/bykof/go-plantuml/cmd/go-plantuml@latest
+go install github.com/bykof/go-plantuml@latest
 go install github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
 
 #vscode

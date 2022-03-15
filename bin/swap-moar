@@ -7,7 +7,7 @@ if [ $# -eq 1 ]; then
 	SIZE="$1G"
 fi
 
-fallocate -l $SIZE $SWAP_FILE
+fallocate -l "$SIZE" $SWAP_FILE
 chmod 600 $SWAP_FILE
 mkswap $SWAP_FILE # btrfs fails
 swapon $SWAP_FILE
