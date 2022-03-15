@@ -9,10 +9,7 @@ export ANDROID_HOME="$HOME/.local/android/sdk"
 export JAVA_HOME="/usr/lib/jvm/default-java/"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-export CARGOPATH="$HOME/local/cargo"
-if [ -f "$CARGOPATH/env" ]; then
-    source "$CARGOPATH/env"
-fi
+export CARGOPATH="$HOME/.local/cargo"
 export PATH="${CARGOPATH}/bin:$PATH"
 
 export GOPATH="$HOME/.local/go"

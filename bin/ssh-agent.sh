@@ -1,4 +1,5 @@
 #!/bin/sh
+
 SSH_AGENT_FILE=~/.ssh/agent.env
 if [ -f ${SSH_AGENT_FILE} ]; then
     . ${SSH_AGENT_FILE} >/dev/null
