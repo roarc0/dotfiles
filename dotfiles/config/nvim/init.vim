@@ -277,6 +277,7 @@ Plug 'plasticboy/vim-markdown'
 "Plug 'thinca/vim-quickrun'
 "Plug 'lervag/vimtex'
 "Plug 'godlygeek/tabular'
+Plug 'itspriddle/vim-shellcheck'
 
 call plug#end()
 
