@@ -103,7 +103,6 @@
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
     "cmake.configureOnOpen": false,
-    "go.goroot": "/snap/go/current",
     "go.inferGopath": false,
     "go.useLanguageServer": true,
     "go.gocodeAutoBuild": true,
