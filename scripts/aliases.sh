@@ -20,6 +20,8 @@ alias egrep='egrep --color=auto'
 alias du='du -kh'
 alias df='df -kTh'
 
+alias gedit='gnome-text-editor'
+
 # job control
 alias mtop="ps --no-header -eo pmem,size,vsize,comm | sort -nr | sed 10q"
 alias ctop="ps --no-header -eo pcpu,comm | sort -nr | sed 10q"

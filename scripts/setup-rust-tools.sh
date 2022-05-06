@@ -5,3 +5,4 @@ cargo install tokei
 cargo install alacritty
 cargo install bat
 cargo install exa
+cargo install deno --locked

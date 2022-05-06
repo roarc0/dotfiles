@@ -17,8 +17,10 @@ go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 go install github.com/grpc-ecosystem/grpc-health-probe@latest
 go install github.com/swaggo/swag/cmd/swag@latest
 
+go install github.com/golang/mock/mockgen@latest
 go install github.com/bykof/go-plantuml@latest
 go install github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
+go install github.com/hherman1/gq/cmd/gq@latest
 
 #vscode
 go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
