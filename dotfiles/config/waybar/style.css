@@ -150,11 +150,9 @@ window#waybar.hidden {
 }
 
 #keyboard-state {
-    background: #97e1ad;
-    color: #000000;
-    padding: 0 0px;
-    margin: 0 5px;
-    min-width: 16px;
+    padding: 0 3px;
+    margin: 0 3px;
+    min-width: 18px;
 }
 
 #keyboard-state > label {
@@ -162,12 +160,10 @@ window#waybar.hidden {
 }
 
 #keyboard-state > label.locked {
-    background: rgba(0, 0, 0, 0.2);
 }
 
 #tray {
     margin: 4px 16px 4px 4px;
-    border-radius: 4px;
     background-color: @base02;
 }
 
