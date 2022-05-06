@@ -79,6 +79,7 @@
     "diffEditor.ignoreTrimWhitespace": true,
     "diffEditor.renderSideBySide": true,
     "cSpell.userWords": [
+        "bgcolor",
         "Debugf",
         "fsnotify",
         "grpc",
@@ -236,5 +237,7 @@
         "2148",
         "1091",
         "1090"
-    ]
+    ],
+    "deno.enable": false,
+    "editor.inlineSuggest.enabled": true
 }
