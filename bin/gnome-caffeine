@@ -12,4 +12,5 @@ else
 fi
 
 notify-send "Caffeine: setting idle time to ${new} (was ${cur})"
+echo ${new}
 gsettings set org.gnome.desktop.session idle-delay "$new"
