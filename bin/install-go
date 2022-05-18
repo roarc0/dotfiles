@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 set -e
 
-VERSION=${1:-1.17.8}
+VERSION=${1}
 PLATFORM=${2:-linux-amd64}
 
 if [ -z "$GOROOT" ] || [ -z "$GOPATH" ]; then
-    echo "Please set GOROOT and GOPATH in your environment."
+    echo "Please, set GOROOT and GOPATH in your environment."
+    exit 1
+fi
+
+if [ -z "$VERSION"]; then
+    echo "Please, specify the go version that you want to install as first argument."
     exit 1
 fi
 

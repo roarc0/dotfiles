@@ -2,10 +2,6 @@
 
 go install github.com/gohugoio/hugo@latest
 
-go install github.com/knipferrc/branch-cleaner@latest
-
-go install github.com/square/certstrap@latest
-
 #grpc
 go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
 go install github.com/yoheimuta/protolint/cmd/protolint@latest
@@ -17,10 +13,14 @@ go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 go install github.com/grpc-ecosystem/grpc-health-probe@latest
 go install github.com/swaggo/swag/cmd/swag@latest
 
+#dev
+go install github.com/knipferrc/branch-cleaner@latest
 go install github.com/golang/mock/mockgen@latest
 go install github.com/bykof/go-plantuml@latest
 go install github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
-go install github.com/hherman1/gq/cmd/gq@latest
+go install github.com/hherman1/gq@latest
+go install github.com/square/certstrap@latest
+go install github.com/open-policy-agent/opa@latest
 
 #vscode
 go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
