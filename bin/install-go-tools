@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+go install tailscale.com/cmd/tailscale@latest
+go install tailscale.com/cmd/tailscaled@latest
 
 go install github.com/gohugoio/hugo@latest
 
