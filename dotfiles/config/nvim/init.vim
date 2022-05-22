@@ -6,7 +6,7 @@ set ruler               " Show the line and column numbers of the cursor.
 set number              " Show the line numbers on the left side.
 set formatoptions+=o    " Continue comment marker in new lines.
 set textwidth=0         " Hard-wrap long lines as you type them.
-set expandtab           " Insert spaces when TAB is pressed.
+"set expandtab
 "set noexpandtab
 set smarttab
 set tabstop=4           " Render TABs using this many spaces.
@@ -25,7 +25,9 @@ if !&sidescrolloff
 endif
 set display+=lastline
 set nostartofline       " Do not jump to first character with page commands.
-set laststatus=2 " Always show status bar
+"set winbar=%f
+"set laststatus=3 " Always show status bar
+set statusline=%F%m%r%h%w%=\ [%Y]\ [%{&ff}]\ [%04l,%04v]\ [%p%%]\ [%L]
 set updatetime=500 " Let plugins show effects after 500ms, not 4s
 if has('mouse')
     set mouse=a
@@ -37,7 +39,7 @@ set history=100
 set autoread " Set to auto read when a file is changed from the outside
 set wildmenu " Turn on the WiLd menu
 set wildignore=*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-set cmdheight=2   " Height of the command bar
+set cmdheight=1   " Height of the command bar
 set hid           " A buffer becomes hidden when it is abandoned
 set mat=2         " How many tenths of a second to blink when matching brackets
 set noerrorbells " No annoying sound on errors
@@ -65,6 +67,25 @@ set foldmethod=indent
 set foldlevel=99
 set t_Co=256 "256 color term
 
+" show/hide statusline
+let s:hidden_all = 0
+function! ToggleHiddenAll()
+    if s:hidden_all  == 0
+        let s:hidden_all = 1
+        set noshowmode
+        set noruler
+        set laststatus=0
+        set noshowcmd
+    else
+        let s:hidden_all = 0
+        set showmode
+        set ruler
+        set laststatus=2
+        set showcmd
+    endif
+endfunction
+nnoremap <S-h> :call ToggleHiddenAll()<CR>
+
 " Reload config on savings
 autocmd! bufwritepost ~/.config/nvim/init.vim source ~/.config/nvim/init.vim
 
@@ -72,17 +93,6 @@ autocmd BufEnter *.tpp :setlocal filetype=cpp " Add cpp syntax for .tpp files
 autocmd FileType make set noexpandtab nosta
 autocmd FileType md set expandtab nosta
 
-"" Python configuration
-"au BufNewFile,BufRead *.py
-"\ set tabstop=4
-"\ set softtabstop=4
-"\ set shiftwidth=4
-"\ set textwidth=79
-"\ set expandtab
-"\ set autoindent
-"\ set fileformat=unix
-
-"" Web files configuration
 au BufNewFile,BufRead *.js, *.html, *.css
             \ set tabstop=2
             \ set softtabstop=2
@@ -92,8 +102,6 @@ let g:mapleader = ";"
 inoremap ;; <esc>
 nnoremap <leader>w :update<cr>
 
-" Cancel a search with esc
-"nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<CR>
 " Relative numbering
 function! NumberToggle()
     if(&relativenumber == 1)
@@ -106,20 +114,13 @@ endfunc
 " Toggle between normal and relative numbering.
 nnoremap <leader>r :call NumberToggle()<cr>
 
-" Ex command control
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
-
-" Easy window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-
-""" Terminal Mapping
 tnoremap <Esc> <C-\><C-n>
-
-" Remapping for switching windows when in terminal
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
@@ -201,9 +202,7 @@ nnoremap <C-q>j :Qj <CR>
 nnoremap <C-q>k :Qk <CR>
 nnoremap <C-q>l :Ql <CR>
 
-
 """"""""""" plug
-
 call plug#begin()
 
 " UI plugins
@@ -213,24 +212,19 @@ Plug 'blueshirts/darcula'
 Plug 'dracula/vim'
 Plug 'crusoexia/vim-monokai'
 Plug 'flazz/vim-colorschemes'
-Plug 'ryanoasis/vim-devicons'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-characterize'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'lilydjwg/colorizer'
-
-" File management
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 "Plug 'tpope/vim-fugitive' " git wrapper
 "Plug 'zenbro/mirror.vim'
-Plug 'mhinz/vim-startify'
+"Plug 'mhinz/vim-startify'
 "Plug 'dietsche/vim-lastplace'
 "Plug 'tpope/vim-eunuch'
 "Plug 'vim-scripts/quit-another-window'
 "Plug 'pbrisbin/vim-mkdir'
-
-" Vim motion and bindings
 "Plug 'ctrlpvim/ctrlp.vim' " fuzzy file,buff,ecc finder
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
@@ -244,33 +238,20 @@ Plug 'terryma/vim-smooth-scroll'
 "Plug 'powerman/vim-plugin-viewdoc'
 "Plug 'bkad/CamelCaseMotion'
 "Plug 'tmhedberg/SimpylFold'
-
-" Cliboard management
 "Plug 'vim-scripts/YankRing.vim'
-
-" Indenting and autocompletition
 Plug 'Shougo/deoplete.nvim' , { 'do': ':UpdateRemotePlugins' }
 "Plug 'zchee/deoplete-clang'
-
-"" Rust
-Plug 'sebastianmarkow/deoplete-rust'
-Plug 'rust-lang/rust.vim'
-
-"" Go
+"Plug 'sebastianmarkow/deoplete-rust'
+"Plug 'rust-lang/rust.vim'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
-"" Python
 "Plug 'zchee/deoplete-jedi'
 Plug 'vim-scripts/indentpython.vim'
-
-" Ctags and language plugins
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
 Plug 'szw/vim-tags'
 "Plug 'sheerun/vim-polyglot'
 "Plug 'ludovicchabant/vim-gutentags'
-
 Plug 'wvffle/vimterm'
 Plug 'Chiel92/vim-autoformat'
 Plug 'plasticboy/vim-markdown'
@@ -283,45 +264,21 @@ call plug#end()
 
 filetype plugin indent on
 syntax on
+
 set background=dark
-"colorscheme dracula
 colorscheme molokai
 "colorscheme monokai
 "colorscheme darcula
 "colorscheme badwolf
 
-""" air-line config
-let g:airline_powerline_fonts = 1
-let g:airline_theme='dracula'
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-"let g:airline_right_sep = "\uE0B6" " testing rounded separators (extra-powerline-symbols):
-let g:airline_skip_empty_sections = 1
+""" airline config
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep =  ""
-let g:airline#extensions#tabline#left_alt_sep =  ""
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_theme='dracula'
+let g:airline_powerline_fonts = 1
+
 let b:usemarks         = 1
 let b:cb_jump_on_close = 1
 
@@ -403,14 +360,7 @@ let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
 " go get -u github.com/nsf/gocode
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-
 let g:go_fmt_command = "goimports"
-
-
-let g:gonvim_draw_statusline = 0
-let g:gonvim_draw_split = 0
-let g:gonvim_draw_lint = 0
-
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
 	\ 'kinds'     : [
@@ -438,20 +388,15 @@ let g:tagbar_type_go = {
 	\ 'ctagsbin'  : 'gotags',
 	\ 'ctagsargs' : '-sort -silent'
 \ }
-" go language
 let s:tlist_def_go_settings = 'go;g:enum;s:struct;u:union;t:type;' .
                            \ 'v:variable;f:function'
 
-
-"
-""" Python
+""" python
 let g:python_recommended_style = 1
 let g:python3_host_prog  = '/usr/bin/python3'
-" Skip the check of neovim module
 let g:python3_host_skip_check = 1
 let g:formatter_yapf_style = 'pep8'
 
-"""
 "noremap <F3> :Autoformat<CR>
 "au BufWrite * :Autoformat
 nnoremap <silent> <leader>b :TagbarToggle<CR>
@@ -475,18 +420,13 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = ''
 
 """" utilsnips
-" Track the engine.
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<c-b>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit = "vertical"
+let g:UltiSnipsEditSplit = "vertical" " If you want :UltiSnipsEdit to split your window.
 
 """ multi selection
 let g:multi_cursor_use_default_mapping=1
-" Default mapping
 let g:multi_cursor_start_word_key      = '<C-n>'
 let g:multi_cursor_select_all_word_key = '<A-n>'
 let g:multi_cursor_start_key           = 'g<C-n>'
