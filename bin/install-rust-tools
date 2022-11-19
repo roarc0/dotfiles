@@ -6,3 +6,7 @@ cargo install alacritty
 cargo install bat
 cargo install exa
 cargo install deno --locked
+cargo install ytop
+cargo install bandwhich
+cargo install delta
+cargo install procs

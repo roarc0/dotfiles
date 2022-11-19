@@ -9,7 +9,7 @@ if [ -z "$GOROOT" ] || [ -z "$GOPATH" ]; then
     exit 1
 fi
 
-if [ -z "$VERSION"]; then
+if [ -z "$VERSION" ]; then
     echo "Please, specify the go version that you want to install as first argument."
     exit 1
 fi

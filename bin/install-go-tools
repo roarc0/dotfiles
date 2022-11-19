@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+
+go install github.com/docker/docker/client@latest
+
 go install tailscale.com/cmd/tailscale@latest
 go install tailscale.com/cmd/tailscaled@latest
 
