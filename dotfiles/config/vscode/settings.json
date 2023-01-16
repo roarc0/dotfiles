@@ -100,7 +100,7 @@
   "C_Cpp.autocompleteAddParentheses": true,
   "C_Cpp.clang_format_sortIncludes": true,
   "clangd.onConfigChanged": "restart",
-  "clangd.path": "/home/roarc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/15.0.3/clangd_15.0.3/bin/clangd",
+  "clangd.path": "/home/roarc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/15.0.6/clangd_15.0.6/bin/clangd",
   "clangd.restartAfterCrash": true,
   "clangd.checkUpdates": true,
   "[cpp]": {
@@ -213,9 +213,9 @@
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
   "vs-kubernetes": {
-    "vscode-kubernetes.helm-path.linux": "/home/roarc/.vs-kubernetes/tools/helm/linux-amd64/helm",
-    "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.vs-kubernetes/tools/kubectl/kubectl",
-    "vscode-kubernetes.minikube-path.linux": "/home/roarc/.vs-kubernetes/tools/minikube/linux-amd64/minikube"
+    "vscode-kubernetes.helm-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/helm/linux-amd64/helm",
+    "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/kubectl/kubectl",
+    "vscode-kubernetes.minikube-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube"
   },
   "redhat.telemetry.enabled": false,
   "emojisense.languages": {
