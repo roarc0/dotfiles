@@ -9,4 +9,4 @@ wget -q --show-progress -O "$DEST" $URL
 
 chmod +x "$DEST"
 ln -s "$DEST" "$HOME"/.local/bin >/dev/null 1>&2
-docker-compose -v
+docker compose version

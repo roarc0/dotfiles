@@ -28,6 +28,7 @@ go install github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
 go install github.com/hherman1/gq@latest
 go install github.com/square/certstrap@latest
 go install github.com/open-policy-agent/opa@latest
+go install github.com/minio/mockgen@latest
 
 #vscode
 go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest

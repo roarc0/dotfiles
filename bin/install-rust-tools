@@ -10,3 +10,5 @@ cargo install ytop
 cargo install bandwhich
 cargo install delta
 cargo install procs
+cargo install mdbook
+cargo install mdbook-pdf

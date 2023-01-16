@@ -1,8 +1,10 @@
-#!/usr/bin/env bash
-JAR="$JARS/plantuml.jar"
+#!/usr/bin/env sh
+
+JAR="$HOME/.local/jar/plantuml.jar"
 
 if [ ! -f "$JAR" ]; then
-    ./install-plantuml
+  mkdir -p "$HOME/.local/jar" >/dev/null 1>&2
+  wget -q --show-progress -O "$JAR" http://sourceforge.net/projects/plantuml/files/plantuml.jar/download
 fi
 
 java -jar "$JAR" "$*"

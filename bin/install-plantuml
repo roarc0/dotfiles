@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-JARS="$HOME/.local/jar"
-mkdir -p "$JARS" >/dev/null 1>&2
-JAR="$JARS/plantuml.jar"
-wget -q --show-progress -O "$JAR" http://sourceforge.net/projects/plantuml/files/plantuml.jar/download
