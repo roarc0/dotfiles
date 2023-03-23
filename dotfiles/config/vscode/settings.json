@@ -1,7 +1,7 @@
 {
   "window.titleBarStyle": "custom",
-  "window.zoomLevel": 1,
   "window.title": "${rootPath}${separator}${appName}",
+  "window.zoomLevel": 1,
   "sync.autoDownload": true,
   "sync.autoUpload": true,
   "sync.forceDownload": true,
@@ -13,13 +13,9 @@
   "workbench.editor.revealIfOpen": true,
   "workbench.settings.editor": "json",
   "workbench.iconTheme": "vscode-icons",
-  "workbench.colorTheme": "One Monokai",
   "workbench.startupEditor": "none",
   "workbench.editor.centeredLayoutAutoResize": true,
-  "workbench.list.automaticKeyboardNavigation": false,
-  "workbench.editorAssociations": {
-    "*.ipynb": "jupyter.notebook.ipynb"
-  },
+  "workbench.colorTheme": "One Monokai",
   "workbench.colorCustomizations": {
     "statusBar.background": "#00000077",
     "editor.lineHighlightBackground": "#00000033",
@@ -87,12 +83,13 @@
     "fsnotify",
     "grpc",
     "Infof",
+    "Plotly",
     "Tracef",
     "Warnf"
   ],
   "liveServer.settings.donotVerifyTags": true,
   "liveServer.settings.donotShowInfoMsg": true,
-  "C_Cpp.intelliSenseEngine": "Disabled",
+  "C_Cpp.intelliSenseEngine": "disabled",
   "C_Cpp.default.cppStandard": "c++17",
   "C_Cpp.default.cStandard": "c11",
   "C_Cpp.clang_format_path": "/usr/bin/clang-format",
@@ -142,7 +139,7 @@
   ],
   "gopls": {
     "usePlaceholders": true,
-    "staticcheck": true
+    "staticcheck": true,
   },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -181,7 +178,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "eslint.alwaysShowStatus": true,
   "eslint.useESLintClass": true,
   "eslint.lintTask.enable": true,
   "eslint.validate": [
@@ -199,15 +195,13 @@
   "emmet.syntaxProfiles": {
     "postcss": "css"
   },
-  "java.checkstyle.properties": {
-    "basedir": "${workspaceFolder}"
-  },
   "markdown.preview.scrollEditorWithPreview": true,
   "markdown.preview.scrollPreviewWithEditor": true,
   "python.languageServer": "Default",
   "[python]": {
     "editor.insertSpaces": true,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "editor.formatOnType": true
   },
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
@@ -217,19 +211,9 @@
     "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/kubectl/kubectl",
     "vscode-kubernetes.minikube-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube"
   },
-  "redhat.telemetry.enabled": false,
-  "emojisense.languages": {
-    "markdown": true,
-    "json": true,
-    "plaintext": {
-      "markupCompletionsEnabled": false,
-      "emojiDecoratorsEnabled": false
-    },
-    "scminput": true
-  },
   "cSpell.language": "en-GB",
   "cSpell.enabled": true,
-  "cSpell.checkLimit": 10000,
+  "cSpell.checkLimit": 70000,
   "cSpell.minWordLength": 4,
   "cSpell.allowCompoundWords": true,
   "cSpell.diagnosticLevel": "Information",
@@ -240,13 +224,10 @@
     "1091",
     "1090"
   ],
-  "deno.enable": false,
   "formatFiles.excludedFolders": [
     "node_modules",
     ".vscode",
     ".git",
-    "dist",
-    ".chrome"
   ],
   "github.copilot.enable": {
     "*": false,
@@ -254,5 +235,17 @@
     "plaintext": true,
     "markdown": false
   },
-  "npm.keybindingsChangedWarningShown": true
+  "emojisense.languages": {
+    "markdown": true,
+    "json": true,
+    "plaintext": {
+      "markupCompletionsEnabled": false,
+      "emojiDecoratorsEnabled": false
+    },
+    "scminput": true
+  },
+  "deno.enable": false,
+  "npm.keybindingsChangedWarningShown": true,
+  "redhat.telemetry.enabled": false,
+  "git.openRepositoryInParentFolders": "never"
 }
