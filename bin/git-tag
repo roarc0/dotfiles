@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+TAG=$1
+REMOTE=$2
+
+git tag -d "$TAG" "$REMOTE" 2> /dev/null
+git push --delete "$REMOTE" "$TAG" 2> /dev/null
+git tag "$TAG"
+git push "$REMOTE" --tags

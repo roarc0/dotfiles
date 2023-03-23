@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+V=$1
+REMOTE=$2
+
+git tag -d "$V" "$REMOTE"
+git push --delete "$REMOTE" "$V"

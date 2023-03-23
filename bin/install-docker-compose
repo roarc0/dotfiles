@@ -8,5 +8,5 @@ URL=https://github.com/docker/compose/releases/latest/download/docker-compose-li
 wget -q --show-progress -O "$DEST" $URL
 
 chmod +x "$DEST"
-ln -s "$DEST" "$HOME"/.local/bin >/dev/null 1>&2
+ln -sf "$DEST" "$HOME"/.local/bin >/dev/null 1>&2
 docker compose version
