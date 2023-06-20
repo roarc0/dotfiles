@@ -64,5 +64,9 @@
 
 [commit]
 	gpgsign = true
+
 [gpg]
 	program = gpg
+
+[safe]
+	directory = /etc/portage

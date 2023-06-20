@@ -248,4 +248,8 @@
   "npm.keybindingsChangedWarningShown": true,
   "redhat.telemetry.enabled": false,
   "git.openRepositoryInParentFolders": "never"
+  "npm.keybindingsChangedWarningShown": true,
+  "launch": {
+    "configurations": []
+  }
 }
