@@ -1,0 +1,10 @@
+[Unit]
+Description=Restart NetworkManager Timer
+
+[Timer]
+OnBootSec=240s
+OnUnitActiveSec=1h
+Unit=restart-networkmanager.service
+
+[Install]
+WantedBy=timers.target
