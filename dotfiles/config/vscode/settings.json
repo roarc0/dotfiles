@@ -1,7 +1,7 @@
 {
   "window.titleBarStyle": "custom",
-  "window.title": "${rootPath}${separator}${appName}",
   "window.zoomLevel": 1,
+  "window.title": "${rootPath}${separator}${appName}",
   "sync.autoDownload": true,
   "sync.autoUpload": true,
   "sync.forceDownload": true,
@@ -13,9 +13,9 @@
   "workbench.editor.revealIfOpen": true,
   "workbench.settings.editor": "json",
   "workbench.iconTheme": "vscode-icons",
+  "workbench.colorTheme": "One Monokai",
   "workbench.startupEditor": "none",
   "workbench.editor.centeredLayoutAutoResize": true,
-  "workbench.colorTheme": "One Monokai",
   "workbench.colorCustomizations": {
     "statusBar.background": "#00000077",
     "editor.lineHighlightBackground": "#00000033",
@@ -178,6 +178,7 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "eslint.alwaysShowStatus": true,
   "eslint.useESLintClass": true,
   "eslint.lintTask.enable": true,
   "eslint.validate": [
@@ -228,6 +229,8 @@
     "node_modules",
     ".vscode",
     ".git",
+    "dist",
+    ".chrome"
   ],
   "github.copilot.enable": {
     "*": false,

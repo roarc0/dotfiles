@@ -68,5 +68,8 @@
 [gpg]
 	program = gpg
 
+[gpg]
+	program = gpg
+
 [safe]
 	directory = /etc/portage
