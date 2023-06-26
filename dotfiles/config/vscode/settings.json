@@ -44,6 +44,7 @@
   "editor.unicodeHighlight.invisibleCharacters": true,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
+  "editor.inlayHints.enabled": "on",
   "editor.codeActionsOnSave": {
     "source.fixAll.shellcheck": true,
     "source.fixAll.eslint": true,
@@ -148,6 +149,10 @@
     "usePlaceholders": true,
     "staticcheck": true,
   },
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+  },
+  "rust-analyzer.check.command": "clippy",
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
