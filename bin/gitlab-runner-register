@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+GITLAB_RUNNER_HOST="https://gitlab.com/"
+GITLAB_RUNNER_NAME="$1"
+GITLAB_RUNNER_TOKEN="$2"
+
+sudo gitlab-runner register -n \
+    --url $GITLAB_RUNNER_HOST \
+    --registration-token $GITLAB_RUNNER_TOKEN \
+    --executor docker \
+    --description $GITLAB_RUNNER_NAME \
+    --docker-image "docker:stable" \
+    --docker-privileged
+

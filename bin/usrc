@@ -1,56 +1,17 @@
 #!/usr/bin/env bash
 . "$ENV_HOME"/scripts/functions.sh
 
-version="0.4.0"
-
 update() {
   if [ -d ".git" ]; then
     echoc 31 "git repo found"
     git pull
   fi
-  if [ -d ".svn" ]; then
-    echoc 31 "svn repo found"
-    svn update
-  fi
-  if [ -d ".cvs" ]; then
-    echoc 31 "cvs repo found"
-    cvs update
-  fi
-  if [ -d ".hg" ]; then
-    echoc 31 "mercurial repo found"
-    hg pull -uv
-  fi
-  if [ -d ".bzr" ]; then
-    echoc 31 "bazaar repo found"
-    bzr pull
-  fi
-  if [ -d ".mtn" ]; then
-    echoc 31 "monotone repo found"
-    mtn update # ??
-  fi
   cd ..
 }
 
-opt_reset() {
-  param=${*//\'/}
-  if [ -d "$param/.git" ]; then
-    URL=$(cat "$param"/.git/config | grep "url = " | awk '{print $3}')
-    echo "$URL"
-  fi
-
-  ask "Are you sure you want to delete and reset repo \"$param\" "
-  if [ $? == 1 ]; then
-    rm -rf "$param"
-    git clone --depth 1 "$URL"
-  fi
-}
-
-opt_clean() {
-  return
-}
-
 opt_update() {
-  param=${*//\'/}
+  param=${1}
+  echo $param
   if [ -d "$param" ]; then
     echoc 31 "updating $param\n"
   else
@@ -79,46 +40,4 @@ opt_update() {
   cd - >/dev/null || exit
 }
 
-reset_flag=no
-clean_flag=no
-reset_opt=""
-
-if ! options=$(getopt -o r:hc: -l reset:,help,clean: -- "$@"); then
-  exit 1
-fi
-
-set -- "$options"
-
-while [ $# -gt 0 ]; do
-  case $1 in
-  -r | --reset)
-    reset_flag=yes
-    reset_opt="$2"
-    ;;
-  -c | --clean)
-    clean_flag=yes
-    clean_opt="$2"
-    ;;
-  -h | --help) opt_help ;;
-  --)
-    shift
-    break
-    ;;
-  -*)
-    echo "usrc: error - unrecognized option $1" 1>&2
-    exit 1
-    ;;
-  *) break ;;
-  esac
-  shift
-done
-
-echoc 31 "System src updater $version... by roarc (alessandro.rosetti@gmail.com)"
-
-if [ $reset_flag == yes ]; then
-  opt_reset "$reset_opt"
-elif [ $clean_flag == yes ]; then
-  opt_clean "$clean_opt"
-else
-  opt_update "$1"
-fi
+opt_update "$1"
