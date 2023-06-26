@@ -22,6 +22,7 @@
     "editor.lineHighlightBorder": "#aaaaaa33",
     "editor.selectionBackground": "#222",
   },
+  "workbench.editor.untitled.hint": "hidden",
   "editor.rename.enablePreview": false,
   "editor.fontSize": 17,
   "editor.fontFamily": "'Droid Sans Mono'",
@@ -67,13 +68,21 @@
     "*.js": "javascriptreact",
     "*.ts": "typescriptreact"
   },
+  "formatFiles.excludedFolders": [
+    "node_modules",
+    ".vscode",
+    ".git",
+    "dist",
+    ".chrome"
+  ],
   "explorer.autoReveal": true,
   "explorer.confirmDragAndDrop": false,
   "explorer.confirmDelete": false,
-  "explorer.openEditors.visible": 0,
+  "explorer.openEditors.visible": 1,
   "terminal.explorerKind": "external",
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.enableShellIntegration": true,
+  "extensions.ignoreRecommendations": true,
   "vsicons.dontShowNewVersionMessage": true,
   "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderSideBySide": true,
@@ -97,7 +106,7 @@
   "C_Cpp.autocompleteAddParentheses": true,
   "C_Cpp.clang_format_sortIncludes": true,
   "clangd.onConfigChanged": "restart",
-  "clangd.path": "/home/roarc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/15.0.6/clangd_15.0.6/bin/clangd",
+  "clangd.path": "/home/roarc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/16.0.2/clangd_16.0.2/bin/clangd",
   "clangd.restartAfterCrash": true,
   "clangd.checkUpdates": true,
   "[cpp]": {
@@ -106,12 +115,10 @@
   "cmake.configureOnOpen": false,
   "go.inferGopath": false,
   "go.useLanguageServer": true,
-  "go.gocodeAutoBuild": true,
   "go.formatTool": "gofmt",
   "go.lintTool": "golint",
   "go.lintOnSave": "workspace",
   "go.vetOnSave": "workspace",
-  "go.autocompleteUnimportedPackages": true,
   "go.toolsManagement.autoUpdate": true,
   "go.coverOnTestPackage": false,
   "[go.mod]": {
@@ -151,9 +158,6 @@
   "html.format.indentHandlebars": true,
   "html.format.endWithNewline": false,
   "css.lint.important": "warning",
-  "[css]": {
-    // "editor.suggest.insertMode": "replace"
-  },
   "stylelint.enable": true,
   "scss.lint.important": "warning",
   "tailwindCSS.emmetCompletions": true,
@@ -178,7 +182,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "eslint.alwaysShowStatus": true,
   "eslint.useESLintClass": true,
   "eslint.lintTask.enable": true,
   "eslint.validate": [
@@ -218,26 +221,20 @@
   "cSpell.minWordLength": 4,
   "cSpell.allowCompoundWords": true,
   "cSpell.diagnosticLevel": "Information",
-  "workbench.editor.untitled.hint": "hidden",
   "shellcheck.run": "onType",
   "shellcheck.exclude": [
     "2148",
     "1091",
     "1090"
   ],
-  "formatFiles.excludedFolders": [
-    "node_modules",
-    ".vscode",
-    ".git",
-    "dist",
-    ".chrome"
-  ],
+  "git.openRepositoryInParentFolders": "never",
   "github.copilot.enable": {
     "*": false,
     "yaml": false,
     "plaintext": true,
     "markdown": false
   },
+  "gitlab.aiAssistedCodeSuggestions.enabled": true,
   "emojisense.languages": {
     "markdown": true,
     "json": true,
@@ -249,10 +246,4 @@
   },
   "deno.enable": false,
   "npm.keybindingsChangedWarningShown": true,
-  "redhat.telemetry.enabled": false,
-  "git.openRepositoryInParentFolders": "never"
-  "npm.keybindingsChangedWarningShown": true,
-  "launch": {
-    "configurations": []
-  }
 }
