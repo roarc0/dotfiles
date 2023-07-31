@@ -1,14 +1,18 @@
 #!/usr/bin/env sh
 
 cargo install tokei
-#libfontconfig-dev libxkbcommon-dev
-cargo install alacritty
-cargo install bat
-cargo install exa
-cargo install deno --locked
+cargo install cargo-modules
+cargo install du-dust
+cargo install fd-find
+cargo install ripgrep
 cargo install ytop
 cargo install bandwhich
 cargo install delta
 cargo install procs
 cargo install mdbook
 cargo install mdbook-pdf
+cargo install deno --locked
+cargo install bat
+cargo install exa
+#libfontconfig-dev libxkbcommon-dev
+#cargo install alacritty
