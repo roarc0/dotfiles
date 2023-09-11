@@ -1,6 +1,5 @@
 {
   "window.titleBarStyle": "custom",
-  "window.zoomLevel": 1,
   "window.title": "${rootPath}${separator}${appName}",
   "sync.autoDownload": true,
   "sync.autoUpload": true,
@@ -93,6 +92,7 @@
     "fsnotify",
     "grpc",
     "Infof",
+    "mipmaps",
     "Plotly",
     "Tracef",
     "Warnf"
@@ -153,6 +153,8 @@
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
   },
   "rust-analyzer.check.command": "clippy",
+  "rust-analyzer.check.features": "all",
+  "rust-analyzer.semanticHighlighting.strings.enable": true,
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
@@ -218,7 +220,8 @@
   "vs-kubernetes": {
     "vscode-kubernetes.helm-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/helm/linux-amd64/helm",
     "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/kubectl/kubectl",
-    "vscode-kubernetes.minikube-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube"
+    "vscode-kubernetes.minikube-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube",
+    "vs-kubernetes.minikube-show-information-expiration": "2024-01-30T07:26:38.769Z"
   },
   "cSpell.language": "en-GB",
   "cSpell.enabled": true,
@@ -251,4 +254,7 @@
   },
   "deno.enable": false,
   "npm.keybindingsChangedWarningShown": true,
+  "window.zoomLevel": 1,
+  "git.confirmSync": false,
+  "git.autofetch": true,
 }

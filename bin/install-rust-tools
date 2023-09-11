@@ -1,7 +1,10 @@
 #!/usr/bin/env sh
 
-cargo install tokei
 cargo install cargo-modules
+cargo install cargo-wgsl
+cargo install sccache
+
+cargo install tokei
 cargo install du-dust
 cargo install fd-find
 cargo install ripgrep
@@ -11,8 +14,9 @@ cargo install delta
 cargo install procs
 cargo install mdbook
 cargo install mdbook-pdf
-cargo install deno --locked
 cargo install bat
-cargo install exa
-#libfontconfig-dev libxkbcommon-dev
-#cargo install alacritty
+#libfontconfig-dev
+cargo install alacritty
+
+#cargo install deno --locked
+#cargo install exa

@@ -11,6 +11,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 export CARGOPATH="$HOME/.local/cargo"
 export PATH="${CARGOPATH}/bin:$PATH"
+export RUSTC_WRAPPER=sccache
 
 export GOPATH="$HOME/.local/go"
 export PATH="${GOPATH}/bin:$PATH"
