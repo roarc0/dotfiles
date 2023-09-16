@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+FONT_ZIP="/tmp/$1.zip"
+
+mkdir -p ~/.fonts &>/dev/null
+
+latest_url=$(curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | grep "browser_download_url.*$1.zip" | cut -d '"' -f 4)
+if [ -z "$latest_url" ]; then
+  echo "Failed to fetch the latest $1 release URL."
+  return 1
+fi
+
+curl -#L "$latest_url" -o "${FONT_ZIP}"
+unzip -oj "${FONT_ZIP}" '*.ttf' -d ~/.fonts
+
+echo "Refreshing fc-cache"
+fc-cache -fv ~/.fonts >/dev/null
+
+rm "${FONT_ZIP}"
+echo "$1 has been installed."
