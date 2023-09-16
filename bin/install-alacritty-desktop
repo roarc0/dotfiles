@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+curl -#L https://raw.githubusercontent.com/alacritty/alacritty/master/extra/logo/alacritty-term.svg -o ~/.local/share/icons/Alacritty.svg
+curl -#L https://raw.githubusercontent.com/alacritty/alacritty/master/extra/linux/Alacritty.desktop -o ~/.local/share/applications/Alacritty.desktop
+update-desktop-database
