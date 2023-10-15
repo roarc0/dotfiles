@@ -10,6 +10,7 @@ export JAVA_HOME="/usr/lib/jvm/default-java/"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 export CARGOPATH="$HOME/.local/cargo"
+export CARGO_TARGET_DIR="$HOME/.local/bin"
 export PATH="${CARGOPATH}/bin:$PATH"
 export RUSTC_WRAPPER=sccache
 

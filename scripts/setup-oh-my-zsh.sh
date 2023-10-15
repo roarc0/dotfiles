@@ -11,7 +11,7 @@ fi
 
 if [ ! -d "$OH_MY_ZSH_PLUGINS"/zsh-completions ]; then
   rm -f ~/.zcompdump
-  git clone --depth 1 git://github.com/zsh-users/zsh-completions.git "$OH_MY_ZSH_PLUGINS"/zsh-completions || true
+  git clone --depth 1 https://github.com/zsh-users/zsh-completions.git "$OH_MY_ZSH_PLUGINS"/zsh-completions || true
 fi
 
 if [ ! -d "$OH_MY_ZSH_PLUGINS"/zsh-syntax-highlighting ]; then

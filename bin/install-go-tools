@@ -1,13 +1,10 @@
 #!/usr/bin/env sh
 
-go install github.com/docker/docker/client@latest
-
+#go install github.com/docker/docker/client@latest
+go install github.com/gohugoio/hugo@latest
 go install tailscale.com/cmd/tailscale@latest
 go install tailscale.com/cmd/tailscaled@latest
-
 go install github.com/ipfs/kubo/cmd/ipfs@latest
-
-go install github.com/gohugoio/hugo@latest
 
 #grpc
 go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
