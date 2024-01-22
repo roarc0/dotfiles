@@ -2,7 +2,7 @@
 sudo env "PATH=$PATH" sh -c '
 emerge --sync
 emerge -uaDNv --autounmask --autounmask-write --with-bdeps=y --backtrack=10 --keep-going world
-etc-update
+dispatch-conf
 pwck
 grpck
 emaint all -f
