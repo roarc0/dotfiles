@@ -19,6 +19,8 @@ export PATH="${GOPATH}/bin:$PATH"
 export GOROOT="$HOME/.local/goroot"
 export PATH="${GOROOT}/bin:$PATH"
 
+export NODE_PATH="/usr/lib64/node_modules"
+
 export PATH="/snap/bin:$PATH"
 
 if [ -d "$HOME/.local/bin" ]; then
