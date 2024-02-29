@@ -2,57 +2,78 @@
 	email = alessandro.rosetti@gmail.com
 	name = Alessandro Rosetti
 	signingkey = C9C90A7C4A7804A0
+	#signingkey = ~/.ssh/id_ecdsa_git
+
+#[includeIf "gitdir/i:personal/"]
+#  path = .gitconfig-personal
+#[includeIf "gitdir/i:work/"]
+#  path = .gitconfig-work'
 
 [core]
 	editor = nvim
+	#untrackedCache = true
+	#fsmonitor = true
 
 [diff]
-    tool = meld
+	tool = meld
 [difftool]
-    prompt = false
+	prompt = false
 [difftool "meld"]
-    cmd = meld $LOCAL $REMOTE
+	cmd = meld $LOCAL $REMOTE
 
 [merge]
 	tool = meld
 [mergetool "meld"]
-    cmd = meld $LOCAL $MERGED $REMOTE --output $MERGED
-    #cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+	cmd = meld $LOCAL $MERGED $REMOTE --output $MERGED
 
 [credential]
-    helper = cache --timeout=8600
+	helper = cache --timeout=300
 
 [alias]
-    co = checkout
-    cob = checkout -b
-    f = fetch -p
-    s = status
-    c = commit
-    p = push
-    b = branch
-    ba = branch -a
-    bd = branch -d
-    bD = branch -D
-    dc = diff --cached
-    sl = stash list
-    sa = stash apply
-    sd = stash drop
-    st = status -sb
-    ll = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
-    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    plog = log --graph --pretty='format:%C(red)%d%C(reset) %C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'
-    qlog = log --graph --pretty=format:'%Cblue%h %Cred%cD %Creset%cn %Cgreen%s%Creset' --date-order
-    tlog = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
-    a = add -p
-    rank = shortlog -sn --no-merges
-    bdm = !git branch --merged | grep -v '*' | xargs -n 1 git branch -d # remove all merged branches
-    fixup = "!git add . && git commit --fixup=${1:-$(git rev-parse HEAD)} && GIT_EDITOR=true git rebase --interactive --autosquash ${1:-$(git rev-parse HEAD~2)}~1"
+	co = checkout
+	cob = checkout -b
+	f = fetch -p
+	a = add -p
+	s = status
+	c = commit
+	p = push
+	b = branch
+	ba = branch -a
+	bd = branch -d
+	bD = branch -D
+	dc = diff --cached
+	sl = stash list
+	sa = stash apply
+	sd = stash drop
+	st = status -sb
+	ll = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
+	lg = log --graph --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	plog = log --graph --pretty='format:%C(red)%d%C(reset) %C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'
+	qlog = log --graph --pretty=format:'%Cblue%h %Cred%cD %Creset%cn %Cgreen%s%Creset' --date-order
+	tlog = log --graph --stat --since='1 Day Ago' --pretty=oneline --abbrev-commit --date=relative
+	rank = shortlog -sn --no-merges
+	bdm = !git branch --merged | grep -v '*' | xargs -n 1 git branch -d # remove all merged branches
+	fixup = "!git add . && git commit --fixup=${1:-$(git rev-parse HEAD)} && GIT_EDITOR=true git rebase --interactive --autosquash ${1:-$(git rev-parse HEAD~2)}~1"
+	staash = stash --all
+	force-push-safe= push --force--with-lease
 
 [rerere]
-    enabled = true
-
+	enabled = true
 [pull]
 	rebase = true
+[fetch]
+	writeCommitGraph = true
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
+	#format = ssh
+[safe]
+	directory = /etc/portage
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
 
 # enforce SSH
 [url "git@github.com:"]
@@ -62,11 +83,10 @@
 [url "git@bitbucket.org:"]
   insteadOf = https://bitbucket.org/
 
-[commit]
-	gpgsign = true
-
-[gpg]
-	program = gpg
-
-[safe]
-	directory = /etc/portage
+# git maintenance start
+[maintenance]
+	auto=false
+	stratety=incremental
+	repo = /home/roarc/workspace/cpf
+[color]
+	ui = auto
