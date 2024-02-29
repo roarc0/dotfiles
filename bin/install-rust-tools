@@ -11,6 +11,7 @@ cargo install ytop
 cargo install bandwhich
 cargo install delta
 cargo install procs
+cargo install eza
 #
 #libfontconfig-dev
 cargo install alacritty

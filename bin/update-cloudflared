@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+sudo apt-get install ./cloudflared-linux-amd64.deb
+cloudflared -v
+rm cloudflared-linux-amd64.deb

@@ -1,22 +1,14 @@
 #!/usr/bin/env sh
 
-#go install github.com/docker/docker/client@latest
-go install golang.org/x/tools/cmd/godoc@master
-go install github.com/gohugoio/hugo@latest
-go install tailscale.com/cmd/tailscale@latest
-go install tailscale.com/cmd/tailscaled@latest
-go install github.com/ipfs/kubo/cmd/ipfs@latest
-
-#grpc
-go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
-go install github.com/yoheimuta/protolint/cmd/protolint@latest
-go install github.com/bufbuild/buf/cmd/buf@latest
-go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
-go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
-go install github.com/grpc-ecosystem/grpc-health-probe@latest
-go install github.com/swaggo/swag/cmd/swag@latest
+#dev
+go install golang.org/x/tools/cmd/deadcode@latest
+go install github.com/99designs/gqlgen@latest
+go install go install go.uber.org/mock/mockgen@latest
+go install github.com/bykof/go-plantuml@latest
+go install github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
+go install github.com/hherman1/gq@latest
+go install github.com/square/certstrap@latest
+go install github.com/knipferrc/branch-cleaner@latest
 
 #vscode
 go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
@@ -28,14 +20,23 @@ go install github.com/haya14busa/goplay/cmd/goplay@latest
 go install github.com/go-delve/delve/cmd/dlv@latest
 go install golang.org/x/lint/golint@latest
 go install golang.org/x/tools/gopls@latest
+go install golang.org/x/tools/cmd/godoc@master
 
-#dev
-go install golang.org/x/tools/cmd/deadcode@latest
-go install github.com/knipferrc/branch-cleaner@latest
-go install github.com/golang/mock/mockgen@latest
-go install github.com/bykof/go-plantuml@latest
-go install github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
-go install github.com/hherman1/gq@latest
-go install github.com/square/certstrap@latest
+go install github.com/gohugoio/hugo@latest
+go install tailscale.com/cmd/tailscale@latest
+go install tailscale.com/cmd/tailscaled@latest
+go install github.com/ipfs/kubo/cmd/ipfs@latest
+#go install github.com/docker/docker/client@latest
 #go install github.com/open-policy-agent/opa@latest
+
+#grpc
+go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+go install github.com/yoheimuta/protolint/cmd/protolint@latest
+go install github.com/bufbuild/buf/cmd/buf@latest
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+go install github.com/grpc-ecosystem/grpc-health-probe@latest
+go install github.com/swaggo/swag/cmd/swag@latest
 
