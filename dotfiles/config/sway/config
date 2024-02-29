@@ -53,20 +53,20 @@ set $chrome ^.*chrom.*$
 set $firefox ^.*firefox.*$
 set $browser $chrome
 
-for_window [class="foot"] border none
-for_window [class="alacritty"] border none
-for_window [class="$firefox"] border none
-for_window [class="$chrome"] border none
+#for_window [class="foot"] border none
+#for_window [class="alacritty"] border none
+#for_window [class="$firefox"] border none
+#for_window [class="$chrome"] border none
 for_window [app_id="$telegram"] border none
 
 bindsym End [class="$browser"] focus
 bindsym F12 [app_id="$telegram"] focus
 bindsym F11 [class="mpv"] focus
 assign [app_id="$telegram"] $ws3
-assign [class="$browser"] $ws2
+#assign [class="$browser"] $ws2
 
-for_window [class="(?i).*zenity"] floating enable, move position center
-for_window [window_type="dialog"] floating enable
+#for_window [class="(?i).*zenity"] floating enable, move position center
+#for_window [window_type="dialog"] floating enable
 for_window [app_id="zoom"] floating enable
 
 ###### theme ######
