@@ -13,4 +13,4 @@ nmerge() {
 }
 
 alias copyconf='su -c "zcat /proc/config.gz > /usr/src/linux/.config"'
-alias mkernel="su -c \"mount /boot ; cd /usr/src/linux ; make -j5 ; make install; make modules -j6 ; make modules_install ; grub-mkconfig -o /boot/grub/grub.cfg ; cd - ; emerge -1O @kernel-modules\""
+alias mkernel="make -j12 ; make install; make modules -j12 ; make modules_install ; grub-mkconfig -o /boot/grub/grub.cfg ; cd - ; emerge -1O @kernel-modules\""
