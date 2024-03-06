@@ -1,12 +1,12 @@
 @define-color background #2f2f2f;
-@define-color primary #30d769;
-@define-color secondary #9340c9;
+@define-color primary #40d070;
+@define-color secondary #8050c0;
 
-@define-color mode #dd1111;
+@define-color mode #bd3030;
 @define-color window @primary;
 
-@define-color base01 #2c2c2c;
-@define-color base02 #4d4d4d;
+@define-color base01 #1c1c1c;
+@define-color base02 #2d2d2d;
 @define-color base03 #525252;
 @define-color base05 #929292;
 @define-color base06 #f1f2f8;

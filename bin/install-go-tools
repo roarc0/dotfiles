@@ -25,6 +25,7 @@ go install golang.org/x/tools/cmd/godoc@master
 go install github.com/gohugoio/hugo@latest
 go install tailscale.com/cmd/tailscale@latest
 go install tailscale.com/cmd/tailscaled@latest
+
 go install github.com/ipfs/kubo/cmd/ipfs@latest
 #go install github.com/docker/docker/client@latest
 #go install github.com/open-policy-agent/opa@latest
@@ -39,4 +40,3 @@ go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@lat
 go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 go install github.com/grpc-ecosystem/grpc-health-probe@latest
 go install github.com/swaggo/swag/cmd/swag@latest
-

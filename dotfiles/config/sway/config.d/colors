@@ -4,7 +4,7 @@ set $unfocus_1      #100520
 set $unfocus_2      #100520
 set $unfocus_text   #6c4397
 set $focus_1    #616161
-set $focus_2    #301540
+set $focus_2    #402555
 set $focus_text #7cd76c
 
 set $alarm        #f0354b

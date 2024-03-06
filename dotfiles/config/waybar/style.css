@@ -2,17 +2,16 @@
 
 * {
     border: none;
-    font-family: Roboto;
-    font-size: 12px;
+    font-family: Fira Code;
+    font-size: 14px;
     min-height: 0;
     transition-duration: 300ms;
-    transition-timing-function: ease;
+    transition-timing-function: ease-in;
     box-shadow: none;
 }
 
 window#waybar {
     background-color: rgba(43, 48, 59, 0.75);
-    /*border-bottom: 4px solid rgba(100, 114, 125, 0.6);*/
     color: #ffffff;
     transition-property: background-color;
     transition-duration: .5s;
@@ -35,19 +34,21 @@ window#waybar.hidden {
 
 #tags button,
 #workspaces button {
-    padding: 3px;
+    margin: 1px; 
+    padding: 2px;
     color: @base01;
-    border: 2px solid transparent;
+    border: 2px solid @base01;
 }
 
 #tags button.occupied {
     border: 2px solid @secondary;
     color: @secondary;
+    background-color: @base01;
 }
 
 #workspaces button.persistent {
-    color: #111;
-    border: 2px solid transparent;
+    color: @base02;
+    border: 2px solid @base02;
 }
 
 #tags button.urgent,
@@ -97,8 +98,8 @@ window#waybar.hidden {
 
 #window { /* Shown current Sway mode (resize etc.) */
     color: @window;
-    padding: 3px;
-    margin: 3px;
+    padding: 2px;
+    margin: 2px;
     border: 2px dashed @base01;
     border-radius: 4px;
 }
@@ -119,15 +120,15 @@ window#waybar.hidden {
 #custom-net-speed,
 #temperature,
 #clock {
-    margin: 4px 2px;
-    padding: 0 6px;
-    border-radius: 4px;
+    margin: 2px;
+    padding: 0 2px;
+    border-radius: 2px;
     min-width: 20px;
     background-color: @base04;
 }
 
 #clock {
-    margin-left: 12px;
+    margin-left: 10px;
     margin-right: 4px;
 }
 
@@ -168,7 +169,7 @@ window#waybar.hidden {
 }
 
 #tray * {
-    padding: 0 6px;
+    padding: 0 4px;
     border-left: 1px solid @background;
 }
 

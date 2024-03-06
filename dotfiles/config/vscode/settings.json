@@ -257,4 +257,5 @@
   "window.zoomLevel": 1,
   "git.confirmSync": false,
   "git.autofetch": true,
+  "svelte.enable-ts-plugin": true,
 }

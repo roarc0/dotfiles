@@ -1,8 +1,6 @@
 set $conf ~/.config/sway
-
-set $font pango:Roboto Mono 12, FontAwesome5Free 12, FontAwesome5Brands 12
-
-set $term foot
+set $font pango:Fira Code 12 
+set $term alacritty
 set $editor nvim
 set $wallpaper ~/pictures/wm/wallpaper.png
 set $locker swaylock -i ~/pictures/wm/lockscreen.png
@@ -92,7 +90,7 @@ bindsym Pause exec $locker
 bindsym $mod+d exec $menu
 #bindsym $mod+v exec $browser
 bindsym Print exec ~/env/bin/screenshot
-bindsym Shift+Print exec ~/env/bin/screenshot_sel
+bindsym Shift+Print exec ~/env/bin/screenshot-sel
 
 bindsym $mod+Shift+a exec "pavucontrol"
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%

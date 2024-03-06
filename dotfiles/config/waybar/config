@@ -41,11 +41,11 @@
             "9"
         ]
     },
-    "sway/language": {
-        "format": " {}",
-        "min-length": 5,
-        "tooltip": false
-    },
+    //"sway/language": {
+    //    "format": " {}",
+    //    "min-length": 5,
+    //    "tooltip": false
+    //},
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>",
         "tooltip": false
@@ -114,7 +114,7 @@
     },
     "network": {
         //"interface": "wlp2*", // force interface
-        "format-wifi": "  {essid} {signalStrength}%",
+        "format-wifi": " {essid}({signalStrength}%)",
         "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
         "format-linked": " {ifname} (No IP)",
         "format-disconnected": "⚠ (Disconnected)",
@@ -130,15 +130,15 @@
         "exec": "$HOME/env/bin/net-speed wlan0"
     },
     "custom/storage": {
-        "format": "  {}",
-        "format-alt": "  {percentage}%",
+        "format": " {}",
+        "format-alt": " {percentage}%",
         "format-alt-click": "click-right",
         "return-type": "json",
         "interval": 60,
         "exec": "$HOME/.config/waybar/modules/storage.sh"
     },
     "cpu": {
-        "format": "  {usage:3}%",
+        "format": "󰻠 {usage}%",
         "interval": 5,
         "states": {
             "warning": 50,
@@ -147,7 +147,7 @@
         "tooltip": true
     },
     "memory": {
-        "format": "  {}%",
+        "format": "󰍛 {}%",
         "interval": 5,
         "states": {
             "warning": 50,
@@ -156,18 +156,14 @@
         "tooltip": true
     },
     "battery": {
-        //"bat": "BAT0",
         "states": {
-            //"good": 95,
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
+        "format": "{icon} {capacity}%",
         "format-charging": "{capacity}% ",
         "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        //"format-good": "",
-        //"format-full": "",
+        "format-alt": "{icon} {time}",
         "format-icons": [
             "",
             "",
@@ -180,8 +176,8 @@
     },
     "backlight": {
         "device": "intel_backlight",
-        "format": "{percent}% {icon}",
-        "format-alt": "{percent}% {icon}",
+        "format": "{icon} {percent}%",
+        "format-alt": "{icon} {percent}%",
         "format-alt-click": "click-right",
         "format-icons": [
             "",
@@ -201,8 +197,8 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": "󰒳",
+            "deactivated": "󰒲"
         },
         "tooltip": false
     },
@@ -224,7 +220,7 @@
         "interval": 3600
     },
     "clock": {
-        "format": "   {:%a  ·  %d-%m  ·  %H:%M}",
+        "format": " {:%a %d/%m %H:%M}",
         "interval": 10,
         "tooltip": false
     },
@@ -241,6 +237,6 @@
     },
     "tray": {
         "icon-size": 21,
-        "spacing": 10
+        "spacing": 8 
     },
 }

@@ -20,7 +20,7 @@ print_network() {
  txs="$(bc <<< "($tx - $txprev) / ($utime-$utimeprev)")"
  rxsh="$(numfmt --to=iec --padding=10 --suffix=B/s --format="%.2f" $rxs | sed -e "s/,00B/B/g")"
  txsh="$(numfmt --to=iec --padding=10 --suffix=B/s --format="%.2f" $txs | sed -e "s/,00B/B/g")"
- echo " $rxsh  $txsh"
+ echo "$rxsh $txsh"
 }
 
 echo "$(print_network $1)"
