@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 SRC="$(pwd)/kindle/"
-DEST="/media/roarc/Kindle/documents"
+DEST="/media/roarc/sync/kindle/documents"
 
 rsync -azPvhe -A --exclude=dev --exclude=*.azw3f --exclude=*.azw3r --exclude=*.lua --exclude=*.lua.old --delete --stats  $SRC $DEST
