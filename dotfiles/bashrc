@@ -17,4 +17,6 @@ export LC_NUMERIC="POSIX"
 export PAGER=less
 export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
 
+export GPG_TTY=$(tty)
+
 eval ~/env/env.sh
