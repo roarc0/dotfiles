@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+YTDL="$HOME/.local/bin/youtube-dl"
+
+if [ ! -f "$YTDL" ]; then
+  mkdir -p "$HOME/.local/bin" >/dev/null 1>&2
+  wget -q --show-progress -O "$YTDL" https://yt-dl.org/downloads/latest/youtube-dl
+  chmod +x "$YTDL"
+fi
+
+$YTDL "$*"

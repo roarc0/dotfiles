@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-if [ -x "$(command -v mpv)" ]; then
-  mpv "$@"
-else
-  toolbox run -c arch-toolbox mpv "$@"
-fi

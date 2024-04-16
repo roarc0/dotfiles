@@ -10,6 +10,8 @@ go install github.com/hherman1/gq@latest
 go install github.com/square/certstrap@latest
 go install github.com/knipferrc/branch-cleaner@latest
 go install github.com/cosmtrek/air@latest
+go install github.com/a-h/templ/cmd/templ@latest
+
 
 #vscode
 go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
