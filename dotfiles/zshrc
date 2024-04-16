@@ -15,7 +15,7 @@ COMPLETION_WAITING_DOTS="true"
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd/mm/yyyy"
 
-plugins=(git git-extras gitignore colorize zsh-syntax-highlighting zsh-completions zsh-autosuggestions docker docker-compose golang rust npm sudo vscode)
+plugins=(aliases systemd git git-extras gitignore ssh colorize docker docker-compose podman kubectl kubectx minikube golang rust npm sudo vscode zsh-syntax-highlighting zsh-completions zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
