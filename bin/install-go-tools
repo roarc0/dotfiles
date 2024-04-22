@@ -3,7 +3,7 @@
 #dev
 go install golang.org/x/tools/cmd/deadcode@latest
 go install github.com/99designs/gqlgen@latest
-go install go install go.uber.org/mock/mockgen@latest
+go install go.uber.org/mock/mockgen@latest
 go install github.com/bykof/go-plantuml@latest
 go install github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
 go install github.com/hherman1/gq@latest
@@ -11,7 +11,9 @@ go install github.com/square/certstrap@latest
 go install github.com/knipferrc/branch-cleaner@latest
 go install github.com/cosmtrek/air@latest
 go install github.com/a-h/templ/cmd/templ@latest
-
+go install github.com/antonmedv/fx@latest
+go install github.com/swaggo/swag/cmd/swag@latest
+go install github.com/derailed/k9s@latest
 
 #vscode
 go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
