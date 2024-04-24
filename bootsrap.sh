@@ -9,8 +9,8 @@ if [ "$USER" = "root" ]; then
   HOME="/root"
 fi
 
-mkdir $HOME/{workspace,dev,repos,tmp,sync} >/dev/null 2>&1 || true
-mkdir -p $HOME/.local/share/{icons,fonts} >/dev/null 2>&1 || true
+mkdir "$HOME"/{workspace,dev,repos,tmp,sync} >/dev/null 2>&1 || true
+mkdir -p "$HOME"/.local/share/{icons,fonts} >/dev/null 2>&1 || true
 
 install_link "$ENV_HOME/dotfiles/profile" "$HOME/.profile"
 install_link "$ENV_HOME/dotfiles/local/share/icons" "$HOME/.local/share/icons"

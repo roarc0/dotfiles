@@ -1,13 +1,11 @@
 [user]
 	email = alessandro.rosetti@gmail.com
 	name = Alessandro Rosetti
-	signingkey = C9C90A7C4A7804A0
-	#signingkey = ~/.ssh/id_ecdsa_git
+	#signingkey = C9C90A7C4A7804A0
+	signingkey = ~/.ssh/id_ecdsa_github
 
-#[includeIf "gitdir/i:personal/"]
-#  path = .gitconfig-personal
-#[includeIf "gitdir/i:work/"]
-#  path = .gitconfig-work'
+[includeIf "gitdir:~/workspace/**"]
+  path = ~/.gitconfig-work
 
 [core]
 	editor = nvim
@@ -66,8 +64,8 @@
 [commit]
 	gpgsign = true
 [gpg]
-	program = gpg
-	#format = ssh
+	#program = gpg
+	format = ssh
 [safe]
 	directory = /etc/portage
 [column]
