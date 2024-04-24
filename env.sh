@@ -20,6 +20,7 @@ export ENV_FILE
 . ~/.profile
 . "$ENV_HOME"/scripts/aliases.sh
 . "$ENV_HOME"/scripts/docker.sh
+. "$ENV_HOME"/scripts/k8s.sh
 . "$ENV_HOME"/scripts/functions.sh
 
 HOST="$(hostname)"
