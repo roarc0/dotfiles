@@ -30,3 +30,5 @@ alias kgcm="kubectl get cm"
 complete -F __start_kubectl_get_cm kgcm
 alias kgcmn="kubectl get cm -n"
 complete -F __start_kubectl_get_cm_-n kgcmn
+alias kgs="kubectl get services"
+complete -F __start_kubectl_get_services kgs
