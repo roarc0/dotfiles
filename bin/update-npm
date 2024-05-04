@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+set -e
+
+cd ~/.npm
+
+if ! command -v npm-check >/dev/null 2>&1; then
+  npm install npm-check
+fi
+
+npm-check -u
+
+cd -
