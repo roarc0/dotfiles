@@ -1,52 +1,58 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-#dev
-go install golang.org/x/tools/cmd/deadcode@latest
-go install github.com/99designs/gqlgen@latest
-go install go.uber.org/mock/mockgen@latest
-go install github.com/bykof/go-plantuml@latest
-go install github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
-go install github.com/hherman1/gq@latest
-go install github.com/square/certstrap@latest
-go install github.com/knipferrc/branch-cleaner@latest
-go install github.com/cosmtrek/air@latest
-go install github.com/a-h/templ/cmd/templ@latest
-go install github.com/antonmedv/fx@latest
-go install github.com/swaggo/swag/cmd/swag@latest
+go_install() {
+  printf "\033[31mInstalling %s\033[0m\n" "$1"
+  if ! go install "$1"; then
+    echo "Failed to install $1"
+  fi
+}
 
-go install github.com/derailed/k9s@latest
-# go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
-go install github.com/golang-migrate/migrate/v4/cmd/migrate@latest
-go install github.com/bitnami-labs/sealed-secrets/cmd/kubeseal@main
+packages=(
+  golang.org/x/tools/cmd/deadcode@latest
+  github.com/99designs/gqlgen@latest
+  go.uber.org/mock/mockgen@latest
+  github.com/bykof/go-plantuml@latest
+  github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
+  github.com/hherman1/gq@latest
+  github.com/square/certstrap@latest
+  github.com/knipferrc/branch-cleaner@latest
+  github.com/cosmtrek/air@latest
+  github.com/a-h/templ/cmd/templ@latest
+  github.com/antonmedv/fx@latest
+  github.com/swaggo/swag/cmd/swag@latest
+  github.com/googleapis/api-linter/cmd/api-linter@latest
+  github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+  github.com/derailed/k9s@latest
+  github.com/kubernetes/kompose@latest
+  github.com/bitnami-labs/sealed-secrets/cmd/kubeseal@main
+  github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
+  github.com/ramya-rao-a/go-outline@latest
+  github.com/cweill/gotests/gotests@latest
+  github.com/fatih/gomodifytags@latest
+  github.com/josharian/impl@latest
+  github.com/haya14busa/goplay/cmd/goplay@latest
+  github.com/go-delve/delve/cmd/dlv@latest
+  golang.org/x/lint/golint@latest
+  golang.org/x/tools/gopls@latest
+  golang.org/x/tools/cmd/godoc@master
+  github.com/gohugoio/hugo@latest
+  github.com/ipfs/kubo/cmd/ipfs@latest
+  github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+  github.com/yoheimuta/protolint/cmd/protolint@latest
+  github.com/bufbuild/buf/cmd/buf@latest
+  google.golang.org/protobuf/cmd/protoc-gen-go@latest
+  google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+  github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+  github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+  github.com/grpc-ecosystem/grpc-health-probe@latest
+  github.com/swaggo/swag/cmd/swag@latest
+)
+#tailscale.com/cmd/tailscale@latest
+#tailscale.com/cmd/tailscaled@latest
+#go_install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+#github.com/docker/docker/client@latest
+#github.com/open-policy-agent/opa@latest
 
-
-#vscode
-go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
-go install github.com/ramya-rao-a/go-outline@latest
-go install github.com/cweill/gotests/gotests@latest
-go install github.com/fatih/gomodifytags@latest
-go install github.com/josharian/impl@latest
-go install github.com/haya14busa/goplay/cmd/goplay@latest
-go install github.com/go-delve/delve/cmd/dlv@latest
-go install golang.org/x/lint/golint@latest
-go install golang.org/x/tools/gopls@latest
-go install golang.org/x/tools/cmd/godoc@master
-
-go install github.com/gohugoio/hugo@latest
-go install tailscale.com/cmd/tailscale@latest
-go install tailscale.com/cmd/tailscaled@latest
-
-go install github.com/ipfs/kubo/cmd/ipfs@latest
-#go install github.com/docker/docker/client@latest
-#go install github.com/open-policy-agent/opa@latest
-
-#grpc
-go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
-go install github.com/yoheimuta/protolint/cmd/protolint@latest
-go install github.com/bufbuild/buf/cmd/buf@latest
-go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
-go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
-go install github.com/grpc-ecosystem/grpc-health-probe@latest
-go install github.com/swaggo/swag/cmd/swag@latest
+for package in "${packages[@]}"; do
+  go_install "$package"
+done

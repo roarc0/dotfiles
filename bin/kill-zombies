@@ -1,4 +1,5 @@
 #!/bin/sh
+
 ZMB=$(ps -aux | awk '{ print $8 " " $2 }' | grep -w Z | awk '{ print $2 }')
 
 if [ -z "${ZMB}" ]; then

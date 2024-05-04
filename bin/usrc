@@ -11,7 +11,7 @@ update() {
 
 opt_update() {
   param=${1}
-  echo $param
+  echo "$param"
   if [ -d "$param" ]; then
     echoc 31 "updating $param\n"
   else

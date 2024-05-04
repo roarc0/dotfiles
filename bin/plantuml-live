@@ -1,2 +1,2 @@
 #!/bin/sh
-inotify_exec.sh "$1" plantuml "$1"
+inotify-exec "$1" plantuml "$1"

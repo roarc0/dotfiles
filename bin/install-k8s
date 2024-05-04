@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if command -v minikube &>/dev/null; then
+if command -v minikube >/dev/null 2>&1; then
   minikube version
 fi
 MINIKUBE="$HOME/.local/bin/minikube"
@@ -8,7 +8,7 @@ curl --progress-bar -L https://storage.googleapis.com/minikube/releases/latest/m
 chmod +x "$MINIKUBE"
 minikube version
 
-if command -v kubectl &>/dev/null; then
+if command -v kubectl >/dev/null 2>&1; then
   kubectl version
 fi
 KUBECTL="$HOME/.local/bin/kubectl"

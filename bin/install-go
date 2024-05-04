@@ -10,8 +10,7 @@ if [ -z "$GOROOT" ] || [ -z "$GOPATH" ]; then
 fi
 
 if [ -z "$VERSION" ]; then
-    echo "Please, specify the go version that you want to install as first argument."
-    exit 1
+    VERSION=$(curl -s -L https://golang.org/VERSION?m=text | awk -F 'go' '{print $2}')
 fi
 
 TMP_DIR=$(mktemp -d)
@@ -20,8 +19,7 @@ trap 'rm -rf -- "$TMP_DIR"' EXIT
 GO_TAR="$TMP_DIR/go.tar.gz"
 PACKAGE_NAME="go$VERSION.$PLATFORM.tar.gz"
 echo "Downloading $PACKAGE_NAME ..."
-curl -# -f -o "$GO_TAR" https://storage.googleapis.com/golang/"$PACKAGE_NAME"
-if [ $? -ne 0 ]; then
+if ! curl -# -f -o "$GO_TAR" https://storage.googleapis.com/golang/"$PACKAGE_NAME"; then
     echo "Download failed!"
     exit 1
 fi
@@ -36,8 +34,7 @@ if [ -d "$GOROOT" ]; then
     rm -rf "$GOROOT"
 fi
 
-mkdir -p "${GOPATH}"
-mkdir -p "$GOROOT"
+mkdir -p {"$GOPATH","$GOROOT"}
 tar -C "$GOROOT" --strip-components=1 -xzf "$GO_TAR"
 
 echo -e "\nGo $VERSION was installed into $GOROOT."

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-IMAGE=redis
-NAME=redis
-docker pull $IMAGE:latest
-docker stop $NAME
-docker rm $NAME
-docker run --rm --name $NAME -d -p 6379:6379 $IMAGE

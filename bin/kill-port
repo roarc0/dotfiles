@@ -1,2 +1,3 @@
 #!/bin/sh
+
 wport "$1" | xargs pkill -9
