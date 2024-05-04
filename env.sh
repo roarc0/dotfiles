@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-# shellcheck disable=SC1091
 
 ENV_HOME="$(
   cd "$(dirname "$0")" >/dev/null 2>&1 || exit
@@ -19,8 +18,8 @@ export ENV_FILE
 
 . ~/.profile
 . "$ENV_HOME"/scripts/aliases.sh
-. "$ENV_HOME"/scripts/docker.sh
-. "$ENV_HOME"/scripts/k8s.sh
+. "$ENV_HOME"/scripts/aliases-k8s.sh
+. "$ENV_HOME"/scripts/aliases-docker.sh
 . "$ENV_HOME"/scripts/functions.sh
 
 HOST="$(hostname)"
@@ -35,6 +34,3 @@ if [ -n "$HOST" ] && [ -d "$HOST_HOME" ]; then
     . "$HOST_HOME"/profile
   fi
 fi
-
-# if [[ -n $SSH_CONNECTION ]]; then
-# fi
