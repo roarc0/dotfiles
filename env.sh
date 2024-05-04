@@ -6,10 +6,9 @@ ENV_HOME="$(
 )"
 export ENV_HOME
 
-export PATH="${ENV_HOME}/bin:$PATH"
-export PATH="$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.npm/node_modules/.bin:$PATH"
+export PATH="$PATH:${ENV_HOME}/bin"
+export PATH="$PATH:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin"
+export PATH="$PATH:$HOME/.npm/node_modules/.bin"
 
 ENV_FILE="$ENV_HOME/.env"
 if [ -f "$ENV_FILE" ]; then
