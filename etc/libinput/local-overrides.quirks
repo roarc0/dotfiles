@@ -1,0 +1,5 @@
+[Logitech MX Master 3S]
+MatchVendor=0x46D
+MatchProduct=0xB034
+#ModelInvertHorizontalScrolling=1
+ModelSwapScrollingAxes=1
