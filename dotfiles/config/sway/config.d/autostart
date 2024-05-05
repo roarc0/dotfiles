@@ -1,5 +1,5 @@
-exec dbus-update-activation-environment --all
-#exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+#exec dbus-update-activation-environment --all
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 exec --no-startup-id mako
 exec --no-startup-id nm-applet
 exec --no-startup-id gnome-keyring-daemon --components=secrets

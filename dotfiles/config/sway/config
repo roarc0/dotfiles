@@ -19,7 +19,7 @@ include $conf/config.d/autostart
 #include $conf/config.d/inputs
 
 #outputs: swaymsg -t get_outputs
-set $display eDP-1
+#set $display eDP-1
 output * bg $wallpaper fill
 output $display res 1920x1080 pos 0 0
 output HDMI-A-1 res 1920x1080 pos 0 0

@@ -1,6 +1,30 @@
-awesome: &awesome Fira Code 10 Free:style=solid:pixelsize=14
-awesome_brands: &awesome_brands Fira Code 10 Brands:pixelsize=16
-std_underline: &std_underline {underline: { size: 2, color: 00ff00ff}}
+underline: &underline {underline: { size: 2, color: 00ff00ff}}
+font-md: &font-md "Fira Code:size=13:regular"
+font-lg: &font-lg "Fira Code:size=14:bold"
+font-icon: &font-icon "Fira Code:size=13"
+icon-margin: &icon-margin {left-margin: 5, right-margin: 5}
+col-normal: &col-normal {foreground: aaaaaaff}
+col-alert: &col-alert {foreground: ffcc66ff}
+col-critical: &col-critical {foreground: ff5555ff, font: *font-lg}
+blank: &blank {string: {text: ""}}
+
+.colors:
+  0:  &c0  2e3440ff
+  1:  &c1  3b4252ff
+  2:  &c2  434c5eff
+  3:  &c3  4c566aff
+  4:  &c4  d8dee9ff
+  5:  &c5  e5e9f0ff
+  6:  &c6  eceff4ff
+  7:  &c7  8fbcbbff
+  8:  &c8  88c0d0ff
+  9:  &c9  81a1c1ff
+  10: &c10 5e81acff
+  11: &c11 bf616aff
+  12: &c12 d08770ff
+  13: &c13 ebcb8bff
+  14: &c14 a3be8cff
+  15: &c15 b48eadff
 
 bar:
   height: 30
@@ -9,10 +33,10 @@ bar:
   margin: 5
   font: Fira Code:pixelsize=14
   foreground: ffffffff
-  background: 111111ee
+  background: 111111cc
   border:
-    width: 0
-    color: 999999cc
+    width: 1
+    color: 111111ee
     margin: 0
     top-margin: 0
 
@@ -21,17 +45,17 @@ bar:
         anchors:
           - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
           - string: &default {<<: *i3_common, text: "{name}"}
-          - string: &main    {<<: *i3_common, text: , font: *awesome}
-          - string: &surfing {<<: *i3_common, text: , font: *awesome_brands}
-          - string: &misc    {<<: *i3_common, text: , font: *awesome}
-          - string: &mail    {<<: *i3_common, text: , font: *awesome}
-          - string: &music   {<<: *i3_common, text: , font: *awesome}
+          - string: &main    {<<: *i3_common, text: , font: *font-md}
+          - string: &surfing {<<: *i3_common, text: , font: *font-md}
+          - string: &misc    {<<: *i3_common, text: , font: *font-md}
+          - string: &mail    {<<: *i3_common, text: , font: *font-md}
+          - string: &music   {<<: *i3_common, text: , font: *font-md}
           - focused: &focused
-              deco: {stack: [background: {color: a0ffa04c}, <<: *std_underline]}
+              deco: {stack: [background: {color: a0ffa04c}, <<: *underline]}
           - invisible: &invisible {foreground: ffffff55}
           - urgent: &urgent
               foreground: 000000ff
-              deco: {stack: [background: {color: bc2b3fff}, <<: *std_underline]}
+              deco: {stack: [background: {color: bc2b3fff}, <<: *underline]}
           - map: &i3_mode
               default:
                 - string:
@@ -125,10 +149,41 @@ bar:
 #              state == playing: {list: *artist_album_title}
 
   right:
+    - script:
+        anchors:
+          - cpu: &cpu  {text: " {cpu}%", <<: *icon-margin}
+          - mem: &mem  {text: " {mem}%", <<: *icon-margin}
+          - disk: &disk {text: " {disk}%", <<: *icon-margin}
+          - noop: &noop {text: "", <<: *icon-margin}
+
+        path: "~/.config/yambar/yambar-top"
+        args: ["10"]
+        poll-interval: 1000
+        content:
+          - ramp:
+              tag: cpu
+              items:
+                - string: {<<: [*cpu, *col-normal]}
+                - string: {<<: [*cpu, *col-normal]}
+                - string: {<<: [*cpu, *col-alert]}
+                - string: {<<: [*cpu, *col-critical]}
+          - ramp:
+              tag: mem
+              items:
+                - string: {<<: [*mem, *col-normal]}
+                - string: {<<: [*mem, *col-alert]}
+                - string: {<<: [*mem, *col-critical]}
+          - ramp:
+              tag: disk
+              items:
+                - string: {<<: [*disk, *col-normal]}
+                - string: {<<: [*disk, *col-normal]}
+                - string: {<<: [*disk, *col-alert]}
+                - string: {<<: [*disk, *col-critical]}
     - removables:
         anchors:
-          drive: &drive { text: , font: *awesome}
-          optical: &optical {text: , font: *awesome}
+          drive: &drive { text: , font: *font-md}
+          optical: &optical {text: , font: *font-md}
         spacing: 5
         content:
           map:
@@ -144,55 +199,19 @@ bar:
                   on-click: udisksctl unmount -b {device}
                   conditions:
                     ~optical:
-                      - string: {<<: *drive, deco: *std_underline}
+                      - string: {<<: *drive, deco: *underline}
                       - string: {text: "{label}"}
                     optical:
-                      - string: {<<: *optical, deco: *std_underline}
+                      - string: {<<: *optical, deco: *underline}
                       - string: {text: "{label}"}
     - sway-xkb:
         identifiers: [1:1:AT_Translated_Set_2_keyboard]
         content:
-          - string: {text: , font: *awesome}
+          - string: {text: , font: *font-md}
           - string: {text: "{layout}"}
-    - network:
-        content:
-          map:
-            default: {empty: {}}
-            conditions:
-              name == enp1s0:
-                map:
-                  conditions:
-                    ~carrier: {empty: {}}
-                    carrier:
-                      map:
-                        default: {string: {text: , font: *awesome, foreground: ffffff66}}
-                        conditions:
-                          state == up && ipv4 != "": {string: {text: , font: *awesome}}
-    - network:
-        poll-interval: 1000
-        content:
-          map:
-            default: {empty: {}}
-            conditions:
-              name == enp6s0:
-                map:
-                  default: {string: {text: , font: *awesome, foreground: ffffff66}}
-                  conditions:
-                    state == down: {string: {text: , font: *awesome, foreground: ff0000ff}}
-                    state == up:
-                      map:
-                        default:
-                          - string: {text: , font: *awesome}
-                          - string: {text: "{ssid} {dl-speed:mb}/{ul-speed:mb} Mb/s"}
-
-                        conditions:
-                          ipv4 == "":
-                            - string: {text: , font: *awesome, foreground: ffffff66}
-                            - string: {text: "{ssid} {dl-speed:mb}/{ul-speed:mb} Mb/s", foreground: ffffff66}
     - clock:
-        time-format: "%H:%M"
+        time-format: "%I:%M %p"
         content:
-          - string: {text: , font: *awesome}
-          - string: {text: "{date}", right-margin: 5}
-          - string: {text: , font: *awesome, right-margin: 3}
-          - string: {text: "{time}"}
+          - string: {text: "", font: *font-md, <<: *icon-margin}
+          - string: {text: "{date}", font: *font-md}
+          - string: {text: " {time}", <<: *icon-margin, font: *font-md}
