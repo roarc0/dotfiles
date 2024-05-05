@@ -1,0 +1,1 @@
+set $menu bemenu-run -p ">" -bli -H 30 --tb \"$background\" --tf \"$focus_text\" --nb \"$background\" --nf \"$unfocus_text\" --nf \"$font\"

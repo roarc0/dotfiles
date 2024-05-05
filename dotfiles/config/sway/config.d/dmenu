@@ -1,0 +1,1 @@
+set $menu dmenu_run -i -sb \"$background\" -sf \"$focus_text\" -nb \"$background\" -nf \"$unfocus_text\" -fn \"$font\"

@@ -1,8 +1,8 @@
 underline: &underline {underline: { size: 2, color: 00ff00ff}}
-font-md: &font-md "Fira Code:size=13:regular"
-font-lg: &font-lg "Fira Code:size=14:bold"
-font-icon: &font-icon "Fira Code:size=13"
-icon-margin: &icon-margin {left-margin: 5, right-margin: 5}
+font-md: &font-md "Fira Code:size=15:regular"
+font-lg: &font-lg "Fira Code:size=15:bold"
+font-icon: &font-icon "Fira Code:size=15"
+icon-margin: &icon-margin {left-margin: 7, right-margin: 7}
 col-normal: &col-normal {foreground: aaaaaaff}
 col-alert: &col-alert {foreground: ffcc66ff}
 col-critical: &col-critical {foreground: ff5555ff, font: *font-lg}
@@ -29,7 +29,7 @@ blank: &blank {string: {text: ""}}
 bar:
   height: 30
   location: top
-  spacing: 12
+  spacing: 6
   margin: 5
   font: Fira Code:pixelsize=14
   foreground: ffffffff
@@ -180,6 +180,26 @@ bar:
                 - string: {<<: [*disk, *col-normal]}
                 - string: {<<: [*disk, *col-alert]}
                 - string: {<<: [*disk, *col-critical]}
+    - network:
+        poll-interval: 5000
+        content:
+          map:
+            default: {empty: {}}
+            conditions:
+              name == enp6s0:
+                map:
+                  default: {string: {text: , font: *font-md}}
+                  conditions:
+                    state == down: {string: {text: , font: *font-md}}
+                    state == up:
+                      map:
+                        default:
+                          - string: {text: , font: *font-md}
+                          - string: {text: "{ssid} {dl-speed:mb}/{ul-speed:mb} Mb/s"}
+                        conditions:
+                          ipv4 == "":
+                            - string: {text: , font: *font-md}
+                            - string: {text: "{ssid} {dl-speed:mb}/{ul-speed:mb} Mb/s"}
     - removables:
         anchors:
           drive: &drive { text: , font: *font-md}
@@ -205,13 +225,13 @@ bar:
                       - string: {<<: *optical, deco: *underline}
                       - string: {text: "{label}"}
     - sway-xkb:
-        identifiers: [1:1:AT_Translated_Set_2_keyboard]
+        identifiers: [1266:8537:Chicony_Perixx_Ergo_Keyboard]
         content:
-          - string: {text: , font: *font-md}
+          - string: {text: , font: *font-md, <<: *icon-margin}
           - string: {text: "{layout}"}
     - clock:
         time-format: "%I:%M %p"
         content:
           - string: {text: "", font: *font-md, <<: *icon-margin}
           - string: {text: "{date}", font: *font-md}
-          - string: {text: " {time}", <<: *icon-margin, font: *font-md}
+          - string: {text: " {time}", <<: *icon-margin, font: *font-lg}

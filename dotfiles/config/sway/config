@@ -1,10 +1,6 @@
 set $conf ~/.config/sway
 set $font pango:Fira Code 14
 set $term foot
-set $editor nvim
-set $wallpaper ~/pictures/wm/wallpaper.png
-set $locker swaylock -i ~/pictures/wm/lockscreen.png
-
 set $mod Mod4
 set $sup Mod1
 set $left h
@@ -12,23 +8,8 @@ set $down j
 set $up k
 set $right l
 set $bar_height 30
-
-###### includes ######
-include $conf/config.d/colors
-include $conf/config.d/autostart
-#include $conf/config.d/inputs
-
-#outputs: swaymsg -t get_outputs
-#set $display eDP-1
-output * bg $wallpaper fill
-output $display res 1920x1080 pos 0 0
-output HDMI-A-1 res 1920x1080 pos 0 0
-
-bindswitch --reload --locked lid:on output $display disable
-bindswitch --reload --locked lid:off output $display enable
-
-#set $menu dmenu_run -i -sb \"$background\" -sf \"$focus_text\" -nb \"$background\" -nf \"$unfocus_text\" -fn \"$font\"
-set $menu bemenu-run -bli -H 30 --tb \"$background\" --tf \"$focus_text\" --nb \"$background\" --nf \"$unfocus_text\" --nf \"$font\"
+set $wallpaper ~/pictures/wm/wallpaper.png
+set $locker swaylock -i ~/pictures/wm/lockscreen.png
 
 # old 1:1
 set $ws1 1
@@ -42,31 +23,55 @@ set $ws8 8
 set $ws9 9
 set $ws0 10
 
+include $conf/config.d/colors
+include $conf/config.d/autostart
+include $conf/config.d/bemenu
+include $conf/config.d/yambar
+
+#inputs: swaymsg -t get_inputs
+input * {
+	xkb_layout "us"
+	xkb_variant "altgr-intl"
+}
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+}
+
+#outputs: swaymsg -t get_outputs
+output * bg $wallpaper fill
+#output HDMI-A-1 res 1920x1080 pos 0 0
+set $laptop eDP-1
+output $laptop res 1920x1080 pos 0 0
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
 font $font
-focus_follows_mouse yes
-#workspace_auto_back_and_forth yes
-hide_edge_borders both
 gaps inner 4
+focus_follows_mouse yes
+hide_edge_borders both
+#workspace_auto_back_and_forth yes
 
 set $telegram ^.*elegram.*$
 set $chrome ^.*chrom.*$
 set $firefox ^.*firefox.*$
-set $browser $chrome
+set $browser chrome
+set $ide Code
 
-#for_window [class="foot"] border none
-#for_window [class="alacritty"] border none
-#for_window [class="$firefox"] border none
-#for_window [class="$chrome"] border none
-for_window [app_id="$telegram"] border none
-bindsym End [class="$browser"] focus
+# swaymsg -t get_tree
+bindsym F1 [class="$browser"] focus
+bindsym F2 [class="$ide"] focus
 bindsym F12 [app_id="$telegram"] focus
 bindsym F11 [class="mpv"] focus
+for_window [class="$firefox"] border none
+for_window [class="$chrome"] border none
+for_window [app_id="$telegram"] border none
+for_window [class="$ide"] border none
+for_window [class="(?i).*zenity"] floating enable, move position center
+for_window [window_type="dialog"] floating enable
+for_window [app_id="zoom"] floating enable
 assign [app_id="$telegram"] $ws3
 #assign [class="$browser"] $ws2
-
-#for_window [class="(?i).*zenity"] floating enable, move position center
-#for_window [window_type="dialog"] floating enable
-for_window [app_id="zoom"] floating enable
 
 ###### theme ######
 #<colorclass>           <border>      <background> <text>        <indicator> <child_border>
@@ -79,9 +84,6 @@ client.focused_inactive $unfocus_2  $unfocus_2 $unfocus_text $alarm $unfocus_2
 client.unfocused        $unfocus_2  $unfocus_2 $unfocus_text $alarm $unfocus_2
 client.urgent           $unfocus_2  $unfocus_2 $alarm_text   $alarm $unfocus_2
 
-###### bar ######
-include $conf/config.d/yambar
-
 ###### keybinds ######
 floating_modifier $mod normal
 
@@ -89,11 +91,9 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+x exec $locker
 bindsym Pause exec $locker
 bindsym $mod+d exec $menu
-#bindsym $mod+v exec $browser
 bindsym Print exec ~/env/bin/screenshot
 bindsym Shift+Print exec ~/env/bin/screenshot-sel
 
-bindsym $mod+Shift+a exec "pavucontrol"
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle

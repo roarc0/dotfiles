@@ -2,7 +2,8 @@
 exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 exec --no-startup-id mako
 exec --no-startup-id nm-applet
-exec --no-startup-id gnome-keyring-daemon --components=secrets
+exec --no-startup-id polkit-authentication-agent-1
+exec --no-startup-id gnome-keyring-daemon --components=secrets,pkcs11,ssh
 exec --no-startup-id ~/env/bin/ssh-agent.sh
 exec --no-startup-id swayidle timeout 60 '$BrightnessLow' \
     timeout 300 '$Locker' \
