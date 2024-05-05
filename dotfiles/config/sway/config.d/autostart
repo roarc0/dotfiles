@@ -1,13 +1,12 @@
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
-
+exec dbus-update-activation-environment --all
+#exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+exec --no-startup-id mako
+exec --no-startup-id nm-applet
+exec --no-startup-id gnome-keyring-daemon --components=secrets
+exec --no-startup-id ~/env/bin/ssh-agent.sh
 exec --no-startup-id swayidle timeout 60 '$BrightnessLow' \
     timeout 300 '$Locker' \
     timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on" ; $BrightnessHigh' \
     before-sleep '$Locker'
-
-exec --no-startup-id mako
-exec --no-startup-id nm-applet
-exec --no-startup-id gnome-keyring-daemon -r -d #--components=secrets
-exec --no-startup-id ~/env/bin/ssh-agent.sh
-exec_always $conf/scripts/lid.sh
-exec_always "systemctl --user import-environment"
+#exec_always "$conf"/scripts/lid.sh
+#exec_always "systemctl --user import-environment"

@@ -1,6 +1,6 @@
 set $conf ~/.config/sway
-set $font pango:Fira Code 12 
-set $term alacritty
+set $font pango:Fira Code 14
+set $term foot
 set $editor nvim
 set $wallpaper ~/pictures/wm/wallpaper.png
 set $locker swaylock -i ~/pictures/wm/lockscreen.png
@@ -11,40 +11,42 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $bar_height 26
+set $bar_height 30
 
 ###### includes ######
 include $conf/config.d/colors
 include $conf/config.d/autostart
-include $conf/config.d/inputs
+#include $conf/config.d/inputs
 
 #outputs: swaymsg -t get_outputs
-set $laptop eDP-1
+set $display eDP-1
 output * bg $wallpaper fill
-output $laptop res 1920x1080 pos 0 0
+output $display res 1920x1080 pos 0 0
 output HDMI-A-1 res 1920x1080 pos 0 0
 
-bindswitch --reload --locked lid:on output $laptop disable
-bindswitch --reload --locked lid:off output $laptop enable
+bindswitch --reload --locked lid:on output $display disable
+bindswitch --reload --locked lid:off output $display enable
 
-set $menu dmenu_run -i -sb \"$background\" -sf \"$focus_text\" -nb \"$background\" -nf \"$unfocus_text\" -fn \"$font\"
+#set $menu dmenu_run -i -sb \"$background\" -sf \"$focus_text\" -nb \"$background\" -nf \"$unfocus_text\" -fn \"$font\"
+set $menu bemenu-run -bli -H 30 --tb \"$background\" --tf \"$focus_text\" --nb \"$background\" --nf \"$unfocus_text\" --nf \"$font\"
 
-set $ws1 1:1
-set $ws2 2:2
-set $ws3 3:3
-set $ws4 4:4
-set $ws5 5:5
-set $ws6 6:6
-set $ws7 7:7
-set $ws8 8:8
-set $ws9 9:9
-set $ws0 10:10
+# old 1:1
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws0 10
 
 font $font
 focus_follows_mouse yes
 #workspace_auto_back_and_forth yes
 hide_edge_borders both
-gaps inner 3
+gaps inner 4
 
 set $telegram ^.*elegram.*$
 set $chrome ^.*chrom.*$
@@ -56,7 +58,6 @@ set $browser $chrome
 #for_window [class="$firefox"] border none
 #for_window [class="$chrome"] border none
 for_window [app_id="$telegram"] border none
-
 bindsym End [class="$browser"] focus
 bindsym F12 [app_id="$telegram"] focus
 bindsym F11 [class="mpv"] focus
@@ -79,7 +80,7 @@ client.unfocused        $unfocus_2  $unfocus_2 $unfocus_text $alarm $unfocus_2
 client.urgent           $unfocus_2  $unfocus_2 $alarm_text   $alarm $unfocus_2
 
 ###### bar ######
-include $conf/config.d/waybar
+include $conf/config.d/yambar
 
 ###### keybinds ######
 floating_modifier $mod normal

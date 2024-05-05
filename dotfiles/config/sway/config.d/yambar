@@ -1,0 +1,6 @@
+exec_always sh -c "killall yambar; yambar &"
+
+#bar {
+#    swaybar_command yambar
+#    id bar1
+#}

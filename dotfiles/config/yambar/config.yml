@@ -1,0 +1,198 @@
+awesome: &awesome Fira Code 10 Free:style=solid:pixelsize=14
+awesome_brands: &awesome_brands Fira Code 10 Brands:pixelsize=16
+std_underline: &std_underline {underline: { size: 2, color: 00ff00ff}}
+
+bar:
+  height: 30
+  location: top
+  spacing: 12
+  margin: 5
+  font: Fira Code:pixelsize=14
+  foreground: ffffffff
+  background: 111111ee
+  border:
+    width: 0
+    color: 999999cc
+    margin: 0
+    top-margin: 0
+
+  left:
+    - i3:
+        anchors:
+          - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
+          - string: &default {<<: *i3_common, text: "{name}"}
+          - string: &main    {<<: *i3_common, text: , font: *awesome}
+          - string: &surfing {<<: *i3_common, text: , font: *awesome_brands}
+          - string: &misc    {<<: *i3_common, text: , font: *awesome}
+          - string: &mail    {<<: *i3_common, text: , font: *awesome}
+          - string: &music   {<<: *i3_common, text: , font: *awesome}
+          - focused: &focused
+              deco: {stack: [background: {color: a0ffa04c}, <<: *std_underline]}
+          - invisible: &invisible {foreground: ffffff55}
+          - urgent: &urgent
+              foreground: 000000ff
+              deco: {stack: [background: {color: bc2b3fff}, <<: *std_underline]}
+          - map: &i3_mode
+              default:
+                - string:
+                    margin: 5
+                    text: "{mode}"
+                    deco: {background: {color: cc421dff}}
+                - empty: {right-margin: 7}
+              conditions:
+                mode == default: {empty: {}}
+        content:
+          "":
+            map:
+              conditions:
+                state == focused:   {string: {<<: [*default, *focused]}}
+                state == unfocused: {string: {<<: *default}}
+                state == invisible: {string: {<<: [*default, *invisible]}}
+                state == urgent:    {string: {<<: [*default, *urgent]}}
+          main:
+            map:
+              conditions:
+                state == focused:   {string: {<<: [*main, *focused]}}
+                state == unfocused: {string: {<<: *main}}
+                state == invisible: {string: {<<: [*main, *invisible]}}
+                state == urgent:    {string: {<<: [*main, *urgent]}}
+          surfing:
+            map:
+              conditions:
+                state == focused: {string: {<<: [*surfing, *focused]}}
+                state == unfocused: {string: {<<: *surfing}}
+                state == invisible: {string: {<<: [*surfing, *invisible]}}
+                state == urgent:    {string: {<<: [*surfing, *urgent]}}
+          misc:
+            map:
+              conditions:
+                state == focused: {string: {<<: [*misc, *focused]}}
+                state == unfocused: {string: {<<: *misc}}
+                state == invisible: {string: {<<: [*misc, *invisible]}}
+                state == urgent:    {string: {<<: [*misc, *urgent]}}
+          mail:
+            map:
+              conditions:
+                state == focused: {string: {<<: [*mail, *focused]}}
+                state == unfocused: {string: {<<: *mail}}
+                state == invisible: {string: {<<: [*mail, *invisible]}}
+                state == urgent:    {string: {<<: [*mail, *urgent]}}
+          music:
+            map:
+              conditions:
+                state == focused: {string: {<<: [*music, *focused]}}
+                state == unfocused: {string: {<<: *music}}
+                state == invisible: {string: {<<: [*music, *invisible]}}
+                state == urgent:    {string: {<<: [*music, *urgent]}}
+    - foreign-toplevel:
+        content:
+          map:
+            conditions:
+              ~activated: {empty: {}}
+              activated:
+                - string: {text: "{app-id}", foreground: 72fc72ff}
+                - string: {text: ": {title}"}
+
+#  center:
+#    - mpd:
+#        host: /run/mpd/socket
+#        anchors:
+#          list: &artist_album_title
+#            spacing: 0
+#            items:
+#              - map:
+#                  conditions:
+#                    state == playing: {string: {text: "{artist}"}}
+#                    state == paused: {string: {text: "{artist}", foreground: ffffff66}}
+#              - string: {text: " | ", foreground: ffffff66}
+#              - map:
+#                  conditions:
+#                    state == playing: {string: {text: "{album}"}}
+#                    state == paused: {string: {text: "{album}", foreground: ffffff66}}
+#              - string: {text: " | ", foreground: ffffff66}
+#              - map:
+#                  conditions:
+#                    state == playing: {string: {text: "{title}", foreground: ffa0a0ff}}
+#                    state == paused: {string: {text: "{title}", foreground: ffffff66}}
+
+#        content:
+#          map:
+#            margin: 10
+#            conditions:
+#              state == offline: {string: {text: offline, foreground: ff0000ff}}
+#              state == stopped: {string: {text: stopped}}
+#              state == paused: {list: *artist_album_title}
+#              state == playing: {list: *artist_album_title}
+
+  right:
+    - removables:
+        anchors:
+          drive: &drive { text: , font: *awesome}
+          optical: &optical {text: , font: *awesome}
+        spacing: 5
+        content:
+          map:
+            conditions:
+              ~mounted:
+                map:
+                  on-click: udisksctl mount -b {device}
+                  conditions:
+                    ~optical: [{string: *drive}, {string: {text: "{label}"}}]
+                    optical: [{string: *optical}, {string: {text: "{label}"}}]
+              mounted:
+                map:
+                  on-click: udisksctl unmount -b {device}
+                  conditions:
+                    ~optical:
+                      - string: {<<: *drive, deco: *std_underline}
+                      - string: {text: "{label}"}
+                    optical:
+                      - string: {<<: *optical, deco: *std_underline}
+                      - string: {text: "{label}"}
+    - sway-xkb:
+        identifiers: [1:1:AT_Translated_Set_2_keyboard]
+        content:
+          - string: {text: , font: *awesome}
+          - string: {text: "{layout}"}
+    - network:
+        content:
+          map:
+            default: {empty: {}}
+            conditions:
+              name == enp1s0:
+                map:
+                  conditions:
+                    ~carrier: {empty: {}}
+                    carrier:
+                      map:
+                        default: {string: {text: , font: *awesome, foreground: ffffff66}}
+                        conditions:
+                          state == up && ipv4 != "": {string: {text: , font: *awesome}}
+    - network:
+        poll-interval: 1000
+        content:
+          map:
+            default: {empty: {}}
+            conditions:
+              name == enp6s0:
+                map:
+                  default: {string: {text: , font: *awesome, foreground: ffffff66}}
+                  conditions:
+                    state == down: {string: {text: , font: *awesome, foreground: ff0000ff}}
+                    state == up:
+                      map:
+                        default:
+                          - string: {text: , font: *awesome}
+                          - string: {text: "{ssid} {dl-speed:mb}/{ul-speed:mb} Mb/s"}
+
+                        conditions:
+                          ipv4 == "":
+                            - string: {text: , font: *awesome, foreground: ffffff66}
+                            - string: {text: "{ssid} {dl-speed:mb}/{ul-speed:mb} Mb/s", foreground: ffffff66}
+    - clock:
+        time-format: "%H:%M"
+        content:
+          - string: {text: , font: *awesome}
+          - string: {text: "{date}", right-margin: 5}
+          - string: {text: , font: *awesome, right-margin: 3}
+          - string: {text: "{time}"}
