@@ -5,9 +5,14 @@ exec --no-startup-id nm-applet
 exec --no-startup-id polkit-authentication-agent-1
 exec --no-startup-id gnome-keyring-daemon --components=secrets,pkcs11,ssh
 exec --no-startup-id ~/env/bin/ssh-agent.sh
-exec --no-startup-id swayidle timeout 60 '$BrightnessLow' \
-    timeout 300 '$Locker' \
-    timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on" ; $BrightnessHigh' \
-    before-sleep '$Locker'
+exec --no-startup-id swayidle \
+    timeout 60 '$brightness_low' \
+    timeout 400 '$locker' \
+    timeout 460 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on" ; $brightness_high' \
+    before-sleep '$locker'
+
 #exec_always "$conf"/scripts/lid.sh
 #exec_always "systemctl --user import-environment"
+#exec wl-paste -t text --watch clipman store --no-persist
+

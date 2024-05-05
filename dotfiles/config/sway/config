@@ -23,164 +23,22 @@ set $ws8 8
 set $ws9 9
 set $ws0 10
 
-include $conf/config.d/colors
-include $conf/config.d/autostart
-include $conf/config.d/bemenu
-include $conf/config.d/yambar
-
-#inputs: swaymsg -t get_inputs
-input * {
-	xkb_layout "us"
-	xkb_variant "altgr-intl"
-}
-input type:touchpad {
-    tap enabled
-    natural_scroll enabled
-}
-
-#outputs: swaymsg -t get_outputs
-output * bg $wallpaper fill
-#output HDMI-A-1 res 1920x1080 pos 0 0
-set $laptop eDP-1
-output $laptop res 1920x1080 pos 0 0
-bindswitch --reload --locked lid:on output $laptop disable
-bindswitch --reload --locked lid:off output $laptop enable
-
 font $font
 gaps inner 4
 focus_follows_mouse yes
 hide_edge_borders both
+#xwayland disable
 #workspace_auto_back_and_forth yes
 
-set $telegram ^.*elegram.*$
-set $chrome ^.*chrom.*$
-set $firefox ^.*firefox.*$
-set $browser chrome
-set $ide Code
-
-# swaymsg -t get_tree
-bindsym F1 [class="$browser"] focus
-bindsym F2 [class="$ide"] focus
-bindsym F12 [app_id="$telegram"] focus
-bindsym F11 [class="mpv"] focus
-for_window [class="$firefox"] border none
-for_window [class="$chrome"] border none
-for_window [app_id="$telegram"] border none
-for_window [class="$ide"] border none
-for_window [class="(?i).*zenity"] floating enable, move position center
-for_window [window_type="dialog"] floating enable
-for_window [app_id="zoom"] floating enable
-assign [app_id="$telegram"] $ws3
-#assign [class="$browser"] $ws2
-
-###### theme ######
-#<colorclass>           <border>      <background> <text>        <indicator> <child_border>
-client.focused          $unfocus_2    $focus_2     $focus_text   $alarm   $focus_2
-#client.focused_inactive $unfocus_2$a  $unfocus_2$a $unfocus_text $alarm$a $unfocus_2$a
-#client.unfocused        $unfocus_2$a  $unfocus_2$a $unfocus_text $alarm$a $unfocus_2$a
-#client.urgent           $unfocus_2$a  $unfocus_2$a $alarm_text   $alarm$a $unfocus_2$a
-
-client.focused_inactive $unfocus_2  $unfocus_2 $unfocus_text $alarm $unfocus_2
-client.unfocused        $unfocus_2  $unfocus_2 $unfocus_text $alarm $unfocus_2
-client.urgent           $unfocus_2  $unfocus_2 $alarm_text   $alarm $unfocus_2
-
-###### keybinds ######
-floating_modifier $mod normal
-
-bindsym $mod+Return exec $term
-bindsym $mod+Shift+x exec $locker
-bindsym Pause exec $locker
-bindsym $mod+d exec $menu
-bindsym Print exec ~/env/bin/screenshot
-bindsym Shift+Print exec ~/env/bin/screenshot-sel
-
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
-bindsym XF86MonBrightnessUp exec brightnessctl s +5%
-
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+e exit
-#bindsym $mod+m bar mode toggle
-
-### window controls
-bindsym $mod+Shift+q kill
-bindsym $mod+BackSpace kill
-bindsym $mod+b splith
-bindsym $mod+v splitv
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-bindsym $mod+f fullscreen toggle
-bindsym $mod+Shift+space floating toggle
-#bindsym $mod+x [urgent=latest] focus
-#bindsym $mod+space focus mode_toggle
-#bindsym $mod+a focus parent
-#bindsym $mod+d focus child
-bindsym $mod+Tab focus right
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
-
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
-
-### workspaces controls
-bindsym $mod+$righteft workspace prev_on_output
-bindsym $mod+Right workspace next_on_output
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws0
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws0
-#bindsym Shift+$mod+f move workspace to output right
-#bindsym Shift+$mod+s move workspace to output left
-
-###### modes ######
-bindsym $mod+r mode "resize"
-mode "resize" {
-    bindsym $left resize shrink width 10 px or 10 ppt
-    bindsym $down resize grow height 10 px or 10 ppt
-    bindsym $up resize shrink height 10 px or 10 ppt
-    bindsym $right resize grow width 10 px or 10 ppt
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-bindsym $mod+Pause mode "system"
-mode "system" {
-    bindsym e exec --no-startup-id swaymsg exit, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl suspend && $locker, mode "default"
-    bindsym Shift+h exec --no-startup-id systemctl hibernate && $locker, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym s exec --no-startup-id systemctl poweroff -i, mode "default"
-}
+include $conf/config.d/colors
+include $conf/config.d/input
+include $conf/config.d/output
+include $conf/config.d/autostart
+include $conf/config.d/theme
+include $conf/config.d/controls
+include $conf/config.d/windows
+include $conf/config.d/mode_resize
+include $conf/config.d/mode_swaynag
+include $conf/config.d/mode_system
+include $conf/config.d/bemenu
+include $conf/config.d/yambar

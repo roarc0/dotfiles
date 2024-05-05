@@ -1,0 +1,9 @@
+#inputs: swaymsg -t get_inputs
+input * {
+	xkb_layout "us"
+	xkb_variant "altgr-intl"
+}
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+}
