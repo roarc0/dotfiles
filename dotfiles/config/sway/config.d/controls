@@ -8,16 +8,6 @@ bindsym $mod+d exec $menu
 bindsym Print exec ~/env/bin/screenshot
 bindsym Shift+Print exec ~/env/bin/screenshot-sel
 
-bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym --locked XF86AudioPlay exec playerctl play-pause
-bindsym --locked XF86AudioPause exec playerctl pause
-bindsym --locked XF86AudioNext exec playerctl next
-bindsym --locked XF86AudioPrev exec playerctl previous
-bindsym --locked XF86MonBrightnessDown exec brightnessctl s 5%-
-bindsym --locked XF86MonBrightnessUp exec brightnessctl s +5%
-
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exit
 #bindsym $mod+m bar mode toggle
@@ -27,6 +17,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+BackSpace kill
 bindsym $mod+b splith
 bindsym $mod+v splitv
+#bindsym $mod+? splitt
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
@@ -74,3 +65,21 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws0
 #bindsym Shift+$mod+f move workspace to output right
 #bindsym Shift+$mod+s move workspace to output left
+
+### notifications
+bindsym Control+Space exec makoctl dismiss
+bindsym Control+Shift+Space exec makoctl dismiss --all
+
+### multimedia
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioPause exec playerctl pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
+bindsym --locked XF86MonBrightnessDown exec brightnessctl s 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl s +5%
+
+bindsym $mod+Home exec --no-startup-id pkill -USR1 redshift
+

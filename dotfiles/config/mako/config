@@ -1,10 +1,16 @@
+font=Fira Code 14
+
 background-color=#002b36
 text-color=#839496
 border-color=#839496
 border-size=4
+margin=8
+
+#anchor=bottom-right
 ignore-timeout=1
 default-timeout=5000
-margin=8
+
+#output=''
 
 [hidden]
 format=(and %h more)

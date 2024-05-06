@@ -1,8 +1,11 @@
 bindsym $mod+Pause mode "system"
 mode "system" {
-    bindsym e exec --no-startup-id swaymsg exit, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl suspend && $locker, mode "default"
-    bindsym Shift+h exec --no-startup-id systemctl hibernate && $locker, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym s exec --no-startup-id systemctl poweroff -i, mode "default"
+    bindsym l $locker, mode "default"
+    bindsym e exec swaymsg exit
+    bindsym s exec systemctl poweroff -i, mode "default"
+    bindsym r exec systemctl reboot, mode "default"
+    bindsym Shift+s exec systemctl suspend && $locker, mode "default"
+    bindsym Shift+h exec systemctl hibernate && $locker, mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }

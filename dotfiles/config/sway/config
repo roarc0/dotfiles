@@ -24,7 +24,8 @@ set $ws9 9
 set $ws0 10
 
 font $font
-gaps inner 4
+gaps inner 10
+smart_gaps on
 focus_follows_mouse yes
 hide_edge_borders both
 #xwayland disable
@@ -42,3 +43,4 @@ include $conf/config.d/mode_swaynag
 include $conf/config.d/mode_system
 include $conf/config.d/bemenu
 include $conf/config.d/yambar
+include $conf/config.d/$(hostname)/*

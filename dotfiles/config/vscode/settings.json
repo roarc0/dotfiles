@@ -1,6 +1,8 @@
 {
   "window.titleBarStyle": "custom",
   "window.title": "${rootPath}${separator}${appName}",
+  "window.zoomLevel": 1,
+  "window.menuBarVisibility": "toggle",
   "sync.autoDownload": true,
   "sync.autoUpload": true,
   "sync.forceDownload": true,
@@ -12,6 +14,7 @@
   "workbench.editor.revealIfOpen": true,
   "workbench.editor.untitled.hint": "hidden",
   "workbench.editor.centeredLayoutAutoResize": true,
+  "workbench.editor.highlightModifiedTabs": true,
   "workbench.settings.editor": "json",
   "workbench.iconTheme": "vscode-icons",
   "workbench.colorTheme": "One Monokai",
@@ -38,8 +41,10 @@
   "editor.scrollBeyondLastLine": false,
   "editor.cursorBlinking": "phase",
   "editor.linkedEditing": true,
+  "editor.minimap.enabled": true,
   "editor.suggestSelection": "first",
   "editor.selectionClipboard": false,
+  "editor.renderWhitespace": "boundary",
   "editor.unicodeHighlight.invisibleCharacters": true,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
@@ -82,6 +87,7 @@
   "terminal.explorerKind": "external",
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.enableShellIntegration": true,
+  "terminal.integrated.rendererType": "dom",
   "extensions.ignoreRecommendations": true,
   "vsicons.dontShowNewVersionMessage": true,
   "diffEditor.ignoreTrimWhitespace": true,
@@ -236,6 +242,8 @@
     "1090"
   ],
   "git.openRepositoryInParentFolders": "never",
+  "git.confirmSync": false,
+  "git.autofetch": true,
   "github.copilot.enable": {
     "*": false,
     "yaml": false,
@@ -254,8 +262,5 @@
   },
   "deno.enable": false,
   "npm.keybindingsChangedWarningShown": true,
-  "window.zoomLevel": 1,
-  "git.confirmSync": false,
-  "git.autofetch": true,
   "svelte.enable-ts-plugin": true,
 }

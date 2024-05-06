@@ -1,17 +1,17 @@
-#exec dbus-update-activation-environment --all
-exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
-exec --no-startup-id mako
-exec --no-startup-id nm-applet
-exec --no-startup-id polkit-authentication-agent-1
-exec --no-startup-id gnome-keyring-daemon --components=secrets,pkcs11,ssh
-exec --no-startup-id ~/env/bin/ssh-agent.sh
-exec --no-startup-id swayidle \
+exec $conf/scripts/keyring.sh
+exec dbus-update-activation-environment --all
+#exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+exec "/usr/libexec/polkit-gnome-authentication-agent-1"
+exec mako
+exec nm-applet
+#exec $conf/scripts/ssh-agent.sh
+exec swayidle \
     timeout 60 '$brightness_low' \
     timeout 400 '$locker' \
     timeout 460 'swaymsg "output * dpms off"' \
     resume 'swaymsg "output * dpms on" ; $brightness_high' \
     before-sleep '$locker'
-
+#exec redshift -c ~/.config/redshift/config
 #exec_always "$conf"/scripts/lid.sh
 #exec_always "systemctl --user import-environment"
 #exec wl-paste -t text --watch clipman store --no-persist
