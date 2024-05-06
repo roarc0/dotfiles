@@ -4,6 +4,6 @@ apt update &&
 apt full-upgrade &&
 apt autoremove --purge &&
 snap refresh &&
-snap-remove-old &&
+snap-clean &&
 flatpak-update
 '
