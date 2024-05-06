@@ -6,4 +6,5 @@ apt autoremove --purge &&
 snap refresh &&
 snap-clean &&
 flatpak-update
+do-release-upgrade -pc
 '
