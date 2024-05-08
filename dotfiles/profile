@@ -32,5 +32,5 @@ export VISUAL=$EDITOR
 export SYSTEMD_EDITOR=$EDITOR
 export MERGETOOL=meld
 export BEMENU_BACKEND=wayland
-export SSH_AUTH_SOCK
+#export SSH_AUTH_SOCK
 unset SSH_ASKPASS

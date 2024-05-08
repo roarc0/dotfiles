@@ -11,6 +11,7 @@ packages=(
   golang.org/x/tools/cmd/deadcode@latest
   github.com/99designs/gqlgen@latest
   go.uber.org/mock/mockgen@latest
+  github.com/vektra/mockery/v2@latest
   github.com/bykof/go-plantuml@latest
   github.com/jfeliu007/goplantuml/cmd/goplantuml@latest
   github.com/hherman1/gq@latest
@@ -21,7 +22,8 @@ packages=(
   github.com/antonmedv/fx@latest
   github.com/swaggo/swag/cmd/swag@latest
   github.com/googleapis/api-linter/cmd/api-linter@latest
-  github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+  -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+  github.com/pressly/goose/v3/cmd/goose@latest
   github.com/derailed/k9s@latest
   github.com/kubernetes/kompose@latest
   github.com/bitnami-labs/sealed-secrets/cmd/kubeseal@main
@@ -49,7 +51,6 @@ packages=(
 )
 #tailscale.com/cmd/tailscale@latest
 #tailscale.com/cmd/tailscaled@latest
-#go_install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 #github.com/docker/docker/client@latest
 #github.com/open-policy-agent/opa@latest
 

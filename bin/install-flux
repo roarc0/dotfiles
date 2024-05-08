@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+VERSION=$(curl --silent "https://api.github.com/repos/fluxcd/flux2/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+echo "installing flux $VERSION"
+curl -L "https://github.com/fluxcd/flux2/releases/download/v${VERSION}/flux_${VERSION}_linux_amd64.tar.gz" | tar xz flux && mv flux ~/.local/bin
