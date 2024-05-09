@@ -1,6 +1,7 @@
 underline: &underline {underline: { size: 2, color: 00ff00ff}}
+font-sm: &font-sm "Fira Code:size=12:regular"
 font-md: &font-md "Fira Code:size=15:regular"
-font-lg: &font-lg "Fira Code:size=15:bold"
+font-lg: &font-lg "Fira Code:size=16:bold"
 font-icon: &font-icon "Fira Code:size=15"
 icon-margin: &icon-margin {left-margin: 7, right-margin: 7}
 col-normal: &col-normal {foreground: aaaaaaff}
@@ -9,22 +10,7 @@ col-critical: &col-critical {foreground: ff5555ff, font: *font-lg}
 blank: &blank {string: {text: ""}}
 
 .colors:
-  0:  &c0  2e3440ff
-  1:  &c1  3b4252ff
-  2:  &c2  434c5eff
-  3:  &c3  4c566aff
-  4:  &c4  d8dee9ff
-  5:  &c5  e5e9f0ff
-  6:  &c6  eceff4ff
-  7:  &c7  8fbcbbff
-  8:  &c8  88c0d0ff
-  9:  &c9  81a1c1ff
-  10: &c10 5e81acff
-  11: &c11 bf616aff
-  12: &c12 d08770ff
-  13: &c13 ebcb8bff
-  14: &c14 a3be8cff
-  15: &c15 b48eadff
+  0:  &c0  72fc72ff
 
 bar:
   height: 30
@@ -45,11 +31,6 @@ bar:
         anchors:
           - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
           - string: &default {<<: *i3_common, text: "{name}"}
-          - string: &main    {<<: *i3_common, text: , font: *font-md}
-          - string: &surfing {<<: *i3_common, text: , font: *font-md}
-          - string: &misc    {<<: *i3_common, text: , font: *font-md}
-          - string: &mail    {<<: *i3_common, text: , font: *font-md}
-          - string: &music   {<<: *i3_common, text: , font: *font-md}
           - focused: &focused
               deco: {stack: [background: {color: a0ffa04c}, <<: *underline]}
           - invisible: &invisible {foreground: ffffff55}
@@ -61,7 +42,7 @@ bar:
                 - string:
                     margin: 5
                     text: "{mode}"
-                    deco: {background: {color: cc421dff}}
+                    deco: {background: {color: *c0}}
                 - empty: {right-margin: 7}
               conditions:
                 mode == default: {empty: {}}
@@ -73,41 +54,6 @@ bar:
                 state == unfocused: {string: {<<: *default}}
                 state == invisible: {string: {<<: [*default, *invisible]}}
                 state == urgent:    {string: {<<: [*default, *urgent]}}
-          main:
-            map:
-              conditions:
-                state == focused:   {string: {<<: [*main, *focused]}}
-                state == unfocused: {string: {<<: *main}}
-                state == invisible: {string: {<<: [*main, *invisible]}}
-                state == urgent:    {string: {<<: [*main, *urgent]}}
-          surfing:
-            map:
-              conditions:
-                state == focused: {string: {<<: [*surfing, *focused]}}
-                state == unfocused: {string: {<<: *surfing}}
-                state == invisible: {string: {<<: [*surfing, *invisible]}}
-                state == urgent:    {string: {<<: [*surfing, *urgent]}}
-          misc:
-            map:
-              conditions:
-                state == focused: {string: {<<: [*misc, *focused]}}
-                state == unfocused: {string: {<<: *misc}}
-                state == invisible: {string: {<<: [*misc, *invisible]}}
-                state == urgent:    {string: {<<: [*misc, *urgent]}}
-          mail:
-            map:
-              conditions:
-                state == focused: {string: {<<: [*mail, *focused]}}
-                state == unfocused: {string: {<<: *mail}}
-                state == invisible: {string: {<<: [*mail, *invisible]}}
-                state == urgent:    {string: {<<: [*mail, *urgent]}}
-          music:
-            map:
-              conditions:
-                state == focused: {string: {<<: [*music, *focused]}}
-                state == unfocused: {string: {<<: *music}}
-                state == invisible: {string: {<<: [*music, *invisible]}}
-                state == urgent:    {string: {<<: [*music, *urgent]}}
     - foreign-toplevel:
         content:
           map:
@@ -194,12 +140,12 @@ bar:
                     state == up:
                       map:
                         default:
-                          - string: {text: , font: *font-md}
-                          - string: {text: "{ssid} {dl-speed:mb}/{ul-speed:mb} Mb/s"}
+                          - string: {text: , font: *font-md, <<: *icon-margin}
+                          - string: {text: "🔻{dl-speed:mb}🔺{ul-speed:mb} Mb/s", font: *font-sm}
                         conditions:
                           ipv4 == "":
-                            - string: {text: , font: *font-md}
-                            - string: {text: "{ssid} {dl-speed:mb}/{ul-speed:mb} Mb/s"}
+                            - string: {text: , font: *font-md, <<: *icon-margin}
+                            - string: {text: "🔻{dl-speed:mb}🔺{ul-speed:mb} Mb/s", font: *font-sm}
     - removables:
         anchors:
           drive: &drive { text: , font: *font-md}
@@ -224,14 +170,41 @@ bar:
                     optical:
                       - string: {<<: *optical, deco: *underline}
                       - string: {text: "{label}"}
-    - sway-xkb:
-        identifiers: [1266:8537:Chicony_Perixx_Ergo_Keyboard]
+    - pipewire:
+        anchors:
+          volume: &volume
+            conditions:
+              muted: {string: {text: "{linear_volume}%", foreground: ff0000ff}}
+              ~muted: {string: {text: "{linear_volume}%"}}
         content:
-          - string: {text: , font: *font-md, <<: *icon-margin}
-          - string: {text: "{layout}"}
+          list:
+            items:
+              - map:
+                  conditions:
+                    type == "sink":
+                      map:
+                        conditions:
+                          icon == "audio-headset-bluetooth":
+                            string: {text: "🎧"}
+                        default:
+                          - ramp:
+                              tag: linear_volume
+                              items:
+                                - string: {text: "🕨", font: *font-md, <<: *icon-margin}
+                                - string: {text: "🕩", font: *font-md, <<: *icon-margin}
+                                - string: {text: "🕪", font: *font-md, <<: *icon-margin}
+                    type == "source":
+                      - string: {text: " 🎙", font: *font-md, <<: *icon-margin}
+              - map:
+                  <<: *volume
+#    - sway-xkb:
+#        identifiers: [1266:8537:Chicony_Perixx_Ergo_Keyboard]
+#        content:
+#          - string: {text: , font: *font-md, <<: *icon-margin}
+#          - string: {text: "{layout}"}
     - clock:
         time-format: "%I:%M %p"
         content:
           - string: {text: "", font: *font-md, <<: *icon-margin}
           - string: {text: "{date}", font: *font-md}
-          - string: {text: " {time}", <<: *icon-margin, font: *font-lg}
+          - string: {text: " {time}", <<: *icon-margin, font: *font-md, foreground: *c0}

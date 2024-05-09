@@ -31,10 +31,10 @@ hide_edge_borders both
 #xwayland disable
 #workspace_auto_back_and_forth yes
 
+include $conf/config.d/autostart
 include $conf/config.d/colors
 include $conf/config.d/input
 include $conf/config.d/output
-include $conf/config.d/autostart
 include $conf/config.d/theme
 include $conf/config.d/controls
 include $conf/config.d/windows
