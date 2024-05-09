@@ -21,7 +21,6 @@ packages=(
   github.com/a-h/templ/cmd/templ@latest
   github.com/antonmedv/fx@latest
   github.com/swaggo/swag/cmd/swag@latest
-  github.com/googleapis/api-linter/cmd/api-linter@latest
   -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
   github.com/pressly/goose/v3/cmd/goose@latest
   github.com/derailed/k9s@latest
@@ -34,12 +33,11 @@ packages=(
   github.com/josharian/impl@latest
   github.com/haya14busa/goplay/cmd/goplay@latest
   github.com/go-delve/delve/cmd/dlv@latest
-  golang.org/x/lint/golint@latest
-  golang.org/x/tools/gopls@latest
   golang.org/x/tools/cmd/godoc@master
-  github.com/gohugoio/hugo@latest
-  github.com/ipfs/kubo/cmd/ipfs@latest
-  github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+  golang.org/x/tools/gopls@latest
+  golang.org/x/lint/golint@latest
+  honnef.co/go/tools/cmd/staticcheck@latest
+  github.com/googleapis/api-linter/cmd/api-linter@latest
   github.com/yoheimuta/protolint/cmd/protolint@latest
   github.com/bufbuild/buf/cmd/buf@latest
   google.golang.org/protobuf/cmd/protoc-gen-go@latest
@@ -47,7 +45,10 @@ packages=(
   github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
   github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
   github.com/grpc-ecosystem/grpc-health-probe@latest
+  github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
   github.com/swaggo/swag/cmd/swag@latest
+  github.com/gohugoio/hugo@latest
+  github.com/ipfs/kubo/cmd/ipfs@latest
 )
 #tailscale.com/cmd/tailscale@latest
 #tailscale.com/cmd/tailscaled@latest
