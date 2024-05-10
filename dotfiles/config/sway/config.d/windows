@@ -5,10 +5,10 @@ set $browser chrome
 set $ide Code
 
 # swaymsg -t get_tree
-bindsym F1 [class="$browser"] focus
-bindsym F2 [class="$ide"] focus
-bindsym F12 [app_id="$telegram"] focus
-bindsym F11 [class="mpv"] focus
+bindsym F9 [app_id="$telegram"] focus
+bindsym F10 [class="mpv"] focus
+bindsym F11 [class="$ide"] focus
+bindsym F12 [class="$browser"] focus
 for_window [class="$firefox"] border none
 for_window [class="$chrome"] border none
 for_window [app_id="$telegram"] border none

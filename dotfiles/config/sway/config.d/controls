@@ -6,7 +6,7 @@ bindsym $mod+Shift+x exec $locker
 bindsym Pause exec $locker
 bindsym $mod+d exec $menu
 bindsym Print exec ~/env/bin/screenshot
-bindsym Shift+Print exec ~/env/bin/screenshot-sel
+bindsym Shift+Print exec ~/env/bin/screenshot_sel
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exit
@@ -82,4 +82,3 @@ bindsym --locked XF86MonBrightnessDown exec brightnessctl s 5%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl s +5%
 
 bindsym $mod+Home exec --no-startup-id pkill -USR1 redshift
-

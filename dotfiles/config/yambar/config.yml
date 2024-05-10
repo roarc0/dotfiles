@@ -204,6 +204,7 @@ bar:
 #          - string: {text: "{layout}"}
     - clock:
         time-format: "%I:%M %p"
+        date-format: "%a %b %d"
         content:
           - string: {text: "", font: *font-md, <<: *icon-margin}
           - string: {text: "{date}", font: *font-md}
