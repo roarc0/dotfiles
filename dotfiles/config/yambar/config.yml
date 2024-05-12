@@ -97,15 +97,23 @@ bar:
   right:
     - script:
         anchors:
-          - cpu: &cpu  {text: " {cpu}%", <<: *icon-margin}
-          - mem: &mem  {text: " {mem}%", <<: *icon-margin}
-          - disk: &disk {text: " {disk}%", <<: *icon-margin}
+          - cpu_temp: &cpu_temp {text: "🌡 {cpu_temp}°C", <<: *icon-margin}
+          - cpu: &cpu  {text: "  {cpu}%", <<: *icon-margin}
+          - mem: &mem  {text: "  {mem}%", <<: *icon-margin}
+          - disk: &disk {text: "  {disk}%", <<: *icon-margin}
           - noop: &noop {text: "", <<: *icon-margin}
 
         path: "~/.config/yambar/yambar-top"
         args: ["10"]
-        poll-interval: 1000
+        poll-interval: 3000
         content:
+          - ramp:
+              tag: cpu_temp
+              items:
+                - string: {<<: [*cpu_temp, *col-normal]}
+                - string: {<<: [*cpu_temp, *col-normal]}
+                - string: {<<: [*cpu_temp, *col-alert]}
+                - string: {<<: [*cpu_temp, *col-critical]}
           - ramp:
               tag: cpu
               items:

@@ -1,13 +1,16 @@
 #!/bin/sh
 
-SLEEP="${1:-10}"
-
 disk_usage() {
   df / | awk '/dev/ {print $5}'| tr -d "%"
 }
 
 cpu_usage() {
     vmstat  | awk '/[0-9]/ { print $13 }'
+}
+
+cpu_temperature() {
+    temp=$(cat /sys/class/thermal/thermal_zone0/temp)
+    echo "scale=0; $temp/1000" | bc
 }
 
 mem_usage() {
@@ -20,10 +23,10 @@ fmt_yambar_range() {
     echo "$name|range:0-100|$val"
 }
 
-# while : ; do
-    fmt_yambar_range cpu  "$(cpu_usage)"
-    fmt_yambar_range mem  "$(mem_usage)"
-    fmt_yambar_range disk "$(disk_usage)"
-    echo
-    # sleep "$SLEEP"
-# done
+# https://manpages.debian.org/unstable/yambar/yambar-modules-script.5.en.html
+
+fmt_yambar_range cpu  "$(cpu_usage)"
+fmt_yambar_range mem  "$(mem_usage)"
+fmt_yambar_range disk "$(disk_usage)"
+echo "cpu_temp|int|$(cpu_temperature)"
+echo
