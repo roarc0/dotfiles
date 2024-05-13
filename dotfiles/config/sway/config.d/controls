@@ -5,8 +5,8 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+x exec $locker
 bindsym Pause exec $locker
 bindsym $mod+d exec $menu
-bindsym Print exec ~/env/bin/screenshot
-bindsym Shift+Print exec ~/env/bin/screenshot_sel
+bindsym --release Print exec ~/env/bin/screenshot
+bindsym --release Shift+Print exec ~/env/bin/screenshot_sel
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exit
