@@ -1,2 +1,7 @@
 #!/bin/sh
-grim - | wl-copy
+DEST=$(xdg-user-dir PICTURES)/Screenshots
+IMG=$DEST/$(date +%Y-%m-%d_%H-%m-%s).png
+
+mkdir -p "$DEST" >/dev/null 2>&1
+
+(grim "$IMG") && wl-copy <"$IMG"

@@ -33,3 +33,7 @@ export SYSTEMD_EDITOR=$EDITOR
 export MERGETOOL=meld
 export BEMENU_BACKEND=wayland
 unset SSH_ASKPASS
+
+if [ -f "$HOME/workspace/.profile" ]; then
+    . "$HOME/workspace/.profile"
+fi
