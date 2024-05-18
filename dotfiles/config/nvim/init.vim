@@ -218,18 +218,19 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'lilydjwg/colorizer'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdcommenter'
+Plug 'ervandew/supertab'
+Plug 'terryma/vim-smooth-scroll'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.6' }
 "Plug 'tpope/vim-fugitive' " git wrapper
 "Plug 'zenbro/mirror.vim'
-"Plug 'mhinz/vim-startify'
 "Plug 'dietsche/vim-lastplace'
 "Plug 'tpope/vim-eunuch'
 "Plug 'vim-scripts/quit-another-window'
 "Plug 'pbrisbin/vim-mkdir'
 "Plug 'ctrlpvim/ctrlp.vim' " fuzzy file,buff,ecc finder
-Plug 'scrooloose/nerdcommenter'
-Plug 'ervandew/supertab'
 "Plug 'tpope/vim-repeat'
-Plug 'terryma/vim-smooth-scroll'
 "Plug 'sunaku/vim-shortcut'
 "Plug 'reedes/vim-wheel'
 "Plug 'matze/vim-move'
@@ -239,22 +240,20 @@ Plug 'terryma/vim-smooth-scroll'
 "Plug 'bkad/CamelCaseMotion'
 "Plug 'tmhedberg/SimpylFold'
 "Plug 'vim-scripts/YankRing.vim'
-Plug 'Shougo/deoplete.nvim' , { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/deoplete.nvim' , { 'do': ':UpdateRemotePlugins' }
 "Plug 'zchee/deoplete-clang'
+"Plug 'zchee/deoplete-go', { 'do': 'make'}
+"Plug 'zchee/deoplete-jedi'
 "Plug 'sebastianmarkow/deoplete-rust'
 "Plug 'rust-lang/rust.vim'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-"Plug 'zchee/deoplete-jedi'
-Plug 'vim-scripts/indentpython.vim'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
 Plug 'szw/vim-tags'
-"Plug 'sheerun/vim-polyglot'
-"Plug 'ludovicchabant/vim-gutentags'
-Plug 'wvffle/vimterm'
 Plug 'Chiel92/vim-autoformat'
 Plug 'plasticboy/vim-markdown'
+"Plug 'sheerun/vim-polyglot'
+"Plug 'ludovicchabant/vim-gutentags'
 "Plug 'thinca/vim-quickrun'
 "Plug 'lervag/vimtex'
 "Plug 'godlygeek/tabular'
@@ -301,17 +300,9 @@ let g:NERDTreeIndicatorMapCustom = {
             \ "Unknown"   : "?"
             \ }
 
-""" Startify config
-let g:startify_enable_unsafe = 0
-
 """ vim-smooth-scroll config
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 5, 2)<CR>
 noremap <silent> <c-i> :call smooth_scroll#down(&scroll, 5, 2)<CR>
-
-""" Cpp enhanced sintax highligthing
-let g:cpp_class_scope_highlight = 1 " Highlighting of class scope
-let g:cpp_experimental_simple_template_highlight = 1 " Hightlight template functions
-let g:cpp_concepts_highlight = 1 " Highlighting of library concepts
 
 """ Neoformat config
 nmap <Leader>R :Neoformat<CR>
@@ -326,41 +317,38 @@ nmap <Leader>p :MirrorPush<CR>
 let g:wheel#map#up   = '<m-y>'
 let g:wheel#map#down = '<m-e>'
 
-""" Vimterm config
-nnoremap <F7> :call vimterm#toggle() <CR>
-tnoremap <F7> <C-\><C-n>:call vimterm#toggle() <CR>
-
 """ Undotree config
 nnoremap <F5> :UndotreeToggle<cr>
-" Focus undotree when showing it
 let g:undotree_SetFocusWhenToggle = 1
-" Add persistent undo history between files
 if has("persistent_undo")
     set undodir=~/.cache/undodir/
     set undofile
 endif
 
-""" vim-better-whitespace config
-autocmd BufEnter * EnableStripWhitespaceOnSave " Enable stripping on save
-" Whitespaces color
+autocmd BufEnter * EnableStripWhitespaceOnSave
 highlight ExtraWhitespace ctermbg=darkred guibg=darkred
 
 """ deoplete
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
+
+""" Cpp enhanced sintax highligthing
+let g:cpp_class_scope_highlight = 1 " Highlighting of class scope
+let g:cpp_experimental_simple_template_highlight = 1 " Hightlight template functions
+let g:cpp_concepts_highlight = 1 " Highlighting of library concepts
 
 """ rust
-let g:deoplete#sources#rust#rust_source_path='/usr/lib/rustlib/src/rust/src'
-let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
+"let g:deoplete#sources#rust#rust_source_path='/usr/lib/rustlib/src/rust/src'
+"let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
+"let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+"let g:deoplete#sources#clang#clang_header = '/usr/include/clang/'
 "let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/5/lib64/libclang.so'
 "let g:deoplete#sources#clang#clang_header = '/usr/lib64/llvm/5/include/clang/'
 
 """ golang
-" go get -u github.com/nsf/gocode
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:go_fmt_command = "goimports"
+" go install github.com/nsf/gocode@latest
+"let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+"let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+"let g:go_fmt_command = "goimports"
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
 	\ 'kinds'     : [
@@ -391,41 +379,18 @@ let g:tagbar_type_go = {
 let s:tlist_def_go_settings = 'go;g:enum;s:struct;u:union;t:type;' .
                            \ 'v:variable;f:function'
 
-""" python
-let g:python_recommended_style = 1
-let g:python3_host_prog  = '/usr/bin/python3'
-let g:python3_host_skip_check = 1
-let g:formatter_yapf_style = 'pep8'
-
 "noremap <F3> :Autoformat<CR>
 "au BufWrite * :Autoformat
 nnoremap <silent> <leader>b :TagbarToggle<CR>
 nmap <F8> :TagbarToggle<CR>
 
-function! MyOnBattery()
-    return readfile('/sys/class/power_supply/AC/online') == ['0']
-endfunction
-
-"if MyOnBattery()
-"  call neomake#configure#automake('w')
-"  call deoplete#disable()
-"else
-"  call neomake#configure#automake('nw', 1000)
-"  call deoplete#enable()
-"endif
-
-" ctrlp.vim
-let g:ctrlp_map = '<c-p>' " after paste ctrl+p switch between clipboard and register
+let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = ''
-
-"""" utilsnips
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<c-b>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
-let g:UltiSnipsEditSplit = "vertical" " If you want :UltiSnipsEdit to split your window.
-
-""" multi selection
+let g:UltiSnipsEditSplit = "vertical"
 let g:multi_cursor_use_default_mapping=1
 let g:multi_cursor_start_word_key      = '<C-n>'
 let g:multi_cursor_select_all_word_key = '<A-n>'
@@ -435,5 +400,16 @@ let g:multi_cursor_next_key            = '<C-n>'
 let g:multi_cursor_prev_key            = '<C-p>'
 let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
-
 let g:SimpylFold_docstring_preview=1
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
