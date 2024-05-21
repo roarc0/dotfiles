@@ -54,6 +54,11 @@
     "source.fixAll.eslint": true,
     "source.addMissingImports": true
   },
+  "editor.quickSuggestions": {
+    "others": true,
+    "comments": true,
+    "strings": true
+  },
   "files.autoSave": "onFocusChange",
   "files.insertFinalNewline": false,
   "files.trimTrailingWhitespace": true,

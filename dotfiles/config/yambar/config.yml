@@ -28,12 +28,16 @@ bar:
 
   left:
     - i3:
+        sort: ascending
+        persistent: ["1","2","3","4","5","6","7","8","9"]
         anchors:
           - string: &i3_common {margin: 5, on-click: "swaymsg --quiet workspace {name}"}
           - string: &default {<<: *i3_common, text: "{name}"}
           - focused: &focused
               deco: {stack: [background: {color: a0ffa04c}, <<: *underline]}
-          - invisible: &invisible {foreground: ffffff55}
+          - empty: &empty
+              foreground: 303030ff
+          - invisible: &invisible {foreground: ffffff99}
           - urgent: &urgent
               foreground: 000000ff
               deco: {stack: [background: {color: bc2b3fff}, <<: *underline]}
@@ -51,7 +55,7 @@ bar:
             map:
               conditions:
                 state == focused:   {string: {<<: [*default, *focused]}}
-                state == unfocused: {string: {<<: *default}}
+                empty: {string: {<<: [*default, *empty]}}
                 state == invisible: {string: {<<: [*default, *invisible]}}
                 state == urgent:    {string: {<<: [*default, *urgent]}}
     - foreign-toplevel:

@@ -9,7 +9,7 @@ cpu_usage() {
 }
 
 cpu_temperature() {
-    temp=$(cat /sys/class/thermal/thermal_zone0/temp)
+    temp=$(cat /sys/class/thermal/thermal_zone1/temp)
     echo "scale=0; $temp/1000" | bc
 }
 
