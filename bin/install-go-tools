@@ -50,6 +50,10 @@ packages=(
   github.com/swaggo/swag/cmd/swag@latest
   github.com/gohugoio/hugo@latest
   github.com/ipfs/kubo/cmd/ipfs@latest
+  github.com/nsf/gocode@latest
+  mvdan.cc/gofumpt@latest
+  github.com/incu6us/goimports-reviser/v3@latest
+  github.com/segmentio/golines@latest
 )
 #tailscale.com/cmd/tailscale@latest
 #tailscale.com/cmd/tailscaled@latest
