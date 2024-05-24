@@ -1,29 +1,29 @@
 {
   "window.titleBarStyle": "custom",
   "window.title": "${rootPath}${separator}${appName}",
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 2,
   "window.menuBarVisibility": "toggle",
   "sync.autoDownload": true,
   "sync.autoUpload": true,
   "sync.forceDownload": true,
   "sync.forceUpload": true,
   "sync.quietSync": true,
+  "workbench.editor.empty.hint": "hidden",
   "workbench.editor.enablePreview": false,
   "workbench.editor.showTabs": "multiple",
   "workbench.editor.pinnedTabSizing": "shrink",
   "workbench.editor.revealIfOpen": true,
-  "workbench.editor.untitled.hint": "hidden",
   "workbench.editor.centeredLayoutAutoResize": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.settings.editor": "json",
-  "workbench.iconTheme": "vscode-icons",
-  "workbench.colorTheme": "One Monokai",
+  "workbench.colorTheme": "Dracula Soft",
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.startupEditor": "none",
   "workbench.colorCustomizations": {
     "statusBar.background": "#00000077",
     "editor.lineHighlightBackground": "#00000033",
     "editor.lineHighlightBorder": "#aaaaaa33",
-    "editor.selectionBackground": "#222",
+    "editor.selectionBackground": "#222"
   },
   "editor.rename.enablePreview": false,
   "editor.fontSize": 17,
@@ -50,12 +50,11 @@
   "editor.guides.bracketPairs": "active",
   "editor.inlayHints.enabled": "on",
   "editor.codeActionsOnSave": {
-    "source.fixAll.shellcheck": true,
-    "source.fixAll.eslint": true,
-    "source.addMissingImports": true
+    "source.fixAll.shellcheck": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.addMissingImports": "explicit"
   },
   "editor.quickSuggestions": {
-    "others": true,
     "comments": true,
     "strings": true
   },
@@ -91,77 +90,156 @@
   "explorer.openEditors.visible": 1,
   "terminal.explorerKind": "external",
   "terminal.integrated.fontSize": 12,
-  "terminal.integrated.enableShellIntegration": true,
-  "terminal.integrated.rendererType": "dom",
   "extensions.ignoreRecommendations": true,
   "vsicons.dontShowNewVersionMessage": true,
   "diffEditor.ignoreTrimWhitespace": true,
   "diffEditor.renderSideBySide": true,
+  "cSpell.language": "en-GB",
+  "cSpell.enabled": true,
+  "cSpell.checkLimit": 1000,
+  "cSpell.minWordLength": 5,
+  "cSpell.allowCompoundWords": true,
+  "cSpell.diagnosticLevel": "Information",
+  "cSpell.enableFiletypes": [
+    "markdown",
+    "!json"
+  ],
+  "cSpell.checkOnlyEnabledFileTypes": true,
+  "cSpell.allowedSchemas": [
+    "file",
+    "gist",
+    "repo",
+    "sftp",
+    "untitled",
+    "vscode-notebook-cell",
+    "vscode-scm",
+    "vscode-userdata"
+  ],
   "cSpell.userWords": [
+    "adserver",
+    "adunitcode",
+    "analyzer",
     "bgcolor",
+    "clangd",
+    "clickhousedb",
+    "clippy",
+    "color",
+    "Colorization",
+    "cwire",
+    "daisyui",
+    "dbname",
     "Debugf",
+    "donot",
+    "esbenp",
     "fsnotify",
+    "gingonic",
+    "godoc",
+    "gofmt",
+    "golangci",
+    "gonic",
+    "Gopath",
+    "gopls",
+    "gorm",
     "grpc",
+    "iconify",
+    "igorm",
     "Infof",
+    "inventorydb",
+    "kclient",
+    "kgoio",
+    "mileusna",
     "mipmaps",
+    "nums",
+    "oclick",
+    "plantuml",
     "Plotly",
+    "portaldb",
+    "pressly",
+    "privkey",
+    "protobuf",
+    "redisio",
+    "referer",
+    "roarc",
+    "rollup",
+    "rollupch",
+    "scminput",
+    "SULID",
+    "timestamppb",
+    "Unimported",
     "Tracef",
     "Warnf"
   ],
   "liveServer.settings.donotVerifyTags": true,
   "liveServer.settings.donotShowInfoMsg": true,
   "C_Cpp.intelliSenseEngine": "disabled",
-  "C_Cpp.default.cppStandard": "c++17",
+  "C_Cpp.default.cppStandard": "c++20",
   "C_Cpp.default.cStandard": "c11",
   "C_Cpp.clang_format_path": "/usr/bin/clang-format",
   "C_Cpp.addNodeAddonIncludePaths": true,
   "C_Cpp.autocompleteAddParentheses": true,
   "C_Cpp.clang_format_sortIncludes": true,
   "clangd.onConfigChanged": "restart",
-  "clangd.path": "/home/roarc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/16.0.2/clangd_16.0.2/bin/clangd",
+  "clangd.path": "/home/roarc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/18.1.3/clangd_18.1.3/bin/clangd",
   "clangd.restartAfterCrash": true,
   "clangd.checkUpdates": true,
   "[cpp]": {
     "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
   },
+  "cmake.showOptionsMovedNotification": false,
   "cmake.configureOnOpen": false,
   "go.inferGopath": false,
   "go.useLanguageServer": true,
+  // "go.formatTool": "goimports",
   "go.formatTool": "gofmt",
-  "go.lintTool": "golint",
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": [
+    "-c",
+    "~/.config/golangci-lint.yaml",
+    "--fast"
+  ],
   "go.lintOnSave": "workspace",
   "go.vetOnSave": "workspace",
   "go.toolsManagement.autoUpdate": true,
-  "go.coverOnTestPackage": false,
+  "go.coverOnTestPackage": true,
+  "go.coverOnSingleTest": true,
+  "go.testFlags": [
+    "-v"
+  ],
+  "go.autocompleteUnimportedPackages": true,
+  "go.gotoSymbol.includeGoroot": true,
+  "go.gotoSymbol.includeImports": true,
+  "[go]": {
+    "editor.snippetSuggestions": "none",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always",
+    },
+  },
   "[go.mod]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports": "always",
+      "source.fixAll": "always"
     }
   },
   "go.delveConfig": {
     "dlvLoadConfig": {
       "followPointers": true,
-      "maxVariableRecurse": 5,
-      "maxStringLen": 1024,
-      "maxArrayValues": 1024,
+      "maxVariableRecurse": 10,
+      "maxStringLen": 4096,
+      "maxArrayValues": 4096,
       "maxStructFields": -1
     },
     "apiVersion": 2,
-    "showGlobalVariables": false,
+    "showGlobalVariables": false
   },
-  "go.languageServerExperimentalFeatures": {
-    "diagnostics": true
-  },
-  "go.testFlags": [
-    "-v"
-  ],
   "gopls": {
     "usePlaceholders": true,
     "staticcheck": true,
+    "completeUnimported": true
   },
   "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.check.features": "all",
@@ -176,10 +254,10 @@
   "html.format.indentHandlebars": true,
   "html.format.endWithNewline": false,
   "css.lint.important": "warning",
-  "stylelint.enable": true,
   "scss.lint.important": "warning",
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.validate": true,
+  "svelte.enable-ts-plugin": true,
   "javascript.format.enable": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.preferences.importModuleSpecifier": "non-relative",
@@ -219,6 +297,7 @@
   },
   "markdown.preview.scrollEditorWithPreview": true,
   "markdown.preview.scrollPreviewWithEditor": true,
+  "markdown-preview-enhanced.plantumlJarPath": "/home/roarc/.local/jar/plantuml.jar",
   "python.languageServer": "Default",
   "[python]": {
     "editor.insertSpaces": true,
@@ -229,18 +308,12 @@
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
   "vs-kubernetes": {
-    "vscode-kubernetes.helm-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/helm/linux-amd64/helm",
-    "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/kubectl/kubectl",
-    "vscode-kubernetes.minikube-path.linux": "/home/roarc/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube",
-    "vs-kubernetes.minikube-show-information-expiration": "2024-01-30T07:26:38.769Z"
+    "vscode-kubernetes.helm-path.linux": "/home/roarc/.local/bin/helm",
+    "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.local/bin/kubectl",
+    "vscode-kubernetes.minikube-path.linux": "/home/roarc/.local/bin/minikube",
+    "vs-kubernetes.crd-code-completion": "disabled"
   },
-  "cSpell.language": "en-GB",
-  "cSpell.enabled": true,
-  "cSpell.checkLimit": 70000,
-  "cSpell.minWordLength": 4,
-  "cSpell.allowCompoundWords": true,
-  "cSpell.diagnosticLevel": "Information",
-  "shellcheck.run": "onType",
+  "shellcheck.run": "onSave",
   "shellcheck.exclude": [
     "2148",
     "1091",
@@ -250,11 +323,13 @@
   "git.confirmSync": false,
   "git.autofetch": true,
   "github.copilot.enable": {
-    "*": false,
-    "yaml": false,
+    "*": true,
+    "sql": true,
+    "yaml": true,
     "plaintext": true,
-    "markdown": false
+    "markdown": true
   },
+  "github.copilot.editor.enableAutoCompletions": true,
   "gitlab.aiAssistedCodeSuggestions.enabled": true,
   "emojisense.languages": {
     "markdown": true,
@@ -267,5 +342,4 @@
   },
   "deno.enable": false,
   "npm.keybindingsChangedWarningShown": true,
-  "svelte.enable-ts-plugin": true,
 }

@@ -1,0 +1,7 @@
+run: 
+  concurrency: 4
+linters-settings:
+  wsl:
+linters:
+  enable-all: true
+  disable:
