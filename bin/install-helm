@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+HELM_VERSION="v3.15.1"
+ARCH="linux-amd64"
+HELM_URL="https://get.helm.sh/helm-$HELM_VERSION-$ARCH.tar.gz"
+INSTALL_DIR="$HOME/.local/bin"
+TEMP_DIR=$(mktemp -d)
+
+mkdir -p "$INSTALL_DIR"
+
+curl -s -L "$HELM_URL" -o "$TEMP_DIR/helm.tar.gz"
+tar -xzf "$TEMP_DIR/helm.tar.gz" -C "$TEMP_DIR"
+mv "$TEMP_DIR/linux-amd64/helm" "$INSTALL_DIR/helm"
+rm -rf "$TEMP_DIR"
+
+echo "Helm $HELM_VERSION installed successfully in $INSTALL_DIR"
+helm version

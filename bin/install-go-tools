@@ -21,7 +21,7 @@ packages=(
   github.com/a-h/templ/cmd/templ@latest
   github.com/antonmedv/fx@latest
   github.com/swaggo/swag/cmd/swag@latest
-  -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+  "-tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest"
   github.com/pressly/goose/v3/cmd/goose@latest
   github.com/derailed/k9s@latest
   github.com/jesseduffield/lazydocker@latest
