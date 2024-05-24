@@ -102,7 +102,8 @@
   "cSpell.diagnosticLevel": "Information",
   "cSpell.enableFiletypes": [
     "markdown",
-    "!json"
+    "!json",
+    "!go"
   ],
   "cSpell.checkOnlyEnabledFileTypes": true,
   "cSpell.allowedSchemas": [
@@ -136,6 +137,7 @@
     "godoc",
     "gofmt",
     "golangci",
+    "gomnd",
     "gonic",
     "Gopath",
     "gopls",
@@ -149,6 +151,7 @@
     "kgoio",
     "mileusna",
     "mipmaps",
+    "nolint",
     "nums",
     "oclick",
     "plantuml",
@@ -156,6 +159,7 @@
     "portaldb",
     "pressly",
     "privkey",
+    "promlinter",
     "protobuf",
     "redisio",
     "referer",
@@ -165,9 +169,11 @@
     "scminput",
     "SULID",
     "timestamppb",
-    "Unimported",
     "Tracef",
-    "Warnf"
+    "Unimported",
+    "Warnf",
+    "Wrapf",
+    "xxhash"
   ],
   "liveServer.settings.donotVerifyTags": true,
   "liveServer.settings.donotShowInfoMsg": true,

@@ -1,7 +1,15 @@
 run: 
-  concurrency: 4
+  concurrency: 12
 linters-settings:
   wsl:
 linters:
   enable-all: true
   disable:
+    - tagalign
+    - gofumpt
+    - tagliatelle
+    - depguard
+    - gci
+    - godot
+    - nlreturn
+    - wsl
