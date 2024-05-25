@@ -54,6 +54,8 @@ packages=(
   mvdan.cc/gofumpt@latest
   github.com/incu6us/goimports-reviser/v3@latest
   github.com/segmentio/golines@latest
+  github.com/jesseduffield/lazygit@latest
+  github.com/junegunn/fzf@latest
 )
 #tailscale.com/cmd/tailscale@latest
 #tailscale.com/cmd/tailscaled@latest
