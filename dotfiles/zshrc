@@ -30,6 +30,12 @@ export GPG_TTY=$(tty)
 
 source ~/env/env.sh
 
+source <(fzf --zsh)
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVESIZE=10000
+setopt appendhistory
+
 # bun completions
 [ -s "/home/roarc/.bun/_bun" ] && source "/home/roarc/.bun/_bun"
 

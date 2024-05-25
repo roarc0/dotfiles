@@ -53,6 +53,7 @@
 	#format = ssh
 [safe]
 	directory = /etc/portage
+	directory = /var/db/repos/local
 [column]
 	ui = auto
 [branch]
