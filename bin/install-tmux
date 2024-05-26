@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+echo "open tmux and type C-s + I"
