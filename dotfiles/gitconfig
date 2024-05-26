@@ -72,8 +72,10 @@
 	repo = /home/roarc/workspace/cpf
 
 [alias]
+  conf = config --global --edit
 	co = checkout
 	cob = checkout -b
+  cdf = clean -df
 	f = fetch -p
 	a = add -p
 	s = status
@@ -84,10 +86,12 @@
 	bd = branch -d
 	bD = branch -D
 	dc = diff --cached
+	ds = diff --stat
 	sl = stash list
 	sa = stash apply
 	sd = stash drop
 	st = status -sb
+	l = log --pretty=colored
 	ll = log --graph --topo-order --abbrev-commit --date=short --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
 	lg = log --graph --color --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	plog = log --graph --pretty='format:%C(red)%d%C(reset) %C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'
@@ -97,5 +101,4 @@
 	bdm = !git branch --merged | grep -v '*' | xargs -n 1 git branch -d # remove all merged branches
 	fixup = "!git add . && git commit --fixup=${1:-$(git rev-parse HEAD)} && GIT_EDITOR=true git rebase --interactive --autosquash ${1:-$(git rev-parse HEAD~2)}~1"
 	staash = stash --all
-	force-push-safe= push --force--with-lease
-	l = log --pretty=colored
+	spush= push --force--with-lease
