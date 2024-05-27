@@ -17,6 +17,7 @@ install_link "$ENV_HOME/dotfiles/local/share/fonts" "$HOME/.local/share/fonts"
 
 install_link "$ENV_HOME/dotfiles/profile" "$HOME/.profile"
 install_link "$ENV_HOME/dotfiles/zshrc" "$HOME/.zshrc"
+install_link "$ENV_HOME/dotfiles/p10k.zsh" "$HOME/.p10k.zsh"
 install_link "$ENV_HOME/dotfiles/bashrc" "$HOME/.bashrc"
 install_link "$ENV_HOME/dotfiles/gitconfig" "$HOME/.gitconfig"
 
