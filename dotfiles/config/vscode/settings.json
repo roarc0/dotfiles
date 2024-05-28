@@ -209,7 +209,9 @@
   "go.coverOnTestPackage": true,
   "go.coverOnSingleTest": true,
   "go.testFlags": [
-    "-v"
+    "-count=1",
+    "-v",
+    "-timeout=30m"
   ],
   "go.autocompleteUnimportedPackages": true,
   "go.gotoSymbol.includeGoroot": true,
@@ -348,4 +350,6 @@
   },
   "deno.enable": false,
   "npm.keybindingsChangedWarningShown": true,
+  "playwright.reuseBrowser": false,
+  "playwright.showTrace": true,
 }
