@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+url=$(github-latest "golangci/golangci-lint")
+
+if [ -z "$url" ]; then
+  echo "Failed to get latest version of golangci-lint"
+  exit 1
+fi
+
+# if the command golang-ci-lint is already installed, print prev version
+if command -v golangci-lint >/dev/null; then
+  echo "golangci-lint is already installed"
+  golangci-lint --version
+fi
+
+curl -sL "$url" | tar -xz --strip-components=1 -C "$HOME"/.local/bin
+
+echo "golangci-lint installed to $HOME/.local/bin/golangci-lint"
+
+golangci-lint --version

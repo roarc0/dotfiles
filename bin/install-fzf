@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 
-FZF_VERSION="0.52.1"
-ARCH="linux_amd64"
-FZF_URL="https://github.com/junegunn/fzf/releases/download/$FZF_VERSION/fzf-$FZF_VERSION-$ARCH.tar.gz"
+FZF_URL=$(github-latest "junegunn/fzf")
+
 INSTALL_DIR="$HOME/.local/bin"
 
 TEMP_DIR=$(mktemp -d)

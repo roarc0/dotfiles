@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+detect_arch() {
+    arch=$(uname -m)
+
+    case "$arch" in
+    x86_64) arch="amd64" ;;
+    aarch64) arch="arm64" ;;
+    *) arch="unknown" ;;
+    esac
+
+    echo "$arch"
+}
+
+detect_os() {
+    uname -s
+}
+
+get_latest_release_download_url() {
+    repo="$1"
+    os=$(detect_os)
+    arch=$(detect_arch)
+
+    response=$(curl -s "https://api.github.com/repos/$repo/releases/latest")
+
+    download_url=$(echo "$response" | grep -o '"browser_download_url": "[^"]*"' | grep -i "$os" | grep -i "$arch" | grep -i '.tar' | grep -v '.deb' | head -n 1 | awk -F'"' '{print $4}')
+
+    if [ -z "$download_url" ]; then
+        echo "No matching download URL found for OS: $os, Architecture: $arch, and tarball."
+        exit 1
+    fi
+
+    echo "$download_url"
+}
+
+get_latest_release_download_url "$1"
