@@ -9,6 +9,5 @@ emaint all -f
 update-ca-certificates
 eclean-dist -d
 emerge --depclean -av
-perl-cleaner --all
 flatpak-update
 '
