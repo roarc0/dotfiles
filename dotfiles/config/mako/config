@@ -6,9 +6,9 @@ border-color=#839496
 border-size=4
 margin=8
 
-#anchor=bottom-right
+anchor=bottom-right
 ignore-timeout=1
-default-timeout=5000
+default-timeout=3000
 
 #output=''
 
