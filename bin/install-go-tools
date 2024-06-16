@@ -42,6 +42,7 @@ packages=(
   github.com/yoheimuta/protolint/cmd/protolint@latest
   github.com/bufbuild/buf/cmd/buf@latest
   google.golang.org/protobuf/cmd/protoc-gen-go@latest
+  github.com/infobloxopen/protoc-gen-gorm@latest
   google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
   github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
   github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
@@ -56,6 +57,8 @@ packages=(
   github.com/segmentio/golines@latest
   github.com/jesseduffield/lazygit@latest
   github.com/junegunn/fzf@latest
+  github.com/digitalocean/gta/cmd/gta@latest
+  github.com/spf13/cobra-cli@latest
 )
 #tailscale.com/cmd/tailscale@latest
 #tailscale.com/cmd/tailscaled@latest

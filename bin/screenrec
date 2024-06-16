@@ -4,4 +4,7 @@ if pidof wf-recorder; then
   exit 0
 fi
 
-wf-recorder
+DEST=$(xdg-user-dir VIDEOS)/
+VID=$DEST/$(date +%Y-%m-%d_%H-%m-%s).mkv
+
+wf-recorder -f "$VID"

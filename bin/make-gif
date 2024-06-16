@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+FPS=30
+SCALE=1080
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 <input>"
+  exit 1
+fi
+
+# strip the file extension
+OUT=${1%.*}.gif
+
+ffmpeg -i "$1" -vf "fps=$FPS,scale=$SCALE:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" \
+  -loop 1 "${OUT}"
