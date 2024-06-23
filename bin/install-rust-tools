@@ -12,6 +12,7 @@ packages=(
   cargo-wgsl
   sccache
   tokei
+  zoxide
   du-dust
   fd-find
   ripgrep
@@ -27,6 +28,10 @@ packages=(
 #cargo_install deno --locked
 #cargo_install exa
 #cargo_install bat
+
+if command -v rustup &> /dev/null ;then
+  rustup update
+fi
 
 for package in "${packages[@]}"; do
   cargo_install "$package"
