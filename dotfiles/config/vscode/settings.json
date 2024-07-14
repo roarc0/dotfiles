@@ -17,7 +17,6 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.settings.editor": "json",
   "workbench.colorTheme": "Dracula Soft",
-  "workbench.iconTheme": "material-icon-theme",
   "workbench.startupEditor": "none",
   "workbench.colorCustomizations": {
     "statusBar.background": "#00000077",
@@ -33,8 +32,8 @@
   "editor.wordWrap": "on",
   "editor.wordWrapColumn": 80,
   "editor.wrappingStrategy": "advanced",
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
   "editor.formatOnType": false,
   "editor.inlineSuggest.enabled": true,
   "editor.tabSize": 2,
@@ -50,9 +49,9 @@
   "editor.guides.bracketPairs": "active",
   "editor.inlayHints.enabled": "on",
   "editor.codeActionsOnSave": {
-    "source.fixAll.shellcheck": "explicit",
-    "source.fixAll.eslint": "explicit",
-    "source.addMissingImports": "explicit"
+    //"source.fixAll.shellcheck": "explicit",
+    // "source.fixAll.eslint": "explicit",
+    // "source.addMissingImports": "explicit"
   },
   "editor.quickSuggestions": {
     "comments": true,
@@ -91,6 +90,8 @@
   "terminal.explorerKind": "external",
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.fontFamily": "Fira Code,NerdFontsSymbolsOnly,Hack,JetBrains Mono",
+  "terminal.integrated.shellIntegration.enabled" : false,
+  "terminal.integrated.gpuAcceleration": "off",
   "extensions.ignoreRecommendations": true,
   "vsicons.dontShowNewVersionMessage": true,
   "diffEditor.ignoreTrimWhitespace": true,
@@ -354,4 +355,11 @@
   "npm.keybindingsChangedWarningShown": true,
   "playwright.reuseBrowser": false,
   "playwright.showTrace": true,
+  "java.configuration.runtimes": [
+  {
+    "name": "JavaSE-17",
+    "path": "/usr/lib/jvm/openjdk-bin-17",
+    "default": true
+  },
+]
 }
