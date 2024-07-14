@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+URL="https://zed.dev/api/releases/stable/latest/zed-linux-x86_64.tar.gz"
+INSTALL_DIR="$HOME/.local/"
+
+if command -v zed &> /dev/null; then
+  zed -v
+fi
+
+mkdir -p "$INSTALL_DIR"
+
+curl -# -L "$URL" -o "zed.tar.gz"
+tar -xzf "zed.tar.gz" -C "$INSTALL_DIR"
+rm -f zed.tar.gz
+
+ln -sf $INSTALL_DIR/zed.app/bin/zed ~/.local/bin/zed
+
+cp $INSTALL_DIR/zed.app/share/applications/zed.desktop ~/.local/share/applications/zed.desktop
+sed -i "s|Icon=zed|Icon=$INSTALL_DIR/zed.app/share/icons/hicolor/512x512/apps/zed.png|g" ~/.local/share/applications/zed.desktop
+sed -i "s|Exec=zed|Exec=$INSTALL_DIR/zed.app/libexec/zed-editor|g" ~/.local/share/applications/zed.desktop
+
+zed -v

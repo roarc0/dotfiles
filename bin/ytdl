@@ -1,11 +1,13 @@
 #!/usr/bin/env sh
 
 YTDL="$HOME/.local/bin/youtube-dl"
-
+URL="https://github.com/yt-dlp/yt-dlp/releases/download/2024.05.27/yt-dlp"
 if [ ! -f "$YTDL" ]; then
   mkdir -p "$HOME/.local/bin" >/dev/null 1>&2
-  wget -q --show-progress -O "$YTDL" https://yt-dl.org/downloads/latest/youtube-dl
+  wget -q --show-progress -O "$YTDL" $URL
   chmod +x "$YTDL"
 fi
 
-$YTDL "$*"
+shift
+
+$YTDL $*
