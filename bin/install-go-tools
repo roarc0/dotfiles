@@ -59,6 +59,7 @@ packages=(
   github.com/junegunn/fzf@latest
   github.com/digitalocean/gta/cmd/gta@latest
   github.com/spf13/cobra-cli@latest
+  github.com/CircleCI-Public/circleci-cli@latest
 )
 #tailscale.com/cmd/tailscale@latest
 #tailscale.com/cmd/tailscaled@latest
