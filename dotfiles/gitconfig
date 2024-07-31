@@ -54,6 +54,9 @@
 [safe]
 	directory = /etc/portage
 	directory = /var/db/repos/local
+	directory = /var/lib/repos/gentoo/metadata/dtd
+	directory = /var/lib/repos/gentoo/metadata/news
+	directory = /var/lib/repos/gentoo/metadata/glsa
 [column]
 	ui = auto
 [branch]

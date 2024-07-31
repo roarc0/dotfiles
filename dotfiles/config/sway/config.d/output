@@ -1,7 +1,7 @@
 #outputs: swaymsg -t get_outputs
 output * bg $wallpaper fill
 #output HDMI-A-1 res 1920x1080 pos 0 0
-set $laptop eDP-1
-output $laptop res 1920x1080 pos 0 0
-bindswitch --reload --locked lid:on output $laptop disable
-bindswitch --reload --locked lid:off output $laptop enable
+#set $laptop eDP-1
+#output $laptop res 1920x1080 pos 0 0
+#bindswitch --reload --locked lid:on output $laptop disable
+#bindswitch --reload --locked lid:off output $laptop enable

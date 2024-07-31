@@ -16,7 +16,7 @@
   "workbench.editor.centeredLayoutAutoResize": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.settings.editor": "json",
-  "workbench.colorTheme": "Dracula Soft",
+  "workbench.colorTheme": "Dracula Theme",
   "workbench.startupEditor": "none",
   "workbench.colorCustomizations": {
     "statusBar.background": "#00000077",
@@ -32,8 +32,8 @@
   "editor.wordWrap": "on",
   "editor.wordWrapColumn": 80,
   "editor.wrappingStrategy": "advanced",
-  "editor.formatOnSave": false,
-  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
   "editor.formatOnType": false,
   "editor.inlineSuggest.enabled": true,
   "editor.tabSize": 2,
@@ -90,7 +90,7 @@
   "terminal.explorerKind": "external",
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.fontFamily": "Fira Code,NerdFontsSymbolsOnly,Hack,JetBrains Mono",
-  "terminal.integrated.shellIntegration.enabled" : false,
+  "terminal.integrated.shellIntegration.enabled": false,
   "terminal.integrated.gpuAcceleration": "off",
   "extensions.ignoreRecommendations": true,
   "vsicons.dontShowNewVersionMessage": true,
@@ -356,10 +356,12 @@
   "playwright.reuseBrowser": false,
   "playwright.showTrace": true,
   "java.configuration.runtimes": [
-  {
-    "name": "JavaSE-17",
-    "path": "/usr/lib/jvm/openjdk-bin-17",
-    "default": true
-  },
-]
+    {
+      "name": "JavaSE-17",
+      "path": "/usr/lib/jvm/openjdk-bin-17",
+      "default": true
+    }
+  ],
+  "circleci.hostUrl": "",
+  "explorer.confirmPasteNative": false
 }
