@@ -60,6 +60,7 @@ packages=(
   github.com/digitalocean/gta/cmd/gta@latest
   github.com/spf13/cobra-cli@latest
   github.com/CircleCI-Public/circleci-cli@latest
+  github.com/runreveal/chdump/cmd/chdump@latest
 )
 #tailscale.com/cmd/tailscale@latest
 #tailscale.com/cmd/tailscaled@latest
