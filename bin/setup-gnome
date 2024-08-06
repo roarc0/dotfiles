@@ -2,10 +2,11 @@
 
 #xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
+gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver ['<Shift><Alt>x']
+gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 3600
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
 gsettings set org.gnome.desktop.session idle-delay 900
-gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 3600
 gsettings set org.gnome.gnome-screenshot last-save-directory 'file:///home/roarc/pictures/screenshots'
 gsettings set org.gnome.nautilus.preferences click-policy 'single'
 gsettings set org.gnome.nautilus.preferences always-use-location-entry true
