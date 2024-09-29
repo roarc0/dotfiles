@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+rename .FLAC .flac *.FLAC >/dev/null
+rename .Flac .flac *.Flac >/dev/null
+
+if command_exists parallel; then
+    parallel ffmpeg -i {} -c:a libopus -b:a 160k  {.}.mp3 ::: *.flac
+else
+    for a in ./*.flac; do
+        ffmpeg -i "$a" -c:a libopus -b:a 160k  "${a[@]/%flac/opus}"
+    done
+fi

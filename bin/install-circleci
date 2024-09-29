@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+curl -fLSs https://raw.githubusercontent.com/CircleCI-Public/circleci-cli/main/install.sh | DESTDIR=~/.local/bin bash 

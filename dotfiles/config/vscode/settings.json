@@ -72,10 +72,10 @@
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true
   },
-  "files.associations": {
-    "*.js": "javascriptreact",
-    "*.ts": "typescriptreact"
-  },
+  // "files.associations": {
+  //   "*.js": "javascriptreact",
+  //   "*.ts": "typescriptreact"
+  // },
   "formatFiles.excludedFolders": [
     "node_modules",
     ".vscode",
@@ -286,9 +286,9 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  // "[typescriptreact]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
   "eslint.useESLintClass": true,
   "eslint.lintTask.enable": true,
   "eslint.validate": [
@@ -322,7 +322,8 @@
     "vscode-kubernetes.helm-path.linux": "/home/roarc/.local/bin/helm",
     "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.local/bin/kubectl",
     "vscode-kubernetes.minikube-path.linux": "/home/roarc/.local/bin/minikube",
-    "vs-kubernetes.crd-code-completion": "disabled"
+    "vs-kubernetes.crd-code-completion": "disabled",
+    "vscode-kubernetes.minikube-path-linux": "/home/roarc/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube"
   },
   "shellcheck.run": "onSave",
   "shellcheck.exclude": [
@@ -363,5 +364,8 @@
     }
   ],
   "circleci.hostUrl": "",
-  "explorer.confirmPasteNative": false
+  "explorer.confirmPasteNative": false,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

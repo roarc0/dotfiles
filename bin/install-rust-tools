@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
 
 cargo_install() {
-  printf "\033[31mInstalling %s\033[0m\n" "$1"
-  if ! cargo install "$1"; then
-    echo "Failed to install $1"
+  if [[ $1 == *".git"* ]]; then
+    printf "\033[31mInstalling %s from git\033[0m\n" "$1"
+    if ! cargo install --git "$1"; then
+      echo "Failed to install $1"
+    fi
+  else
+    printf "\033[31mInstalling %s\033[0m\n" "$1"
+    if ! cargo install "$1"; then
+      echo "Failed to install $1"
+    fi
   fi
 }
 
 packages=(
+  https://github.com/russelltg/wl-screenrec.git
+  https://github.com/elkowar/eww.git
   cargo-modules
   cargo-wgsl
   sccache
@@ -24,15 +33,13 @@ packages=(
   mdbook
   mdbook-pdf
   alacritty
+  deno
 )
-#cargo_install deno --locked
-#cargo_install exa
-#cargo_install bat
 
-if command -v rustup &> /dev/null ;then
+if command -v rustup &>/dev/null; then
   rustup update
 fi
 
 for package in "${packages[@]}"; do
-  cargo_install "$package"
+  cargo_install $package
 done
