@@ -32,6 +32,7 @@ export VISUAL=$EDITOR
 export SYSTEMD_EDITOR=$EDITOR
 export MERGETOOL=meld
 export BEMENU_BACKEND=wayland
+export WLR_RENDERER=vulkan
 export AWS_PAGER=""
 unset SSH_ASKPASS
 
