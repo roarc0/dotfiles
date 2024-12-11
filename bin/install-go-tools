@@ -8,6 +8,7 @@ go_install() {
 }
 
 packages=(
+  github.com/zcong1993/gist@latest
   golang.org/x/tools/cmd/deadcode@latest
   go.uber.org/mock/mockgen@latest
   github.com/vektra/mockery/v2@latest

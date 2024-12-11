@@ -16,6 +16,10 @@ fi
 TMP_DIR=$(mktemp -d)
 trap 'rm -rf -- "$TMP_DIR"' EXIT
 
+if ! command go >/dev/null 2>&1; then
+    go version
+fi
+
 GO_TAR="$TMP_DIR/go.tar.gz"
 PACKAGE_NAME="go$VERSION.$PLATFORM.tar.gz"
 echo "Downloading $PACKAGE_NAME ..."

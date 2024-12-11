@@ -1,7 +1,7 @@
 [user]
 	email = alessandro.rosetti@gmail.com
 	name = Alessandro Rosetti
-	signingkey = C9C90A7C4A7804A0
+  signingkey = C9C90A7C4A7804A0
 	#signingkey = ~/.ssh/id_ecdsa_github
 
 [includeIf "gitdir:~/workspace/**"]

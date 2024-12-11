@@ -33,7 +33,7 @@
   "editor.wordWrapColumn": 80,
   "editor.wrappingStrategy": "advanced",
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
+  "editor.formatOnPaste": false,
   "editor.formatOnType": false,
   "editor.inlineSuggest.enabled": true,
   "editor.tabSize": 2,
@@ -261,6 +261,10 @@
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
+  "[sql]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  },
   "html.format.enable": true,
   "html.format.indentHandlebars": true,
   "html.format.endWithNewline": false,
@@ -367,5 +371,6 @@
   "explorer.confirmPasteNative": false,
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "lldb.suppressUpdateNotifications": true
 }
