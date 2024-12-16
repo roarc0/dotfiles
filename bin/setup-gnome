@@ -2,7 +2,7 @@
 
 #xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
-gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver ['<Shift><Alt>x']
+gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '[<Shift><Alt>x]'
 gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 3600
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
