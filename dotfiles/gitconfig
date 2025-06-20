@@ -58,6 +58,7 @@
 	directory = /var/lib/repos/gentoo/metadata/news
 	directory = /var/lib/repos/gentoo/metadata/glsa
 	directory = /var/lib/repos/local
+	directory = /var/lib/repos/local
 [column]
 	ui = auto
 [branch]

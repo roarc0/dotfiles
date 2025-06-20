@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+if command -v rpk >/dev/null 2>&1; then
+  rpk --version
+fi
+
+curl --progress-bar -LO https://github.com/redpanda-data/redpanda/releases/latest/download/rpk-linux-amd64.zip
+unzip -o rpk-linux-amd64.zip
+rm rpk-linux-amd64.zip
+chmod +x rpk
+
+rpk --version

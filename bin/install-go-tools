@@ -8,6 +8,8 @@ go_install() {
 }
 
 packages=(
+  github.com/yorukot/superfile@latest
+  github.com/bruceadowns/gfdupes@latest
   github.com/zcong1993/gist@latest
   golang.org/x/tools/cmd/deadcode@latest
   go.uber.org/mock/mockgen@latest
@@ -17,11 +19,10 @@ packages=(
   github.com/hherman1/gq@latest
   github.com/square/certstrap@latest
   github.com/knipferrc/branch-cleaner@latest
-  github.com/cosmtrek/air@latest
+  github.com/air-verse/air@latest
   github.com/a-h/templ/cmd/templ@latest
   github.com/antonmedv/fx@latest
   github.com/swaggo/swag/cmd/swag@latest
-  "-tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest"
   github.com/pressly/goose/v3/cmd/goose@latest
   github.com/derailed/k9s@latest
   github.com/stern/stern@latest
@@ -71,3 +72,6 @@ packages=(
 for package in "${packages[@]}"; do
   go_install $package
 done
+
+go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
