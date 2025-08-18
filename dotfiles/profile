@@ -17,6 +17,8 @@ export PATH="${GOPATH}/bin:$PATH"
 export GOROOT="$HOME/.local/goroot"
 export PATH="${GOROOT}/bin:$PATH"
 
+GOPRIVATE="github.com/c-wire/*"
+
 export NODE_PATH="$HOME/.npm/node_modules"
 export PATH="$PATH:${NODE_PATH}/.bin"
 
@@ -39,3 +41,5 @@ unset SSH_ASKPASS
 if [ -f "$HOME/workspace/.profile" ]; then
     . "$HOME/workspace/.profile"
 fi
+
+#. "$HOME/snap/code/197/.local/share/../bin/env"

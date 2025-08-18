@@ -20,3 +20,5 @@ export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
 export GPG_TTY=$(tty)
 
 eval ~/env/env.sh
+
+. "$HOME/snap/code/197/.local/share/../bin/env"
