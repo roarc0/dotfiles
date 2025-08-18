@@ -91,7 +91,7 @@
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.fontFamily": "Fira Code,NerdFontsSymbolsOnly,Hack,JetBrains Mono",
   "terminal.integrated.shellIntegration.enabled": false,
-  "terminal.integrated.gpuAcceleration": "off",
+  "terminal.integrated.gpuAcceleration": "on",
   "extensions.ignoreRecommendations": true,
   "vsicons.dontShowNewVersionMessage": true,
   "diffEditor.ignoreTrimWhitespace": true,
@@ -340,12 +340,9 @@
   "git.autofetch": true,
   "github.copilot.enable": {
     "*": true,
-    "sql": true,
-    "yaml": true,
-    "plaintext": true,
-    "markdown": true
   },
   "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.nextEditSuggestions.enabled": true,
   "gitlab.aiAssistedCodeSuggestions.enabled": true,
   "emojisense.languages": {
     "markdown": true,
@@ -372,5 +369,15 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "lldb.suppressUpdateNotifications": true
+  "lldb.suppressUpdateNotifications": true,
+  "sqltools.results": {
+    "customization": {
+      "font-size": "9px",
+      "font-family": "monospace",
+      "table-cell-padding": "1px 2px"
+    }
+  },
+  "typescript.experimental.useTsgo": true,
+  "docker.extension.enableComposeLanguageServer": false,
+  "zig.zls.enabled": "on"
 }

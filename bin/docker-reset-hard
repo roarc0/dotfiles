@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+sudo systemctl stop docker
+sudo systemctl stop containerd
+sudo rm -rf /var/lib/docker
+sudo rm -rf /etc/docker
+sudo ip link delete docker0
+sudo ip link show | grep -oP 'br-[a-f0-9]+' | xargs -I{} sudo ip link delete {}
+

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+~/.local/appimages/Cursor-1.2.2-x86_64.AppImage $@
+
