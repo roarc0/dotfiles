@@ -8,6 +8,7 @@ go_install() {
 }
 
 packages=(
+  gotest.tools/gotestsum@latest
   github.com/yorukot/superfile@latest
   github.com/bruceadowns/gfdupes@latest
   github.com/zcong1993/gist@latest
