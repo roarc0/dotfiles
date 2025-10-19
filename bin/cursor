@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 
-~/.local/appimages/Cursor-1.2.2-x86_64.AppImage $@
+chmod +x ~/.local/appimages/*
+
+~/.local/appimages/Cursor-1.?.??-x86_64.AppImage $@
 
