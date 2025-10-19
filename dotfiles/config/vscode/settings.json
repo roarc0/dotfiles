@@ -2,7 +2,6 @@
   "window.titleBarStyle": "custom",
   "window.title": "${rootPath}${separator}${appName}",
   "window.zoomLevel": 2,
-  "window.menuBarVisibility": "toggle",
   "sync.autoDownload": true,
   "sync.autoUpload": true,
   "sync.forceDownload": true,
@@ -15,7 +14,8 @@
   "workbench.editor.revealIfOpen": true,
   "workbench.editor.centeredLayoutAutoResize": true,
   "workbench.editor.highlightModifiedTabs": true,
-  "workbench.settings.editor": "json",
+  // "workbench.settings.editor": "json",
+  "workbench.settings.editor": "ui",
   "workbench.colorTheme": "Dracula Theme",
   "workbench.startupEditor": "none",
   "workbench.colorCustomizations": {
@@ -34,6 +34,7 @@
   "editor.wrappingStrategy": "advanced",
   "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
+  "workbench.settings.openDefaultSettings": true,
   "editor.formatOnType": false,
   "editor.inlineSuggest.enabled": true,
   "editor.tabSize": 2,
@@ -216,6 +217,9 @@
     "-v",
     "-timeout=30m"
   ],
+  "go.testEnvVars": {
+    "TEST_SUITES": "pg_debug"
+  },
   "go.autocompleteUnimportedPackages": true,
   "go.gotoSymbol.includeGoroot": true,
   "go.gotoSymbol.includeImports": true,
@@ -379,5 +383,32 @@
   },
   "typescript.experimental.useTsgo": true,
   "docker.extension.enableComposeLanguageServer": false,
-  "zig.zls.enabled": "on"
+  "zig.zls.enabled": "on",
+  "chat.edits2.enabled": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.newWorkspace.useContext7": true,
+  "github.copilot.chat.languageContext.fix.typescript.enabled": true,
+  "github.copilot.chat.languageContext.inline.typescript.enabled": true,
+  "github.copilot.chat.generateTests.codeLens": true,
+  "github.copilot.chat.agent.thinkingTool": true,
+  "chat.tools.terminal.autoApprove": {
+    "go build ./...": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  },
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
 }
