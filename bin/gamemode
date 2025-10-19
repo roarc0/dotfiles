@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+# Minimal gamemode helper: apply performance or schedutil governors + show status.
+# Usage:
+#   gamemode on      # performance governor + turbo + performance power profile
+#   gamemode off     # schedutil governor + balanced power profile
+#   gamemode status  # detect current related settings
+#   gamemode help    # show usage
+
+set -euo pipefail
+
+ERR() { printf "[gamemode][error] %s\n" "$*" >&2; }
+LOG() { printf "[gamemode] %s\n" "$*"; }
+
+need_root_cmd() { if [[ $EUID -ne 0 ]]; then sudo "$@"; else "$@"; fi; }
+
+ensure_cpupower() { command -v cpupower &>/dev/null || { ERR "cpupower not found"; exit 1; }; }
+
+set_governor_all() {
+  local gov=$1
+  LOG "Setting governor -> $gov"
+
+  need_root_cmd cpupower frequency-set -g "$gov" >/dev/null 2>&1 || {
+    for cpu_dir in /sys/devices/system/cpu/cpu[0-9]*; do
+      local path="$cpu_dir/cpufreq/scaling_governor"
+      [[ -w $path ]] || continue
+      need_root_cmd bash -c "echo $gov > $path" || true
+    done
+  }
+}
+
+do_on() {
+  ensure_cpupower
+
+  set_governor_all performance
+
+  if [[ -w /sys/devices/system/cpu/intel_pstate/no_turbo ]]; then
+    LOG "Enabling turbo"
+    need_root_cmd bash -c 'echo 0 > /sys/devices/system/cpu/intel_pstate/no_turbo'
+  fi
+
+  # if command -v powerprofilesctl &>/dev/null; then
+  #   LOG "powerprofilesctl performance"
+  #   powerprofilesctl set performance || true
+  # fi
+
+  LOG "Applied performance settings"
+}
+
+do_off() {
+  ensure_cpupower
+  set_governor_all schedutil || true
+  # if command -v powerprofilesctl &>/dev/null; then
+  #   LOG "powerprofilesctl balanced"
+  #   powerprofilesctl set balanced || true
+  # fi
+  LOG "Applied schedutil/balanced settings"
+}
+
+status() {
+  printf "=== gamemode status ===\n"
+  # Governors
+  local govs=()
+  for gfile in /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor; do
+    [[ -r $gfile ]] || continue
+    govs+=("$(<"$gfile")")
+  done
+  if ((${#govs[@]})); then
+    # unique list
+    local uniq
+    uniq=$(printf '%s\n' "${govs[@]}" | sort -u | tr '\n' ' ')
+    printf "governors: %s\n" "$uniq"
+  else
+    printf "governors: (unavailable)\n"
+  fi
+
+  # Turbo
+  if [[ -r /sys/devices/system/cpu/intel_pstate/no_turbo ]]; then
+    local nt
+    nt=$(< /sys/devices/system/cpu/intel_pstate/no_turbo)
+    if [[ $nt == 0 ]]; then printf "turbo: enabled\n"; else printf "turbo: disabled\n"; fi
+  fi
+
+  # EPP (Energy Performance Preference) if present (Intel/AMD pstate)
+  local epps=()
+  for epp in /sys/devices/system/cpu/cpu[0-9]*/cpufreq/energy_performance_preference; do
+    [[ -r $epp ]] || continue
+    epps+=("$(<"$epp")")
+  done
+  if ((${#epps[@]})); then
+    local eppuniq
+    eppuniq=$(printf '%s\n' "${epps[@]}" | sort -u | tr '\n' ' ')
+    printf "EPP: %s\n" "$eppuniq"
+  fi
+
+  # power profile
+  # if command -v powerprofilesctl &>/dev/null; then
+  #   local prof
+  #   prof=$(powerprofilesctl get 2>/dev/null || true)
+  #   [[ -n $prof ]] && printf "power profile: %s\n" "$prof"
+  # fi
+
+  # cpupower summary (short)
+  if command -v cpupower &>/dev/null; then
+    cpupower frequency-info 2>/dev/null | grep -E "current CPU frequency:|boost state" || true
+  fi
+}
+
+usage() { echo "Usage: gamemode <on|off|status|help>"; }
+
+case ${1:-} in
+  on) do_on ;;
+  off) do_off ;;
+  status) status ;;
+  help|-h|--help|"") usage ;;
+  *) ERR "Unknown command: $1"; usage; exit 1 ;;
+esac
