@@ -5,13 +5,15 @@ k9s:
   readOnly: false
   noExitOnCtrlC: false
   ui:
-    enableMouse: true
+    enableMouse: false
     headless: false
-    logoless: false
+    logoless: true
+    splashless: true
     crumbsless: false
-    reactive: false
+    reactive: true
     noIcons: false
-  skipLatestRevCheck: false
+    skin: dracula
+  skipLatestRevCheck: true
   disablePodCounting: false
   shellPod:
     image: busybox:1.35.0
@@ -20,18 +22,6 @@ k9s:
       cpu: 100m
       memory: 100Mi
     tty: true
-  imageScans:
-    enable: false
-    exclusions:
-      namespaces:
-        - kube-system
-        - fred
-      labels:
-        k8s-app:
-          - kindnet
-          - bozo
-        env:
-          - dev
   logger:
     tail: 100
     buffer: 5000
