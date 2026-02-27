@@ -2,7 +2,17 @@
 set -e
 
 VERSION=${1}
-PLATFORM=${2:-linux-amd64}
+
+# Detect platform if not specified
+if [ -z "$2" ]; then
+    OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+    ARCH=$(uname -m)
+    case "$OS" in linux) OS_NAME="linux" ;; darwin) OS_NAME="darwin" ;; *) echo "Unsupported OS: $OS"; exit 1 ;; esac
+    case "$ARCH" in x86_64) ARCH_NAME="amd64" ;; aarch64|arm64) ARCH_NAME="arm64" ;; *) echo "Unsupported architecture: $ARCH"; exit 1 ;; esac
+    PLATFORM="${OS_NAME}-${ARCH_NAME}"
+else
+    PLATFORM="$2"
+fi
 
 if [ -z "$GOROOT" ] || [ -z "$GOPATH" ]; then
     echo "Please, set GOROOT and GOPATH in your environment."

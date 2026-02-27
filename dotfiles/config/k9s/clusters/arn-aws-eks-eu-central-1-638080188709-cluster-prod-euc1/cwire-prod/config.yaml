@@ -1,0 +1,13 @@
+k9s:
+  cluster: arn:aws:eks:eu-central-1:638080188709:cluster/prod-euc1
+  namespace:
+    active: all
+    lockFavorites: false
+    favorites:
+      - all
+      - default
+  view:
+    active: v1/pods all
+  featureGates:
+    nodeShell: false
+  proxy: null

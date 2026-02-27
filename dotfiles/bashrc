@@ -22,3 +22,8 @@ export GPG_TTY=$(tty)
 eval ~/env/env.sh
 
 . "$HOME/snap/code/197/.local/share/../bin/env"
+
+# Added by LM Studio CLI (lms)
+#export PATH="$PATH:/Users/roarc/.lmstudio/bin"
+# End of LM Studio CLI section
+

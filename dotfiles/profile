@@ -1,28 +1,35 @@
-export XKB_DEFAULT_LAYOUT=us
-export XKB_DEFAULT_VARIANT=altgr-intl
-#export XKB_DEFAULT_OPTIONS=
-
-export ANDROID_HOME="$HOME/.local/android/sdk"
+#export ANDROID_HOME="$HOME/.local/android/sdk"
 
 #export JAVA_HOME="/usr/lib/jvm/default-java/"
-export _JAVA_AWT_WM_NONREPARENTING=1
+#export _JAVA_AWT_WM_NONREPARENTING=1
 
-export CARGOPATH="$HOME/.local/cargo"
-export PATH="${CARGOPATH}/bin:$HOME/.cargo/bin:$PATH"
-export RUSTC_WRAPPER=sccache
+if [ "$(uname)" = "Linux" ]; then
+    export CARGOPATH="$HOME/.local/cargo"
+    export PATH="${CARGOPATH}/bin:$HOME/.cargo/bin:$PATH"
+    export RUSTC_WRAPPER=sccache
 
-export GOPATH="$HOME/.local/go"
-export PATH="${GOPATH}/bin:$PATH"
-
-export GOROOT="$HOME/.local/goroot"
-export PATH="${GOROOT}/bin:$PATH"
-
-GOPRIVATE="github.com/c-wire/*"
-
-export NODE_PATH="$HOME/.npm/node_modules"
-export PATH="$PATH:${NODE_PATH}/.bin"
-
-export PATH="$PATH:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin"
+    export GOPATH="$HOME/.local/go"
+    export GOROOT="$HOME/.local/goroot"
+    export PATH="${GOROOT}/bin:$PATH"
+    
+    export NODE_PATH="$HOME/.npm/node_modules"
+    export PATH="$PATH:${NODE_PATH}/.bin"
+    export BEMENU_BACKEND=wayland
+    export SYSTEMD_EDITOR=$EDITOR
+    export WLR_RENDERER=vulkan
+    export XKB_DEFAULT_LAYOUT=us
+    export XKB_DEFAULT_VARIANT=altgr-intl
+    #export XKB_DEFAULT_OPTIONS=
+    export PATH="$PATH:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin"
+else
+    # Get Go paths from go env on macOS
+    if command -v go >/dev/null 2>&1; then
+        export GOPATH="$(go env GOPATH)"
+        export GOROOT="$(go env GOROOT)"
+        export PATH="${GOROOT}/bin:$PATH"
+    fi
+fi
+export PATH="${GOPATH}/bin:$PATH" 
 
 if [ -d "$HOME/.local/bin" ]; then
     export PATH="$HOME/.local/bin:$PATH"
@@ -31,15 +38,16 @@ fi
 export GIT_TERMINAL_PROMPT=1
 export EDITOR=nvim
 export VISUAL=$EDITOR
-export SYSTEMD_EDITOR=$EDITOR
 export MERGETOOL=meld
-export BEMENU_BACKEND=wayland
-export WLR_RENDERER=vulkan
 export AWS_PAGER=""
 unset SSH_ASKPASS
 
+export GOPRIVATE="github.com/c-wire/*"
 if [ -f "$HOME/workspace/.profile" ]; then
     . "$HOME/workspace/.profile"
 fi
 
-#. "$HOME/snap/code/197/.local/share/../bin/env"
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/roarc/.lmstudio/bin"
+# End of LM Studio CLI section
+

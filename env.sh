@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+
 ENV_HOME="$(
   cd "$(dirname "$0")" >/dev/null 2>&1 || exit
   pwd -P
@@ -14,7 +15,10 @@ if [ -f "$ENV_FILE" ]; then
 fi
 export ENV_FILE
 
-. ~/.profile
+if [ -f "$HOME/.profile" ]; then
+  . "$HOME/.profile"
+fi
+
 . "$ENV_HOME"/scripts/aliases.sh
 . "$ENV_HOME"/scripts/aliases-k8s.sh
 . "$ENV_HOME"/scripts/aliases-docker.sh

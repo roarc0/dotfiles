@@ -26,10 +26,10 @@ alias memrss='while read command percent rss; do if [[ "${command}" != "COMMAND"
 alias millis='date +%s%3N'
 alias gitignore-sort='sort -u .gitignore -o .gitignore'
 
-#system
-alias reboot='sudo systemctl reboot'
-alias poweroff='sudo systemctl poweroff'
-alias suspend='sudo systemctl suspend'
-alias drop-caches="su -c \"sync; echo 3 > /proc/sys/vm/drop_caches && swapoff -a ; swapon -a\""
-alias grub-update='su -c "mount /boot/ ; grub-mkconfig -o /boot/grub/grub.cfg"'
-alias gedit='gnome-text-editor'
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    alias reboot='sudo systemctl reboot'
+    alias poweroff='sudo systemctl poweroff'
+    alias suspend='sudo systemctl suspend'
+    alias drop-caches="su -c \"sync; echo 3 > /proc/sys/vm/drop_caches && swapoff -a ; swapon -a\""
+    alias grub-update='su -c "mount /boot/ ; grub-mkconfig -o /boot/grub/grub.cfg"'
+fi
