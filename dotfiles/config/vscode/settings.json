@@ -25,8 +25,7 @@
     "editor.selectionBackground": "#222"
   },
   "editor.rename.enablePreview": false,
-  "editor.fontSize": 17,
-  "editor.fontFamily": "'Droid Sans Mono'",
+  "editor.fontSize": 15,
   "editor.fontLigatures": true,
   "editor.lineHeight": 22,
   "editor.wordWrap": "on",
@@ -91,7 +90,6 @@
   "terminal.explorerKind": "external",
   "terminal.integrated.fontSize": 12,
   "terminal.integrated.fontFamily": "Fira Code,NerdFontsSymbolsOnly,Hack,JetBrains Mono",
-  "terminal.integrated.shellIntegration.enabled": false,
   "terminal.integrated.gpuAcceleration": "on",
   "extensions.ignoreRecommendations": true,
   "vsicons.dontShowNewVersionMessage": true,
@@ -120,6 +118,7 @@
     "vscode-userdata"
   ],
   "cSpell.userWords": [
+    "accum",
     "adserver",
     "adunitcode",
     "analyzer",
@@ -170,6 +169,7 @@
     "rollup",
     "rollupch",
     "scminput",
+    "srgba",
     "startuml",
     "SULID",
     "timestamppb",
@@ -395,7 +395,13 @@
     "go build ./...": {
       "approve": true,
       "matchCommandLine": true
-    }
+    },
+    "buf": true,
+    "go": true,
+    "git add": true,
+    "printf": true,
+    "git commit": true,
+    "git -C /Users/roarc/workspace/console/console": true
   },
   "[dockercompose]": {
     "editor.insertSpaces": true,
@@ -414,4 +420,14 @@
   "gitlens.ai.model": "vscode",
   "gitlens.ai.vscode.model": "copilot:gpt-4.1",
   "chat.mcp.gallery.enabled": true,
+  "workbench.iconTheme": "vscode-icons",
+  "protobuf.autoDetection.prompted": true,
+  "claudeCode.preferredLocation": "panel",
+  "chat.viewSessions.orientation": "stacked",
+  "chat.tools.urls.autoApprove": {
+    "https://raw.githubusercontent.com": {
+      "approveRequest": false,
+      "approveResponse": true
+    }
+  },
 }

@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+set -e
+
+# ── helpers ────────────────────────────────────────────────────────────────────
+info() { echo "[+] $*"; }
+warn() { echo "[!] $*"; }
+
+# ── ollama ─────────────────────────────────────────────────────────────────────
+install_ollama() {
+  info "Installing/updating ollama..."
+  curl -fsSL https://ollama.com/install.sh | sh
+}
+
+# ── llmfit ─────────────────────────────────────────────────────────────────────
+install_llmfit() {
+  info "Installing/updating llmfit..."
+  curl -fsSL https://llmfit.axjns.dev/install.sh | sh -s -- --local
+}
+
+# ── claude-launcher ────────────────────────────────────────────────────────────
+install_claude_launcher() {
+  info "Installing/updating claude-launcher..."
+  npm install -g claude-launcher
+  claude-launcher -l
+}
+
+# ── claude CLI (Anthropic official agent) ──────────────────────────────────────
+install_claude_cli() {
+  info "Installing/updating @anthropic-ai/claude-code..."
+  npm install -g @anthropic-ai/claude-code
+}
+
+# ── aider (AI pair programmer — works with Ollama & remote models) ─────────────
+install_aider() {
+  info "Installing/updating aider..."
+  if command -v pipx >/dev/null 2>&1; then
+    pipx install aider-chat 2>/dev/null || pipx upgrade aider-chat
+  elif command -v pip3 >/dev/null 2>&1; then
+    pip3 install --user --upgrade aider-chat
+  else
+    warn "Neither pipx nor pip3 found; skipping aider"
+    return 1
+  fi
+}
+
+# ── llama.cpp ──────────────────────────────────────────────────────────────────
+install_llama_cpp() {
+  (
+    local install_dir="${HOME}/.local/llama.cpp"
+    local tmp_dir
+    tmp_dir=$(mktemp -d)
+    trap 'rm -rf -- "$tmp_dir"' EXIT
+
+    local arch arch_tag
+    arch=$(uname -m)
+    case "$arch" in
+      x86_64)  arch_tag="x64" ;;
+      aarch64) arch_tag="arm64" ;;
+      *) warn "Unsupported architecture: $arch"; exit 1 ;;
+    esac
+
+    info "Fetching latest llama.cpp release..."
+    local release_json tag download_url
+    release_json=$(curl -fsSL "https://api.github.com/repos/ggerganov/llama.cpp/releases/latest")
+    tag=$(echo "$release_json" | grep '"tag_name"' | head -1 | awk -F'"' '{print $4}')
+
+    # Prefer AVX2 CPU build; fall back to generic linux build
+    download_url=$(echo "$release_json" \
+      | grep '"browser_download_url"' \
+      | grep -i "linux" \
+      | grep -i "${arch_tag}" \
+      | grep -i 'avx2' \
+      | grep -v 'cuda\|vulkan\|metal\|kompute\|sycl\|rpc' \
+      | grep '\.zip' \
+      | head -1 \
+      | awk -F'"' '{print $4}')
+
+    if [ -z "$download_url" ]; then
+      download_url=$(echo "$release_json" \
+        | grep '"browser_download_url"' \
+        | grep -i "linux" \
+        | grep -i "${arch_tag}" \
+        | grep -v 'cuda\|vulkan\|metal\|kompute\|sycl\|rpc' \
+        | grep '\.zip' \
+        | head -1 \
+        | awk -F'"' '{print $4}')
+    fi
+
+    if [ -z "$download_url" ]; then
+      warn "Could not find a llama.cpp release asset for linux/${arch_tag}"
+      exit 1
+    fi
+
+    info "Downloading llama.cpp ${tag}..."
+    curl -fsSL -o "$tmp_dir/llama.zip" "$download_url"
+
+    rm -rf "$install_dir"
+    mkdir -p "$install_dir"
+    unzip -q "$tmp_dir/llama.zip" -d "$install_dir"
+    chmod +x "$install_dir"/llama-* 2>/dev/null || true
+
+    info "llama.cpp ${tag} installed to $install_dir"
+  )
+}
+
+# ── main ───────────────────────────────────────────────────────────────────────
+install_ollama
+install_llmfit
+install_claude_launcher
+install_claude_cli
+install_aider
+install_llama_cpp
+
+info "All LLM tools installed/updated."

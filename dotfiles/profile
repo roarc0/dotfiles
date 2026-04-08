@@ -1,8 +1,3 @@
-#export ANDROID_HOME="$HOME/.local/android/sdk"
-
-#export JAVA_HOME="/usr/lib/jvm/default-java/"
-#export _JAVA_AWT_WM_NONREPARENTING=1
-
 if [ "$(uname)" = "Linux" ]; then
     export CARGOPATH="$HOME/.local/cargo"
     export PATH="${CARGOPATH}/bin:$HOME/.cargo/bin:$PATH"
@@ -21,6 +16,9 @@ if [ "$(uname)" = "Linux" ]; then
     export XKB_DEFAULT_VARIANT=altgr-intl
     #export XKB_DEFAULT_OPTIONS=
     export PATH="$PATH:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin"
+    #export ANDROID_HOME="$HOME/.local/android/sdk"
+    #export JAVA_HOME="/usr/lib/jvm/default-java/"
+    #export _JAVA_AWT_WM_NONREPARENTING=1
 else
     # Get Go paths from go env on macOS
     if command -v go >/dev/null 2>&1; then
@@ -47,7 +45,6 @@ if [ -f "$HOME/workspace/.profile" ]; then
     . "$HOME/workspace/.profile"
 fi
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/roarc/.lmstudio/bin"
-# End of LM Studio CLI section
-
+export PATH="$PATH:/$HOME/.lmstudio/bin"
+export LLAMA_CPP_PATH="$HOME/.local/llama.cpp"
+export PATH="$PATH:$LLAMA_CPP_PATH"

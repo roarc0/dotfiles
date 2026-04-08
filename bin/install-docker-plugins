@@ -11,7 +11,7 @@ chmod +x "$DEST"
 docker compose version
 
 DEST=$DEST_DIR/docker-buildx
-URL=https://github.com/docker/buildx/releases/download/v0.11.2/buildx-v0.11.2.linux-amd64
+URL=https://github.com/docker/buildx/releases/download/v0.31.1/buildx-v0.31.1.linux-amd64
 wget -q --show-progress -O "$DEST" $URL
 chmod +x "$DEST"
 #ln -sf "$DEST" "$HOME"/.local/bin >/dev/null 1>&2
