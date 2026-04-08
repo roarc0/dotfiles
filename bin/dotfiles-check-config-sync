@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+#
+# Detect untracked config changes: compares tracked configs with live ones using meld
+# Useful for catching edits that were made to live configs instead of tracked ones
+#
+# Usage:
+#   dotfiles-check-config-sync           # Check all configs
+#   dotfiles-check-config-sync nvim      # Check specific config (dotfiles/config/nvim vs ~/.config/nvim)
+#
+
+set -e
+
+ENV_HOME="${ENV_HOME:-$(cd "$(dirname "$0")/.." && pwd)}"
+DOTFILES="$ENV_HOME/dotfiles"
+
+# Determine CONFIG_DIR based on OS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  CONFIG_DIR="$HOME/Library/Application Support"
+else
+  CONFIG_DIR="$HOME/.config"
+fi
+
+# Check if meld is installed
+if ! type meld >/dev/null 2>&1; then
+  echo "Error: meld is not installed"
+  echo "Install with: sudo apt install meld (Linux) or brew install meld (macOS)"
+  exit 1
+fi
+
+check_config() {
+  local name="$1"
+  local tracked="$DOTFILES/config/$name"
+  local live="$CONFIG_DIR/$name"
+
+  # Skip if tracked version doesn't exist
+  [ -e "$tracked" ] || return 0
+
+  # If live version doesn't exist, nothing to check
+  if [ ! -e "$live" ]; then
+    echo "⊘ Missing: $live (not yet installed)"
+    return 0
+  fi
+
+  # If it's a proper symlink to tracked, all good
+  if [ -L "$live" ] && [ "$(readlink "$live")" = "$tracked" ]; then
+    echo "✓ Synced: $name"
+    return 0
+  fi
+
+  # Not a symlink or points elsewhere - show diff
+  echo "⚠ Out of sync: $name"
+  echo "  Tracked: $tracked"
+  echo "  Live:    $live"
+
+  # Compare and open meld if different
+  if ! diff -r "$tracked" "$live" >/dev/null 2>&1; then
+    echo "  Opening meld..."
+    meld "$tracked" "$live" 2>/dev/null &
+  else
+    echo "  (Contents identical, but not symlinked properly)"
+    # Re-establish symlink
+    read -p "  Re-link? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      rm -rf "$live"
+      ln -sf "$tracked" "$live"
+      echo "  ✓ Re-linked"
+    fi
+  fi
+}
+
+# If argument given, check specific config
+if [ $# -gt 0 ]; then
+  for name in "$@"; do
+    check_config "$name"
+  done
+  exit 0
+fi
+
+# Check all tracked configs
+echo "Checking all tracked configs..."
+echo ""
+
+any_out_of_sync=false
+for tracked in "$DOTFILES"/config/*; do
+  name="$(basename "$tracked")"
+  if ! check_config "$name"; then
+    any_out_of_sync=true
+  fi
+done
+
+echo ""
+if [ "$any_out_of_sync" = false ]; then
+  echo "✓ All configs in sync"
+else
+  echo "⚠ Some configs out of sync (meld windows opened)"
+fi

@@ -1,0 +1,18 @@
+# Claude desktop app: ignore everything by default, whitelist config files only
+
+# Ignore all
+/*
+/*/
+
+# Whitelist only tracked configs
+!.gitignore
+!settings.json
+!statusline.sh
+
+# These files contain secrets/credentials - never commit
+.credentials.json
+*.credentials*
+credentials.*
+secrets.*
+history.jsonl
+stats-cache.json

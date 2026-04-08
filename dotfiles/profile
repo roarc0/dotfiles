@@ -40,11 +40,14 @@ export MERGETOOL=meld
 export AWS_PAGER=""
 unset SSH_ASKPASS
 
+# Work-related environment
 export GOPRIVATE="github.com/c-wire/*"
+
 if [ -f "$HOME/workspace/.profile" ]; then
     . "$HOME/workspace/.profile"
 fi
 
-export PATH="$PATH:/$HOME/.lmstudio/bin"
+# LLM-related environment
+export PATH="$PATH:$HOME/.lmstudio/bin"
 export LLAMA_CPP_PATH="$HOME/.local/llama.cpp"
 export PATH="$PATH:$LLAMA_CPP_PATH"
