@@ -1,0 +1,4 @@
+# Generic Linux profile
+# This is loaded as a fallback on any Linux distro that doesn't have os/<distro>/profile
+# 
+# Add common Linux-only exports here

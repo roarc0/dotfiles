@@ -1,0 +1,4 @@
+# macOS specific profile
+# This is loaded automatically on macOS via env.sh OS detection
+#
+# Add macOS-only exports here

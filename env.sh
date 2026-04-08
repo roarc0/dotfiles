@@ -29,11 +29,30 @@ done
 # Load system defaults last
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 
-# Load host-specific profile if available
-HOST="$(hostname)"
-export HOST
+# Detect OS and load OS-specific profile
+OS_PROFILE=""
+case "$OSTYPE" in
+  darwin*)
+    OS_PROFILE="$ENV_HOME/os/macos/profile"
+    [ -d "$ENV_HOME/os/macos/bin" ] && export PATH="${ENV_HOME}/os/macos/bin:${PATH}"
+    ;;
+  linux*)
+    # Detect Linux distro
+    if [ -f /etc/os-release ]; then
+      . /etc/os-release
+      DISTRO_ID="${ID:-linux}"
+      if [ -d "$ENV_HOME/os/$DISTRO_ID" ]; then
+        OS_PROFILE="$ENV_HOME/os/$DISTRO_ID/profile"
+        [ -d "$ENV_HOME/os/$DISTRO_ID/bin" ] && export PATH="${ENV_HOME}/os/$DISTRO_ID/bin:${PATH}"
+      fi
+    fi
+    # Fallback to generic linux profile
+    if [ -z "$OS_PROFILE" ] || [ ! -f "$OS_PROFILE" ]; then
+      OS_PROFILE="$ENV_HOME/os/linux/profile"
+      [ -d "$ENV_HOME/os/linux/bin" ] && export PATH="${ENV_HOME}/os/linux/bin:${PATH}"
+    fi
+    ;;
+esac
 
-if [ -n "$HOST" ] && [ -d "$ENV_HOME/hosts/$HOST" ]; then
-  [ -d "$ENV_HOME/hosts/$HOST/bin" ] && export PATH="${ENV_HOME}/hosts/$HOST/bin:${PATH}"
-  [ -f "$ENV_HOME/hosts/$HOST/profile" ] && . "$ENV_HOME/hosts/$HOST/profile"
-fi
+# Load OS-specific profile if it exists
+[ -f "$OS_PROFILE" ] && . "$OS_PROFILE"
