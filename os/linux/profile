@@ -1,4 +1,27 @@
 # Generic Linux profile
 # This is loaded as a fallback on any Linux distro that doesn't have os/<distro>/profile
 # 
-# Add common Linux-only exports here
+# Common Linux-only exports and aliases
+
+export CARGOPATH="$HOME/.local/cargo"
+export PATH="${CARGOPATH}/bin:$HOME/.cargo/bin:$PATH"
+export RUSTC_WRAPPER=sccache
+
+export GOPATH="$HOME/.local/go"
+export GOROOT="$HOME/.local/goroot"
+export PATH="${GOROOT}/bin:$PATH"
+
+export NODE_PATH="$HOME/.npm/node_modules"
+export PATH="$PATH:${NODE_PATH}/.bin"
+export BEMENU_BACKEND=wayland
+export SYSTEMD_EDITOR=$EDITOR
+export WLR_RENDERER=vulkan
+export XKB_DEFAULT_LAYOUT=us
+export XKB_DEFAULT_VARIANT=altgr-intl
+export PATH="$PATH:$HOME/.local/share/flatpak/exports/bin:/var/lib/flatpak/exports/bin"
+
+alias reboot='sudo systemctl reboot'
+alias poweroff='sudo systemctl poweroff'
+alias suspend='sudo systemctl suspend'
+alias drop-caches="su -c \"sync; echo 3 > /proc/sys/vm/drop_caches && swapoff -a ; swapon -a\""
+alias grub-update='su -c "mount /boot/ ; grub-mkconfig -o /boot/grub/grub.cfg"'

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Optional: Apply macOS system defaults
-# Run via: ./scripts/setup-macos-defaults.sh
+# Run via: ./os/macos/bin/macos-apply-defaults
 #
 # Customize these based on your preferences
 #

@@ -10,6 +10,50 @@
 
 set -e
 
+supports_color=false
+supports_emoji=false
+if [ -t 1 ] && [ -z "${NO_COLOR:-}" ] && command -v tput >/dev/null 2>&1; then
+  if [ "$(tput colors 2>/dev/null || echo 0)" -ge 8 ]; then
+    supports_color=true
+  fi
+fi
+if [ -t 1 ]; then
+  case "${LC_ALL:-${LC_CTYPE:-${LANG:-}}}" in
+    *UTF-8*|*utf8*) supports_emoji=true ;;
+  esac
+fi
+
+if [ "$supports_color" = true ]; then
+  C_RESET='\033[0m'
+  C_GREEN='\033[32;1m'
+  C_YELLOW='\033[33;1m'
+  C_RED='\033[31;1m'
+  C_BLUE='\033[34;1m'
+else
+  C_RESET=''
+  C_GREEN=''
+  C_YELLOW=''
+  C_RED=''
+  C_BLUE=''
+fi
+
+if [ "$supports_emoji" = true ]; then
+  P_OK='✅ '
+  P_WARN='⚠️ '
+  P_ERR='❌ '
+  P_INFO='ℹ️ '
+else
+  P_OK='[OK] '
+  P_WARN='[WARN] '
+  P_ERR='[ERROR] '
+  P_INFO='[INFO] '
+fi
+
+ok() { printf "%b%s%s%b\n" "$C_GREEN" "$P_OK" "$*" "$C_RESET"; }
+warn() { printf "%b%s%s%b\n" "$C_YELLOW" "$P_WARN" "$*" "$C_RESET"; }
+err() { printf "%b%s%s%b\n" "$C_RED" "$P_ERR" "$*" "$C_RESET"; }
+info() { printf "%b%s%s%b\n" "$C_BLUE" "$P_INFO" "$*" "$C_RESET"; }
+
 ENV_HOME="${ENV_HOME:-$(cd "$(dirname "$0")/.." && pwd)}"
 DOTFILES="$ENV_HOME/dotfiles"
 
@@ -22,8 +66,8 @@ fi
 
 # Check if meld is installed
 if ! type meld >/dev/null 2>&1; then
-  echo "Error: meld is not installed"
-  echo "Install with: sudo apt install meld (Linux) or brew install meld (macOS)"
+  err "meld is not installed"
+  info "Install with: sudo apt install meld (Linux) or brew install meld (macOS)"
   exit 1
 fi
 
@@ -37,34 +81,34 @@ check_config() {
 
   # If live version doesn't exist, nothing to check
   if [ ! -e "$live" ]; then
-    echo "⊘ Missing: $live (not yet installed)"
+    info "Missing: $live (not yet installed)"
     return 0
   fi
 
   # If it's a proper symlink to tracked, all good
   if [ -L "$live" ] && [ "$(readlink "$live")" = "$tracked" ]; then
-    echo "✓ Synced: $name"
+    ok "Synced: $name"
     return 0
   fi
 
   # Not a symlink or points elsewhere - show diff
-  echo "⚠ Out of sync: $name"
-  echo "  Tracked: $tracked"
-  echo "  Live:    $live"
+  warn "Out of sync: $name"
+  info "Tracked: $tracked"
+  info "Live:    $live"
 
   # Compare and open meld if different
   if ! diff -r "$tracked" "$live" >/dev/null 2>&1; then
-    echo "  Opening meld..."
+    info "Opening meld..."
     meld "$tracked" "$live" 2>/dev/null &
   else
-    echo "  (Contents identical, but not symlinked properly)"
+    info "Contents identical, but not symlinked properly"
     # Re-establish symlink
     read -p "  Re-link? (y/n) " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
       rm -rf "$live"
       ln -sf "$tracked" "$live"
-      echo "  ✓ Re-linked"
+      ok "Re-linked"
     fi
   fi
 }
@@ -78,8 +122,7 @@ if [ $# -gt 0 ]; then
 fi
 
 # Check all tracked configs
-echo "Checking all tracked configs..."
-echo ""
+info "Checking all tracked configs..."
 
 any_out_of_sync=false
 for tracked in "$DOTFILES"/config/*; do
@@ -89,9 +132,8 @@ for tracked in "$DOTFILES"/config/*; do
   fi
 done
 
-echo ""
 if [ "$any_out_of_sync" = false ]; then
-  echo "✓ All configs in sync"
+  ok "All configs in sync"
 else
-  echo "⚠ Some configs out of sync (meld windows opened)"
+  warn "Some configs out of sync (meld windows opened)"
 fi

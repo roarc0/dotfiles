@@ -10,9 +10,53 @@
 
 set -e
 
+supports_color=false
+supports_emoji=false
+if [ -t 1 ] && [ -z "${NO_COLOR:-}" ] && command -v tput >/dev/null 2>&1; then
+  if [ "$(tput colors 2>/dev/null || echo 0)" -ge 8 ]; then
+    supports_color=true
+  fi
+fi
+if [ -t 1 ]; then
+  case "${LC_ALL:-${LC_CTYPE:-${LANG:-}}}" in
+    *UTF-8*|*utf8*) supports_emoji=true ;;
+  esac
+fi
+
+if [ "$supports_color" = true ]; then
+  C_RESET='\033[0m'
+  C_GREEN='\033[32;1m'
+  C_YELLOW='\033[33;1m'
+  C_RED='\033[31;1m'
+  C_BLUE='\033[34;1m'
+else
+  C_RESET=''
+  C_GREEN=''
+  C_YELLOW=''
+  C_RED=''
+  C_BLUE=''
+fi
+
+if [ "$supports_emoji" = true ]; then
+  P_INFO='ℹ️ '
+  P_OK='✅ '
+  P_WARN='⚠️ '
+  P_ERR='❌ '
+else
+  P_INFO='[INFO] '
+  P_OK='[OK] '
+  P_WARN='[WARN] '
+  P_ERR='[ERROR] '
+fi
+
+info() { printf "%b%s%s%b\n" "$C_BLUE" "$P_INFO" "$*" "$C_RESET"; }
+ok() { printf "%b%s%s%b\n" "$C_GREEN" "$P_OK" "$*" "$C_RESET"; }
+warn() { printf "%b%s%s%b\n" "$C_YELLOW" "$P_WARN" "$*" "$C_RESET"; }
+err() { printf "%b%s%s%b\n" "$C_RED" "$P_ERR" "$*" "$C_RESET"; }
+
 if [ $# -ne 1 ]; then
-  echo "Usage: track-config <path>"
-  echo "  Example: track-config ~/.config/nvim"
+  err "Usage: dotfiles-track-config <path>"
+  info "Example: dotfiles-track-config ~/.config/nvim"
   exit 1
 fi
 
@@ -23,19 +67,19 @@ DEST="$ENV_HOME/dotfiles/config/$BASENAME"
 
 # Validate source exists
 if [ ! -e "$SOURCE" ]; then
-  echo "Error: $SOURCE does not exist"
+  err "$SOURCE does not exist"
   exit 1
 fi
 
 # Check if already tracked
 if [ -L "$SOURCE" ] && [ "$(readlink "$SOURCE")" = "$DEST" ]; then
-  echo "Already tracked: $SOURCE -> $DEST"
+  ok "Already tracked: $SOURCE -> $DEST"
   exit 0
 fi
 
 # Warn if destination exists
 if [ -e "$DEST" ]; then
-  echo "Warning: $DEST already exists"
+  warn "$DEST already exists"
   read -p "Overwrite? (y/n) " -n 1 -r
   echo
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -48,14 +92,13 @@ fi
 mkdir -p "$(dirname "$DEST")"
 
 # Move source to repo
-echo "Moving $SOURCE -> $DEST"
+info "Moving $SOURCE -> $DEST"
 mv "$SOURCE" "$DEST"
 
 # Create symlink
-echo "Linking $SOURCE <- $DEST"
+info "Linking $SOURCE <- $DEST"
 ln -sf "$DEST" "$SOURCE"
 
-echo "✓ Config tracked: $SOURCE"
-echo "  Repo: $DEST"
-echo ""
-echo "Next: cd $ENV_HOME && git add dotfiles/config/$BASENAME && git commit -m \"track config: $BASENAME\""
+ok "Config tracked: $SOURCE"
+info "Repo: $DEST"
+info "Next: cd $ENV_HOME && git add dotfiles/config/$BASENAME && git commit -m \"track config: $BASENAME\""

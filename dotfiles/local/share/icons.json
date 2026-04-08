@@ -1,5 +1,6 @@
 {
-    "folders": [{
+    "folders": [
+        {
             "icon": "tmp",
             "path": "tmp"
         },
@@ -18,10 +19,6 @@
         {
             "icon": "sync",
             "path": "sync"
-        },
-        {
-            "icon": "syncthing",
-            "path": "sync/scheme"
         },
         {
             "icon": "settings",

@@ -1,0 +1,39 @@
+# VS Code config: ignore everything by default, whitelist only useful user config
+
+# Ignore all
+/*
+/*/
+
+# Keep this file
+!.gitignore
+
+# Keep User-level settings and portable config
+!User/
+User/*
+!User/settings.json
+!User/keybindings.json
+!User/tasks.json
+!User/snippets/
+!User/snippets/**
+!User/globalStorage/
+User/globalStorage/*
+
+# Keep extension recommendations only
+!User/extensions.json
+
+# Explicitly ignore heavy/noisy state
+workspaceStorage/
+CachedData/
+logs/
+Backups/
+blob_storage/
+Cache/
+CachedExtensionVSIXs/
+GPUCache/
+Session Storage/
+Service Worker/
+User/workspaceStorage/
+User/History/
+User/globalStorage/state.vscdb*
+User/globalStorage/*.log
+User/*.lock

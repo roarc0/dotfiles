@@ -1,0 +1,149 @@
+#!/usr/bin/env bash
+set -e
+
+ENV_HOME="${ENV_HOME:-$(cd "$(dirname "$0")/.." && pwd)}"
+DOTFILES="$ENV_HOME/dotfiles"
+FIX=false
+
+if [ "${1:-}" = "--fix" ]; then
+  FIX=true
+fi
+
+supports_color=false
+supports_emoji=false
+if [ -t 1 ] && [ -z "${NO_COLOR:-}" ] && command -v tput >/dev/null 2>&1; then
+  if [ "$(tput colors 2>/dev/null || echo 0)" -ge 8 ]; then
+    supports_color=true
+  fi
+fi
+if [ -t 1 ]; then
+  case "${LC_ALL:-${LC_CTYPE:-${LANG:-}}}" in
+    *UTF-8*|*utf8*) supports_emoji=true ;;
+  esac
+fi
+
+if [ "$supports_color" = true ]; then
+  C_RESET='\033[0m'
+  C_GREEN='\033[32;1m'
+  C_YELLOW='\033[33;1m'
+  C_RED='\033[31;1m'
+  C_CYAN='\033[36;1m'
+else
+  C_RESET=''
+  C_GREEN=''
+  C_YELLOW=''
+  C_RED=''
+  C_CYAN=''
+fi
+
+if [ "$supports_emoji" = true ]; then
+  P_OK='✅'
+  P_WARN='⚠️ '
+  P_FAIL='❌'
+  P_HEAD='🩺'
+else
+  P_OK='[OK]'
+  P_WARN='[WARN]'
+  P_FAIL='[FAIL]'
+  P_HEAD='[DOCTOR]'
+fi
+
+ok() { printf "%b%s%b %s\n" "$C_GREEN" "$P_OK" "$C_RESET" "$1"; }
+warn() { printf "%b%s%b %s\n" "$C_YELLOW" "$P_WARN" "$C_RESET" "$1"; }
+fail() { printf "%b%s%b %s\n" "$C_RED" "$P_FAIL" "$C_RESET" "$1"; }
+
+check_link() {
+  src="$1"
+  dest="$2"
+
+  if [ -L "$dest" ]; then
+    target="$(readlink "$dest" 2>/dev/null || true)"
+    if [ "$target" = "$src" ]; then
+      ok "link: $dest -> $src"
+      return 0
+    fi
+    warn "link points elsewhere: $dest -> $target"
+  elif [ -e "$dest" ]; then
+    warn "exists but not symlink: $dest"
+  else
+    warn "missing: $dest"
+  fi
+
+  if [ "$FIX" = true ]; then
+    if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+      backup="$dest.bak"
+      warn "backing up $dest to $backup"
+      mv "$dest" "$backup"
+    fi
+    ln -sfn "$src" "$dest"
+    ok "fixed: $dest -> $src"
+  fi
+}
+
+check_cmd() {
+  cmd="$1"
+  if command -v "$cmd" >/dev/null 2>&1; then
+    ok "command: $cmd"
+  else
+    warn "missing command: $cmd"
+  fi
+}
+
+is_macos=false
+is_linux=false
+[[ "$OSTYPE" == darwin* ]] && is_macos=true
+[[ "$OSTYPE" == linux* || "$OSTYPE" == linux-gnu* ]] && is_linux=true
+
+printf "%b%s%b Dotfiles Doctor\n" "$C_CYAN" "$P_HEAD" "$C_RESET"
+printf "ENV_HOME: %s\n\n" "$ENV_HOME"
+
+# Core links
+check_link "$DOTFILES/zshrc" "$HOME/.zshrc"
+check_link "$DOTFILES/p10k.zsh" "$HOME/.p10k.zsh"
+check_link "$DOTFILES/bashrc" "$HOME/.bashrc"
+check_link "$DOTFILES/gitconfig" "$HOME/.gitconfig"
+check_link "$DOTFILES/profile" "$HOME/.profile"
+
+# Config dir by OS
+if [ "$is_macos" = true ]; then
+  config_dir="$HOME/Library/Application Support"
+else
+  config_dir="$HOME/.config"
+fi
+
+if [ -d "$DOTFILES/config" ]; then
+  for src in "$DOTFILES"/config/*; do
+    [ -e "$src" ] || continue
+    dest="$config_dir/$(basename "$src")"
+    check_link "$src" "$dest"
+  done
+fi
+
+printf "\nCommand checks\n"
+check_cmd git
+check_cmd zsh
+check_cmd bash
+check_cmd fzf
+check_cmd zoxide
+
+# Optional converter deps
+check_cmd ffmpeg
+check_cmd inkscape
+check_cmd calibre
+check_cmd pdftk
+
+# macOS-only checks
+if [ "$is_macos" = true ]; then
+  check_cmd brew
+  if [ -x "$ENV_HOME/os/macos/bin/macos-apply-defaults" ]; then
+    ok "macOS defaults script present"
+  else
+    warn "missing macOS defaults script: $ENV_HOME/os/macos/bin/macos-apply-defaults"
+  fi
+fi
+
+printf "\nDone."
+if [ "$FIX" = true ]; then
+  printf " Applied fixes where possible."
+fi
+printf "\n"

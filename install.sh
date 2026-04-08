@@ -3,16 +3,25 @@
 . env.sh
 set -e
 
+say_info() { printf "[INFO] %s\n" "$*"; }
+say_ok() { printf "[OK] %s\n" "$*"; }
+say_warn() { printf "[WARN] %s\n" "$*"; }
+say_dry() { printf "[DRY] %s\n" "$*"; }
+
 # Parse arguments
 UNINSTALL=false
+DRY_RUN=false
 while [[ $# -gt 0 ]]; do
   case $1 in
     --uninstall) UNINSTALL=true; shift ;;
-    *) echo "Unknown option: $1"; exit 1 ;;
+    --dry-run) DRY_RUN=true; shift ;;
+    *) say_warn "Unknown option: $1"; exit 1 ;;
   esac
 done
 
-echoc 31 "Environment setup ($([ "$UNINSTALL" = true ] && echo "UNINSTALL" || echo "INSTALL")) ..."
+MODE="$([ "$UNINSTALL" = true ] && echo "UNINSTALL" || echo "INSTALL")"
+[ "$DRY_RUN" = true ] && MODE="$MODE DRY-RUN"
+say_info "Environment setup (${MODE})"
 [ "$USER" = "root" ] && HOME="/root"
 
 # Detect OS
@@ -22,86 +31,123 @@ IS_MACOS=false
 [[ "$OSTYPE" == "darwin"* ]] && IS_MACOS=true
 
 uninstall_link() {
+  [ "$DRY_RUN" = true ] && { say_dry "$(action_prefix UNLINK) $2"; return 0; }
   if [ -L "$2" ]; then
-    echo "unlink $2"
+    printf "%s %s\n" "$(action_prefix UNLINK)" "$2"
     unlink "$2" >/dev/null
   fi
 }
 
+safe_install_link() {
+  if [ "$DRY_RUN" = true ]; then
+    say_dry "$(action_prefix LINK) $1 => $2"
+    return 0
+  fi
+  install_link "$1" "$2"
+}
+
 # If uninstall mode, remove symlinks and exit
 if [ "$UNINSTALL" = true ]; then
-  einfo "Removing symlinks..."
+  say_info "Removing symlinks"
   uninstall_link "$ENV_HOME/dotfiles/zshrc" "$HOME/.zshrc"
   uninstall_link "$ENV_HOME/dotfiles/p10k.zsh" "$HOME/.p10k.zsh"
   uninstall_link "$ENV_HOME/dotfiles/bashrc" "$HOME/.bashrc"
   uninstall_link "$ENV_HOME/dotfiles/gitconfig" "$HOME/.gitconfig"
   uninstall_link "$ENV_HOME/dotfiles/profile" "$HOME/.profile"
-  
+
   if $IS_LINUX; then
     uninstall_link "$ENV_HOME/dotfiles/local/share/icons" "$HOME/.local/share/icons"
     uninstall_link "$ENV_HOME/dotfiles/local/share/fonts" "$HOME/.local/share/fonts"
     uninstall_link "$ENV_HOME/dotfiles/config/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
     uninstall_link "$ENV_HOME/dotfiles/config/user-dirs.locale" "$HOME/.config/user-dirs.locale"
   fi
-  
+
   DOTFILES="$ENV_HOME/dotfiles"
   CONFIG_DIR="$($IS_MACOS && echo "$HOME/Library/Application Support" || echo "$HOME/.config")"
   for SRC in "$DOTFILES"/config/*; do
     DEST="$CONFIG_DIR/$(basename "$SRC")"
     uninstall_link "$SRC" "$DEST"
   done
-  
-  einfo "Uninstall complete. Config files preserved in $DOTFILES"
+
+  say_ok "Uninstall complete. Config files preserved in $DOTFILES"
   exit 0
 fi
 
 # Normal install mode
-[ -d "$HOME"/{workspace,dev,repos,tmp,sync} ] || mkdir -p "$HOME"/{workspace,dev,repos,tmp,sync} >/dev/null 2>&1 || true
+if [ "$DRY_RUN" = true ]; then
+  say_dry "mkdir -p $HOME/{workspace,dev,repos,tmp,sync}"
+else
+  mkdir -p "$HOME"/{workspace,dev,repos,tmp,sync} >/dev/null 2>&1 || true
+fi
 
 # Link shell configs (common to all Unix)
-install_link "$ENV_HOME/dotfiles/zshrc" "$HOME/.zshrc"
-install_link "$ENV_HOME/dotfiles/p10k.zsh" "$HOME/.p10k.zsh"
-install_link "$ENV_HOME/dotfiles/bashrc" "$HOME/.bashrc"
-install_link "$ENV_HOME/dotfiles/gitconfig" "$HOME/.gitconfig"
-install_link "$ENV_HOME/dotfiles/profile" "$HOME/.profile"
+safe_install_link "$ENV_HOME/dotfiles/zshrc" "$HOME/.zshrc"
+safe_install_link "$ENV_HOME/dotfiles/p10k.zsh" "$HOME/.p10k.zsh"
+safe_install_link "$ENV_HOME/dotfiles/bashrc" "$HOME/.bashrc"
+safe_install_link "$ENV_HOME/dotfiles/gitconfig" "$HOME/.gitconfig"
+safe_install_link "$ENV_HOME/dotfiles/profile" "$HOME/.profile"
 
 # macOS: also link ~/.zprofile to ensure profile is sourced before zshrc
 if $IS_MACOS && [ ! -f "$HOME/.zprofile" ]; then
-  cat > "$HOME/.zprofile" << 'EOF'
+  if [ "$DRY_RUN" = true ]; then
+    say_dry "create $HOME/.zprofile"
+  else
+    cat > "$HOME/.zprofile" << 'EOF'
 # macOS zprofile: ensure profile is sourced
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 EOF
-  echo "created $HOME/.zprofile"
+    echo "created $HOME/.zprofile"
+  fi
 fi
 
 # OS-specific setup
 if $IS_LINUX; then
-  mkdir -p "$HOME"/.local/share/{icons,fonts} >/dev/null 2>&1 || true
-  install_link "$ENV_HOME/dotfiles/local/share/icons" "$HOME/.local/share/icons"
-  install_link "$ENV_HOME/dotfiles/local/share/fonts" "$HOME/.local/share/fonts"
+  if [ "$DRY_RUN" = true ]; then
+    say_dry "mkdir -p $HOME/.local/share/{icons,fonts}"
+  else
+    mkdir -p "$HOME"/.local/share/{icons,fonts} >/dev/null 2>&1 || true
+  fi
+  safe_install_link "$ENV_HOME/dotfiles/local/share/icons" "$HOME/.local/share/icons"
+  safe_install_link "$ENV_HOME/dotfiles/local/share/fonts" "$HOME/.local/share/fonts"
 
   # Linux XDG user directories
-  chattr +i "$HOME/.config/user-dirs.dirs" >/dev/null 2>&1 || true
-  install_link "$ENV_HOME/dotfiles/config/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
-  chattr -i "$HOME/.config/user-dirs.dirs" >/dev/null 2>&1 || true
-  install_link "$ENV_HOME/dotfiles/config/user-dirs.locale" "$HOME/.config/user-dirs.locale"
+  if [ "$DRY_RUN" = true ]; then
+    say_dry "chattr +i $HOME/.config/user-dirs.dirs"
+  else
+    chattr +i "$HOME/.config/user-dirs.dirs" >/dev/null 2>&1 || true
+  fi
+  safe_install_link "$ENV_HOME/dotfiles/config/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
+  if [ "$DRY_RUN" = true ]; then
+    say_dry "chattr -i $HOME/.config/user-dirs.dirs"
+  else
+    chattr -i "$HOME/.config/user-dirs.dirs" >/dev/null 2>&1 || true
+  fi
+  safe_install_link "$ENV_HOME/dotfiles/config/user-dirs.locale" "$HOME/.config/user-dirs.locale"
 
   # VSCode on Linux
-  if [ -d "$HOME/.config/Code/User" ]; then
-    install_link "$ENV_HOME/dotfiles/config/vscode/settings.json" "$HOME/.config/Code/User/settings.json" || true
+  if [ -d "$HOME/.config/Code/User" ] && [ ! -d "$ENV_HOME/dotfiles/config/Code" ]; then
+    safe_install_link "$ENV_HOME/dotfiles/config/vscode/settings.json" "$HOME/.config/Code/User/settings.json" || true
   fi
 
   # Apply folder icons if available
-  type setup-folder-icons >/dev/null 2>&1 && setup-folder-icons || true
+  if [ "$DRY_RUN" = true ]; then
+    say_dry "setup-folder-icons"
+  else
+    type setup-folder-icons >/dev/null 2>&1 && setup-folder-icons || true
+  fi
 fi
 
 if $IS_MACOS; then
-  mkdir -p "$HOME/Library/Application Support" >/dev/null 2>&1 || true
-  # macOS VSCode location
-  if [ -d "$HOME/Library/Application Support/Code/User" ]; then
-    install_link "$ENV_HOME/dotfiles/config/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" || true
+  if [ "$DRY_RUN" = true ]; then
+    say_dry "mkdir -p $HOME/Library/Application Support"
+  else
+    mkdir -p "$HOME/Library/Application Support" >/dev/null 2>&1 || true
   fi
-  
+  # macOS VSCode location
+  if [ -d "$HOME/Library/Application Support/Code/User" ] && [ ! -d "$ENV_HOME/dotfiles/config/Code" ]; then
+    safe_install_link "$ENV_HOME/dotfiles/config/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" || true
+  fi
+
   # Add Homebrew paths early (Apple Silicon and Intel)
   if [ -x /opt/homebrew/bin/brew ] || [ -x /usr/local/bin/brew ]; then
     export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:$PATH"
@@ -111,11 +157,15 @@ fi
 # Link generic config files with OS-aware CONFIG_DIR
 DOTFILES="$ENV_HOME/dotfiles"
 CONFIG_DIR="$($IS_MACOS && echo "$HOME/Library/Application Support" || echo "$HOME/.config")"
-mkdir -p "$CONFIG_DIR" >/dev/null 2>&1 || true
+if [ "$DRY_RUN" = true ]; then
+  say_dry "mkdir -p $CONFIG_DIR"
+else
+  mkdir -p "$CONFIG_DIR" >/dev/null 2>&1 || true
+fi
 
 for SRC in "$DOTFILES"/config/*; do
   DEST="$CONFIG_DIR/$(basename "$SRC")"
-  install_link "$SRC" "$DEST"
+  safe_install_link "$SRC" "$DEST"
 done
 
 # Validate bin script dependencies
@@ -132,13 +182,21 @@ for script in convert-*; do
 done
 
 # Shell initialization
-. "$ENV_HOME"/scripts/setup-oh-my-zsh.sh
-
-# Optional: apply macOS defaults if script exists
-if $IS_MACOS && [ -x "$ENV_HOME/scripts/setup-macos-defaults.sh" ]; then
-  read -p "Apply macOS system defaults? (y/n) " -n 1 -r
-  echo
-  [ "$REPLY" = "y" ] && "$ENV_HOME/scripts/setup-macos-defaults.sh"
+if [ "$DRY_RUN" = true ]; then
+  say_dry "source $ENV_HOME/scripts/setup-oh-my-zsh.sh"
+else
+  . "$ENV_HOME"/scripts/setup-oh-my-zsh.sh
 fi
 
-echoc 32 "✓ Setup complete"
+# Optional: apply macOS defaults if script exists
+if $IS_MACOS && [ -x "$ENV_HOME/os/macos/bin/macos-apply-defaults" ]; then
+  if [ "$DRY_RUN" = true ]; then
+    say_dry "optional: $ENV_HOME/os/macos/bin/macos-apply-defaults"
+  else
+    read -p "Apply macOS system defaults? (y/n) " -n 1 -r
+    echo
+    [ "$REPLY" = "y" ] && "$ENV_HOME/os/macos/bin/macos-apply-defaults"
+  fi
+fi
+
+say_ok "Setup complete"

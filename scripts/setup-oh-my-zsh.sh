@@ -20,6 +20,7 @@ if [ ! -d "$OH_MY_ZSH_PLUGINS"/zsh-syntax-highlighting ]; then
   git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting "$OH_MY_ZSH_PLUGINS"/zsh-syntax-highlighting || true
 fi
 
-if [ ! -d "$OH_MY_ZSH"/themes/powerlevel10k ]; then
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+P10K_THEME_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+if [ ! -d "$P10K_THEME_DIR" ]; then
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_THEME_DIR" || true
 fi

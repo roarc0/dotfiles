@@ -31,28 +31,28 @@ done
 
 # Detect OS and load OS-specific profile
 OS_PROFILE=""
+OS_PROFILE_EXTRA=""
 case "$OSTYPE" in
   darwin*)
     OS_PROFILE="$ENV_HOME/os/macos/profile"
     [ -d "$ENV_HOME/os/macos/bin" ] && export PATH="${ENV_HOME}/os/macos/bin:${PATH}"
     ;;
   linux*)
-    # Detect Linux distro
+    OS_PROFILE="$ENV_HOME/os/linux/profile"
+    [ -d "$ENV_HOME/os/linux/bin" ] && export PATH="${ENV_HOME}/os/linux/bin:${PATH}"
+
+    # Detect Linux distro override
     if [ -f /etc/os-release ]; then
       . /etc/os-release
       DISTRO_ID="${ID:-linux}"
       if [ -d "$ENV_HOME/os/$DISTRO_ID" ]; then
-        OS_PROFILE="$ENV_HOME/os/$DISTRO_ID/profile"
+        OS_PROFILE_EXTRA="$ENV_HOME/os/$DISTRO_ID/profile"
         [ -d "$ENV_HOME/os/$DISTRO_ID/bin" ] && export PATH="${ENV_HOME}/os/$DISTRO_ID/bin:${PATH}"
       fi
-    fi
-    # Fallback to generic linux profile
-    if [ -z "$OS_PROFILE" ] || [ ! -f "$OS_PROFILE" ]; then
-      OS_PROFILE="$ENV_HOME/os/linux/profile"
-      [ -d "$ENV_HOME/os/linux/bin" ] && export PATH="${ENV_HOME}/os/linux/bin:${PATH}"
     fi
     ;;
 esac
 
 # Load OS-specific profile if it exists
 [ -f "$OS_PROFILE" ] && . "$OS_PROFILE"
+[ -f "$OS_PROFILE_EXTRA" ] && . "$OS_PROFILE_EXTRA"

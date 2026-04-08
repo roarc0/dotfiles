@@ -4,8 +4,8 @@ alias mkdir='mkdir -p'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-alias e="$EDITOR"
-alias v="$VISUAL"
+alias e='$EDITOR'
+alias v='$VISUAL'
 alias l='ls -CF'
 alias ll='ls -lahF --color=always'
 alias ls='ls --color=always'
@@ -26,10 +26,6 @@ alias memrss='while read command percent rss; do if [[ "${command}" != "COMMAND"
 alias millis='date +%s%3N'
 alias gitignore-sort='sort -u .gitignore -o .gitignore'
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    alias reboot='sudo systemctl reboot'
-    alias poweroff='sudo systemctl poweroff'
-    alias suspend='sudo systemctl suspend'
-    alias drop-caches="su -c \"sync; echo 3 > /proc/sys/vm/drop_caches && swapoff -a ; swapon -a\""
-    alias grub-update='su -c "mount /boot/ ; grub-mkconfig -o /boot/grub/grub.cfg"'
+if [ -x "$HOME/.local/antigravity/antigravity" ]; then
+	alias antigravity='$HOME/.local/antigravity/antigravity'
 fi

@@ -35,10 +35,12 @@ scripts/          # Shell functions and aliases
   aliases-k8s.sh  # Kubernetes aliases
   aliases-docker.sh
   functions.sh    # Shell functions (includes install_link utility)
-hosts/            # Hostname-specific configs
-  <hostname>/
-    bin/          # Host-specific scripts
-    profile       # Host-specific env vars
+os/               # OS/distro-specific overlays
+  linux/          # Generic Linux profile/bin (always loaded on Linux)
+  macos/          # macOS profile/bin
+  ubuntu/         # Ubuntu-specific overrides
+  archlinux/      # Arch-specific overrides
+  gentoo/         # Gentoo-specific overrides
 etc/              # System-level configs (libinput, etc.)
 env.sh            # Environment initialization (sources everything)
 install.sh        # Setup script
@@ -48,11 +50,11 @@ install.sh        # Setup script
 
 `env.sh` is sourced by login shells and sets up:
 - `$ENV_HOME` — repo root directory
-- `$PATH` — includes `bin/` and host-specific `bin/`
+- `$PATH` — includes `bin/` and OS/distro-specific `bin/`
 - Global aliases and functions from `scripts/`
-- Host-specific profile if available
+- OS/distro profile overlays if available
 
-Host detection is automatic via `hostname`. Create `hosts/<hostname>/profile` for machine-specific overrides.
+OS and distro detection is automatic via `$OSTYPE` and `/etc/os-release`.
 
 ## Tracking New Configs
 
@@ -70,6 +72,21 @@ This will:
 3. Print the git command to commit it
 
 Then run `./install.sh` on other machines to recreate the symlinks.
+
+## Validation & Preview
+
+Preview changes without applying them:
+
+```bash
+./install.sh --dry-run
+```
+
+Validate links and dependencies:
+
+```bash
+dotfiles-doctor
+dotfiles-doctor --fix
+```
 
 ## Shell Initialization
 
@@ -97,14 +114,14 @@ Run `./install.sh` to add them to `$PATH`.
 
 ## Customization
 
-Create `hosts/<your-hostname>/profile` for machine-specific settings:
-- Custom `$PATH` entries
-- Environment overrides
-- Local aliases
+Create OS/distro profiles for machine-family settings:
+- `os/linux/profile` for generic Linux exports/aliases
+- `os/macos/profile` for macOS-specific exports/aliases
+- `os/<distro>/profile` for distro-specific overrides (Ubuntu/Arch/Gentoo)
 
-To find your hostname:
+To find your distro ID used by `env.sh`:
 ```bash
-hostname
+grep '^ID=' /etc/os-release
 ```
 
 ---

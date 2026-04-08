@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -e
+
+if [ "$(uname)" != "Darwin" ]; then
+  echo "This command is macOS-only."
+  exit 1
+fi
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Homebrew is not installed."
+  exit 1
+fi
+
+echo "Updating Homebrew..."
+brew update
+
+echo "Upgrading formulae..."
+brew upgrade
+
+echo "Upgrading casks..."
+brew upgrade --cask
+
+echo "Cleaning up..."
+brew autoremove
+brew cleanup -s
+
+echo "Done."

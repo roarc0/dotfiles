@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e
+
+if [ "$(uname)" != "Darwin" ]; then
+  echo "This command is macOS-only."
+  exit 1
+fi
+
+echo "Flushing macOS DNS caches..."
+sudo dscacheutil -flushcache
+sudo killall -HUP mDNSResponder
+echo "Done. DNS cache flushed."
