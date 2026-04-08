@@ -29,6 +29,14 @@ einfo() {
   printf "${GOOD}[INFO]${NORMAL}${INDENT}$*\n"
 }
 
+eok() {
+  printf "${GOOD}[OK]${NORMAL}${INDENT}$*\n"
+}
+
+edry() {
+  printf "${WARN}[DRY]${NORMAL}${INDENT}$*\n"
+}
+
 ewarn() {
   printf "${WARN}[WARN]${NORMAL}${INDENT}$*\n" >&2
 }
@@ -135,4 +143,42 @@ install_link() {
   fi
   printf "%s %s => %s\n" "$p_link" "$1" "$2"
   ln -sf "$1" "$2"
+}
+
+run_or_print() {
+  local msg="$1"
+  shift
+
+  if [ "${DRY_RUN:-false}" = true ]; then
+    edry "$msg"
+    return 0
+  fi
+
+  "$@"
+}
+
+link_or_print() {
+  local src="$1"
+  local dest="$2"
+
+  if [ "${DRY_RUN:-false}" = true ]; then
+    edry "$(action_prefix LINK) $src => $dest"
+    return 0
+  fi
+
+  install_link "$src" "$dest"
+}
+
+unlink_or_print() {
+  local dest="$1"
+
+  if [ "${DRY_RUN:-false}" = true ]; then
+    edry "$(action_prefix UNLINK) $dest"
+    return 0
+  fi
+
+  if [ -L "$dest" ]; then
+    printf "%s %s\n" "$(action_prefix UNLINK)" "$dest"
+    unlink "$dest" >/dev/null
+  fi
 }

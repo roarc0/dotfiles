@@ -30,14 +30,23 @@ done
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
 
 # Detect OS and load OS-specific profile
+# Contract:
+# - macOS: load os/macos/profile (+ os/macos/bin)
+# - Linux: always load os/linux/profile first (+ os/linux/bin)
+#           then optionally load os/<distro>/profile (+ os/<distro>/bin)
 OS_PROFILE=""
 OS_PROFILE_EXTRA=""
+ENV_OS="unknown"
+ENV_DISTRO="unknown"
 case "$OSTYPE" in
   darwin*)
+    ENV_OS="macos"
+    ENV_DISTRO="macos"
     OS_PROFILE="$ENV_HOME/os/macos/profile"
     [ -d "$ENV_HOME/os/macos/bin" ] && export PATH="${ENV_HOME}/os/macos/bin:${PATH}"
     ;;
   linux*)
+    ENV_OS="linux"
     OS_PROFILE="$ENV_HOME/os/linux/profile"
     [ -d "$ENV_HOME/os/linux/bin" ] && export PATH="${ENV_HOME}/os/linux/bin:${PATH}"
 
@@ -45,6 +54,7 @@ case "$OSTYPE" in
     if [ -f /etc/os-release ]; then
       . /etc/os-release
       DISTRO_ID="${ID:-linux}"
+      ENV_DISTRO="$DISTRO_ID"
       if [ -d "$ENV_HOME/os/$DISTRO_ID" ]; then
         OS_PROFILE_EXTRA="$ENV_HOME/os/$DISTRO_ID/profile"
         [ -d "$ENV_HOME/os/$DISTRO_ID/bin" ] && export PATH="${ENV_HOME}/os/$DISTRO_ID/bin:${PATH}"
@@ -52,6 +62,8 @@ case "$OSTYPE" in
     fi
     ;;
 esac
+export ENV_OS
+export ENV_DISTRO
 
 # Load OS-specific profile if it exists
 [ -f "$OS_PROFILE" ] && . "$OS_PROFILE"

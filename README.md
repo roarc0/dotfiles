@@ -53,8 +53,12 @@ install.sh        # Setup script
 - `$PATH` — includes `bin/` and OS/distro-specific `bin/`
 - Global aliases and functions from `scripts/`
 - OS/distro profile overlays if available
+- `$ENV_OS` / `$ENV_DISTRO` — resolved runtime platform values
 
 OS and distro detection is automatic via `$OSTYPE` and `/etc/os-release`.
+Load order:
+1. `os/macos/profile` on macOS, or
+2. `os/linux/profile` on Linux, then `os/<distro>/profile` if present.
 
 ## Tracking New Configs
 
