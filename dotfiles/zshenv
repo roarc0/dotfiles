@@ -6,6 +6,6 @@ case "$OSTYPE" in
     ;;
 esac
 
-[ -f "$HOME/env/env.sh" ] && source "$HOME/env/env.sh"
+[ -f "$HOME/.profile" ] && source "$HOME/.profile"
 
 [ -f "$HOME/.local/cargo/env" ] && source "$HOME/.local/cargo/env"

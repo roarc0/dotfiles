@@ -1,5 +1,5 @@
 # macOS specific profile
-# This is loaded automatically on macOS via env.sh OS detection
+# This is loaded automatically on macOS via profile OS detection.
 #
 # Tooling defaults for macOS
 
@@ -26,7 +26,7 @@ for path in \
 	"/opt/homebrew/opt/coreutils/libexec/gnubin" \
 	"/usr/local/opt/gnu-sed/libexec/gnubin" \
 	"/usr/local/opt/coreutils/libexec/gnubin"; do
-	if [ -d "$path" ]; then
-		export PATH="$path:$PATH"
+	if [ -d "$p" ]; then
+		export PATH="$p:$PATH"
 	fi
 done

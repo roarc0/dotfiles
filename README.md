@@ -42,20 +42,20 @@ os/               # OS/distro-specific overlays
   archlinux/      # Arch-specific overrides
   gentoo/         # Gentoo-specific overrides
 etc/              # System-level configs (libinput, etc.)
-env.sh            # Environment initialization (sources everything)
+dotfiles/profile  # Environment initialization (sourced by shells)
 install.sh        # Setup script
 ```
 
 ## Environment
 
-`env.sh` is sourced by login shells and sets up:
+`dotfiles/profile` is sourced by shells and sets up:
 - `$ENV_HOME` — repo root directory
 - `$PATH` — includes `bin/` and OS/distro-specific `bin/`
 - Global aliases and functions from `scripts/`
 - OS/distro profile overlays if available
 - `$ENV_OS` / `$ENV_DISTRO` — resolved runtime platform values
 
-OS and distro detection is automatic via `$OSTYPE` and `/etc/os-release`.
+OS and distro detection is automatic via `$OSTYPE` (or `uname -s`) and `/etc/os-release`.
 Load order:
 1. `os/macos/profile` on macOS, or
 2. `os/linux/profile` on Linux, then `os/<distro>/profile` if present.
@@ -94,8 +94,8 @@ dotfiles-doctor --fix
 
 ## Shell Initialization
 
-- **Login shells** (zsh, bash): source `~/.profile` → `env.sh` → all aliases/functions
-- **Interactive shells**: source `~/.zshrc` or `~/.bashrc` → includes NVM, GPG, custom PATH
+- **Login shells** (zsh, bash): source `~/.profile` → all aliases/functions and OS overlays
+- **Interactive shells**: source `~/.zshrc` or `~/.bashrc` (both source `~/.profile`) → includes NVM, GPG, custom PATH
 
 Environment variables for LLM tools and work-related settings (GOPRIVATE, etc.) are set in `dotfiles/profile`.
 
@@ -123,7 +123,7 @@ Create OS/distro profiles for machine-family settings:
 - `os/macos/profile` for macOS-specific exports/aliases
 - `os/<distro>/profile` for distro-specific overrides (Ubuntu/Arch/Gentoo)
 
-To find your distro ID used by `env.sh`:
+To find your distro ID used by profile OS detection:
 ```bash
 grep '^ID=' /etc/os-release
 ```

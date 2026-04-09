@@ -19,8 +19,15 @@ export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
 
 export GPG_TTY=$(tty)
 
-eval ~/env/env.sh
+[ -f "$HOME/.profile" ] && . "$HOME/.profile"
 
 . "$HOME/snap/code/197/.local/share/../bin/env"
 
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+#export PATH="$PATH:/Users/roarc/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+alias claude-mem='bun "/Users/roarc/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'

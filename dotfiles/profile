@@ -1,3 +1,107 @@
+#!/usr/bin/env sh
+
+# Prevent duplicate PATH/function mutations when sourced multiple times.
+if [ "${DOTFILES_PROFILE_LOADED:-0}" = "1" ]; then
+    return 0 2>/dev/null || true
+fi
+export DOTFILES_PROFILE_LOADED=1
+
+# Resolve ENV_HOME from this profile path (or fallback to ~/env).
+PROFILE_SOURCE_PATH=""
+if [ -n "${ZSH_VERSION:-}" ]; then
+    PROFILE_SOURCE_PATH="$(eval 'print -r -- ${(%):-%N}')"
+elif [ -n "${BASH_SOURCE:-}" ]; then
+    PROFILE_SOURCE_PATH="${BASH_SOURCE[0]}"
+else
+    PROFILE_SOURCE_PATH="$HOME/.profile"
+fi
+
+if [ -L "$PROFILE_SOURCE_PATH" ] && command -v readlink >/dev/null 2>&1; then
+    PROFILE_LINK_TARGET="$(readlink "$PROFILE_SOURCE_PATH")"
+    case "$PROFILE_LINK_TARGET" in
+        /*) PROFILE_SOURCE_PATH="$PROFILE_LINK_TARGET" ;;
+        *) PROFILE_SOURCE_PATH="$(cd "$(dirname "$PROFILE_SOURCE_PATH")" >/dev/null 2>&1 && cd "$(dirname "$PROFILE_LINK_TARGET")" >/dev/null 2>&1 && pwd -P)/$(basename "$PROFILE_LINK_TARGET")" ;;
+    esac
+fi
+
+if [ -z "${ENV_HOME:-}" ]; then
+    case "$PROFILE_SOURCE_PATH" in
+        */dotfiles/profile)
+            ENV_HOME="$(
+                cd "$(dirname "$PROFILE_SOURCE_PATH")/.." >/dev/null 2>&1 || exit 1
+                pwd -P
+            )"
+            ;;
+    esac
+fi
+
+if [ -z "${ENV_HOME:-}" ] && [ -d "$HOME/env" ]; then
+    ENV_HOME="$HOME/env"
+fi
+
+if [ -n "${ENV_HOME:-}" ]; then
+    export ENV_HOME
+fi
+
+# macOS: add Homebrew paths early (Apple Silicon + Intel).
+if [ -d /opt/homebrew/bin ]; then
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}"
+fi
+if [ -d /usr/local/opt ]; then
+    export PATH="/usr/local/bin:/usr/local/sbin:${PATH}"
+fi
+
+if [ -n "${ENV_HOME:-}" ]; then
+    export PATH="${ENV_HOME}/bin:${PATH}"
+    # Load optional repository-level .env file.
+    ENV_FILE="$ENV_HOME/.env"
+    [ -f "$ENV_FILE" ] && . "$ENV_FILE"
+    export ENV_FILE
+
+    # Local aliases/functions first.
+    for script in aliases.sh aliases-k8s.sh aliases-docker.sh functions.sh; do
+        [ -f "$ENV_HOME/scripts/$script" ] && . "$ENV_HOME/scripts/$script"
+    done
+fi
+
+# Detect OS and load OS/distro overlays.
+OS_PROFILE=""
+OS_PROFILE_EXTRA=""
+ENV_OS="unknown"
+ENV_DISTRO="unknown"
+case "${OSTYPE:-$(uname -s 2>/dev/null || echo unknown)}" in
+    darwin*|Darwin*)
+        ENV_OS="macos"
+        ENV_DISTRO="macos"
+        if [ -n "${ENV_HOME:-}" ]; then
+            OS_PROFILE="$ENV_HOME/os/macos/profile"
+            [ -d "$ENV_HOME/os/macos/bin" ] && export PATH="${ENV_HOME}/os/macos/bin:${PATH}"
+        fi
+        ;;
+    linux*|Linux*)
+        ENV_OS="linux"
+        if [ -n "${ENV_HOME:-}" ]; then
+            OS_PROFILE="$ENV_HOME/os/linux/profile"
+            [ -d "$ENV_HOME/os/linux/bin" ] && export PATH="${ENV_HOME}/os/linux/bin:${PATH}"
+        fi
+
+        if [ -f /etc/os-release ]; then
+            . /etc/os-release
+            DISTRO_ID="${ID:-linux}"
+            ENV_DISTRO="$DISTRO_ID"
+            if [ -n "${ENV_HOME:-}" ] && [ -d "$ENV_HOME/os/$DISTRO_ID" ]; then
+                OS_PROFILE_EXTRA="$ENV_HOME/os/$DISTRO_ID/profile"
+                [ -d "$ENV_HOME/os/$DISTRO_ID/bin" ] && export PATH="${ENV_HOME}/os/$DISTRO_ID/bin:${PATH}"
+            fi
+        fi
+        ;;
+esac
+export ENV_OS
+export ENV_DISTRO
+
+#[ -f "$OS_PROFILE" ] && . "$OS_PROFILE"
+#[ -f "$OS_PROFILE_EXTRA" ] && . "$OS_PROFILE_EXTRA"
+
 if [ -n "$GOPATH" ]; then
     export PATH="${GOPATH}/bin:$PATH"
 fi

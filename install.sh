@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-. env.sh
 set -e
+
+ENV_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+. "$ENV_HOME/scripts/functions.sh"
 
 # Parse arguments
 UNINSTALL=false
