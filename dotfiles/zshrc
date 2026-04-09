@@ -1,7 +1,5 @@
 export GPG_TTY=$(tty)
 
-#typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -39,11 +37,9 @@ fpath=(~/.oh-my-zsh/plugins/zsh-completions/src $fpath)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#cc00cc"
 bindkey '^ ' autosuggest-accept # ctrl+space
 
-source ~/env/env.sh
-
-source <(fzf --zsh)
-
-eval "$(zoxide init zsh)"
+# fzf and zoxide - install if needed
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#eval "$(zoxide init zsh)"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=10000

@@ -1,1 +1,11 @@
-source "$HOME/.local/cargo/env"
+#!/usr/bin/env zsh
+# macOS: Set minimal PATH early for zsh initialization
+case "$OSTYPE" in
+  darwin*)
+    export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+    ;;
+esac
+
+[ -f "$HOME/env/env.sh" ] && source "$HOME/env/env.sh"
+
+[ -f "$HOME/.local/cargo/env" ] && source "$HOME/.local/cargo/env"
