@@ -43,14 +43,6 @@ if [ -n "${ENV_HOME:-}" ]; then
     export ENV_HOME
 fi
 
-# macOS: add Homebrew paths early (Apple Silicon + Intel).
-if [ -d /opt/homebrew/bin ]; then
-    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}"
-fi
-if [ -d /usr/local/opt ]; then
-    export PATH="/usr/local/bin:/usr/local/sbin:${PATH}"
-fi
-
 if [ -n "${ENV_HOME:-}" ]; then
     export PATH="${ENV_HOME}/bin:${PATH}"
     # Load optional repository-level .env file.
@@ -75,6 +67,14 @@ case "${OSTYPE:-$(uname -s 2>/dev/null || echo unknown)}" in
         if [ -n "${ENV_HOME:-}" ]; then
             OS_PROFILE="$ENV_HOME/os/macos/profile"
             [ -d "$ENV_HOME/os/macos/bin" ] && export PATH="${ENV_HOME}/os/macos/bin:${PATH}"
+        fi
+
+        # macOS: add Homebrew paths early (Apple Silicon + Intel).
+        if [ -d /opt/homebrew/bin ]; then
+            export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}"
+        fi
+        if [ -d /usr/local/opt ]; then
+            export PATH="/usr/local/bin:/usr/local/sbin:${PATH}"
         fi
         ;;
     linux*|Linux*)
@@ -116,12 +116,6 @@ unset SSH_ASKPASS
 
 # Work-related environment
 export GOPRIVATE="github.com/c-wire/*"
-
 if [ -f "$HOME/workspace/.profile" ]; then
     . "$HOME/workspace/.profile"
 fi
-
-# LLM-related environment
-export PATH="$PATH:$HOME/.lmstudio/bin"
-export LLAMA_CPP_PATH="$HOME/.local/llama.cpp"
-export PATH="$PATH:$LLAMA_CPP_PATH"
