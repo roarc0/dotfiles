@@ -7,26 +7,3 @@
 export BROWSER=open
 export CLICOLOR=1
 export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
-
-# macOS usually has opendiff; fall back from meld in shared profile.
-if command -v opendiff >/dev/null 2>&1; then
-	export MERGETOOL=opendiff
-fi
-
-# Get Go paths from go env on macOS if available.
-if command -v go >/dev/null 2>&1; then
-	export GOPATH="$(go env GOPATH)"
-	export GOROOT="$(go env GOROOT)"
-	export PATH="${GOROOT}/bin:${GOPATH}/bin:$PATH"
-fi
-
-# Common brew-installed tool paths.
-for path in \
-	"/opt/homebrew/opt/gnu-sed/libexec/gnubin" \
-	"/opt/homebrew/opt/coreutils/libexec/gnubin" \
-	"/usr/local/opt/gnu-sed/libexec/gnubin" \
-	"/usr/local/opt/coreutils/libexec/gnubin"; do
-	if [ -d "$p" ]; then
-		export PATH="$p:$PATH"
-	fi
-done
