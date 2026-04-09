@@ -66,6 +66,7 @@ fi
 
 # Detect OS and load OS/distro overlays.
 OS_PROFILE=""
+OS_PROFILE_EXTRA=""
 ENV_OS="unknown"
 ENV_DISTRO="unknown"
 case "${OSTYPE:-$(uname -s 2>/dev/null || echo unknown)}" in
@@ -89,6 +90,7 @@ case "${OSTYPE:-$(uname -s 2>/dev/null || echo unknown)}" in
             DISTRO_ID="${ID:-linux}"
             ENV_DISTRO="$DISTRO_ID"
             if [ -n "${ENV_HOME:-}" ] && [ -d "$ENV_HOME/os/$DISTRO_ID" ]; then
+                OS_PROFILE_EXTRA="$ENV_HOME/os/$DISTRO_ID/profile"
                 [ -d "$ENV_HOME/os/$DISTRO_ID/bin" ] && export PATH="${ENV_HOME}/os/$DISTRO_ID/bin:${PATH}"
             fi
         fi
@@ -98,6 +100,7 @@ export ENV_OS
 export ENV_DISTRO
 
 #[ -f "$OS_PROFILE" ] && . "$OS_PROFILE"
+#[ -f "$OS_PROFILE_EXTRA" ] && . "$OS_PROFILE_EXTRA"
 
 if [ -n "$GOPATH" ]; then
     export PATH="${GOPATH}/bin:$PATH"
