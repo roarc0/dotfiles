@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+# Check if host parameter is provided
+if [ -z "$1" ]; then
+    echo "Usage: code-remote <host> [user] [path]"
+    echo "  host: SSH host to connect to (required)"
+    echo "  user: SSH user (default: root)"
+    echo "  path: Remote path to open (default: ~)"
+    exit 1
+fi
+
+HOST="$1"
+USER="${2:-root}"
+REMOTE_PATH="${3:-~}"
+
+code --remote ssh-remote+"${USER}@${HOST}" "${REMOTE_PATH}"
