@@ -1,0 +1,3 @@
+alias fix-clickhouse="xattr -d com.apple.quarantine /opt/homebrew/bin/clickhouse"
+#spctl --add --label "trusted" /opt/homebrew/bin/clickhouse
+#defaults write -g com.apple.mouse.scaling  6.0
