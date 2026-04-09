@@ -31,6 +31,7 @@ IS_MACOS=false
 if [ "$UNINSTALL" = true ]; then
   einfo "Removing symlinks"
   unlink_or_print "$HOME/.zshrc"
+  unlink_or_print "$HOME/.zshenv"
   unlink_or_print "$HOME/.p10k.zsh"
   unlink_or_print "$HOME/.bashrc"
   unlink_or_print "$HOME/.gitconfig"
@@ -59,6 +60,7 @@ run_or_print "mkdir -p $HOME/{workspace,dev,repos,tmp,sync}" mkdir -p "$HOME"/{w
 
 # Link shell configs (common to all Unix)
 link_or_print "$ENV_HOME/dotfiles/zshrc" "$HOME/.zshrc"
+link_or_print "$ENV_HOME/dotfiles/zshenv" "$HOME/.zshenv"
 link_or_print "$ENV_HOME/dotfiles/p10k.zsh" "$HOME/.p10k.zsh"
 link_or_print "$ENV_HOME/dotfiles/bashrc" "$HOME/.bashrc"
 link_or_print "$ENV_HOME/dotfiles/gitconfig" "$HOME/.gitconfig"
