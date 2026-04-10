@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$(uname)" != "Darwin" ]; then
+  echo "This command is macOS-only."
+  exit 1
+fi
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Homebrew is not installed."
+  exit 1
+fi
+
+SCRIPT_SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SCRIPT_SOURCE" ]; do
+  SCRIPT_DIR="$(cd -P "$(dirname "$SCRIPT_SOURCE")" && pwd)"
+  SCRIPT_SOURCE="$(readlink "$SCRIPT_SOURCE")"
+  [[ "$SCRIPT_SOURCE" != /* ]] && SCRIPT_SOURCE="$SCRIPT_DIR/$SCRIPT_SOURCE"
+done
+SCRIPT_DIR="$(cd -P "$(dirname "$SCRIPT_SOURCE")" && pwd)"
+BREWFILE_PATH="$(cd -P "$SCRIPT_DIR/.." && pwd)/brewfile"
+MODE="sync"
+
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") [--sync|--restore] [--file <brewfile_path>]
+
+Options:
+  --sync               Save current installed Homebrew items to Brewfile (default)
+  --restore            Install Homebrew items from Brewfile
+  --file <path>        Use custom Brewfile path
+  -h, --help           Show help
+
+Examples:
+  $(basename "$0") --sync
+  $(basename "$0") --restore
+  $(basename "$0") --sync --file "$HOME/Brewfile"
+EOF
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --sync)
+      MODE="sync"
+      ;;
+    --restore)
+      MODE="restore"
+      ;;
+    --file)
+      shift
+      if [ -z "${1:-}" ]; then
+        echo "Missing value for --file"
+        usage
+        exit 1
+      fi
+      BREWFILE_PATH="$1"
+      ;;
+    -h|--help|help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument: $1"
+      usage
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+if [ "$MODE" = "sync" ]; then
+  mkdir -p "$(dirname "$BREWFILE_PATH")"
+  echo "Syncing Homebrew packages to $BREWFILE_PATH ..."
+  brew bundle dump --force --file="$BREWFILE_PATH"
+  echo "Done."
+  exit 0
+fi
+
+if [ ! -e "$BREWFILE_PATH" ]; then
+  echo "Brewfile not found: $BREWFILE_PATH"
+  exit 1
+fi
+
+if [ ! -f "$BREWFILE_PATH" ]; then
+  echo "Brewfile is not a regular file: $BREWFILE_PATH"
+  exit 1
+fi
+
+if [ ! -r "$BREWFILE_PATH" ]; then
+  echo "Brewfile is not readable: $BREWFILE_PATH"
+  exit 1
+fi
+
+echo "Installing Homebrew packages from $BREWFILE_PATH ..."
+brew bundle --file="$BREWFILE_PATH"
+echo "Done."
