@@ -37,9 +37,9 @@ fpath=(~/.oh-my-zsh/plugins/zsh-completions/src $fpath)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#cc00cc"
 bindkey '^ ' autosuggest-accept # ctrl+space
 
-# fzf and zoxide - install if needed
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-#eval "$(zoxide init zsh)"
+# fzf and zoxide - load only when installed
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
