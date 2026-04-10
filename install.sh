@@ -115,9 +115,9 @@ fi
 if $IS_MACOS; then
   run_or_print "mkdir -p $HOME/Library/Application Support" mkdir -p "$HOME/Library/Application Support"
   # macOS VSCode location
-  if [ -d "$HOME/Library/Application Support/Code/User" ] && [ ! -d "$ENV_HOME/dotfiles/config/Code" ]; then
-    link_or_print "$ENV_HOME/dotfiles/config/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" || true
-  fi
+  #if [ -d "$HOME/Library/Application Support/Code/User" ] && [ ! -d "$ENV_HOME/dotfiles/config/Code" ]; then
+  #  link_or_print "$ENV_HOME/dotfiles/config/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json" || true
+  #fi
 
   # Add Homebrew paths early (Apple Silicon and Intel)
   if [ -x /opt/homebrew/bin/brew ] || [ -x /usr/local/bin/brew ]; then
