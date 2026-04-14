@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
 # Prevent duplicate PATH/function mutations when sourced multiple times.
-if [ "${DOTFILES_PROFILE_LOADED:-0}" = "1" ]; then
-    return 0 2>/dev/null || true
-fi
-export DOTFILES_PROFILE_LOADED=1
+#if [ "${DOTFILES_PROFILE_LOADED:-0}" = "1" ]; then
+#    return 0 2>/dev/null || true
+#fi
+#export DOTFILES_PROFILE_LOADED=1
 
 # Resolve ENV_HOME from this profile path (or fallback to ~/env).
 PROFILE_SOURCE_PATH=""
@@ -58,6 +58,7 @@ fi
 
 # Detect OS and load OS/distro overlays.
 OS_PROFILE=""
+OS_PROFILE_EXTRA=""
 ENV_OS="unknown"
 ENV_DISTRO="unknown"
 case "${OSTYPE:-$(uname -s 2>/dev/null || echo unknown)}" in
@@ -89,6 +90,7 @@ case "${OSTYPE:-$(uname -s 2>/dev/null || echo unknown)}" in
             DISTRO_ID="${ID:-linux}"
             ENV_DISTRO="$DISTRO_ID"
             if [ -n "${ENV_HOME:-}" ] && [ -d "$ENV_HOME/os/$DISTRO_ID" ]; then
+                OS_PROFILE_EXTRA="$ENV_HOME/os/$DISTRO_ID/profile"
                 [ -d "$ENV_HOME/os/$DISTRO_ID/bin" ] && export PATH="${ENV_HOME}/os/$DISTRO_ID/bin:${PATH}"
             fi
         fi
@@ -96,8 +98,11 @@ case "${OSTYPE:-$(uname -s 2>/dev/null || echo unknown)}" in
 esac
 export ENV_OS
 export ENV_DISTRO
+export OS_PROFILE
+export OS_PROFILE_EXTRA
 
 [ -f "$OS_PROFILE" ] && . "$OS_PROFILE"
+[ -f "$OS_PROFILE_EXTRA" ] && . "$OS_PROFILE_EXTRA"
 
 if [ -n "$GOPATH" ]; then
     export PATH="${GOPATH}/bin:$PATH"
