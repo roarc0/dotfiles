@@ -2,5 +2,5 @@
 
 chmod +x ~/.local/appimages/*
 
-~/.local/appimages/Cursor-1.?.??-x86_64.AppImage $@
+~/.local/appimages/Cursor-*-x86_64.AppImage $@
 
