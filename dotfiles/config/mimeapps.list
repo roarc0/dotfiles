@@ -13,6 +13,7 @@ text/plain=org.gnome.TextEditor.desktop
 application/x-shellscript=org.gnome.TextEditor.desktop
 application/json=org.gnome.TextEditor.desktop
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+video/vnd.radgamettools.smacker=mpv.desktop
 
 [Added Associations]
 image/png=org.gnome.eog.desktop;
@@ -21,3 +22,4 @@ application/x-shellscript=org.gnome.TextEditor.desktop;
 application/json=org.gnome.TextEditor.desktop;
 text/html=org.gnome.TextEditor.desktop;google-chrome-beta.desktop;
 application/dicom=org.gimp.GIMP.desktop;
+video/vnd.radgamettools.smacker=mpv.desktop;

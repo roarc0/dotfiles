@@ -25,7 +25,7 @@
     "editor.selectionBackground": "#222"
   },
   "editor.rename.enablePreview": false,
-  "editor.fontSize": 15,
+  "editor.fontSize": 14,
   "editor.fontLigatures": true,
   "editor.lineHeight": 22,
   "editor.wordWrap": "on",
@@ -347,7 +347,6 @@
   },
   "github.copilot.editor.enableAutoCompletions": true,
   "github.copilot.nextEditSuggestions.enabled": true,
-  "gitlab.aiAssistedCodeSuggestions.enabled": true,
   "emojisense.languages": {
     "markdown": true,
     "json": true,
@@ -430,4 +429,5 @@
       "approveResponse": true
     }
   },
+  "gitlab.duoCodeSuggestions.enabled": true,
 }
