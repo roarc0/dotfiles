@@ -42,7 +42,8 @@
     "cli-anything@cli-anything": true,
     "engineering-skills@claude-code-skills": true,
     "compound-engineering@compound-engineering-plugin": true,
-    "claude-hud@claude-hud": true
+    "claude-hud@claude-hud": true,
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -85,6 +86,12 @@
       "source": {
         "source": "github",
         "repo": "jarrodwatts/claude-hud"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
       }
     }
   },

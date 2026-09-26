@@ -31,3 +31,13 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 
 alias claude-mem='bun "/Users/roarc/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/roarc/.lmstudio/bin"
+# End of LM Studio CLI section
+
+export PATH="$HOME/.local/bin:$PATH"
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/roarc/.local/bin:$PATH"

@@ -25,7 +25,7 @@
     "editor.selectionBackground": "#222"
   },
   "editor.rename.enablePreview": false,
-  "editor.fontSize": 14,
+  "editor.fontSize": 12,
   "editor.fontLigatures": true,
   "editor.lineHeight": 22,
   "editor.wordWrap": "on",
@@ -331,7 +331,11 @@
     "vscode-kubernetes.kubectl-path.linux": "/home/roarc/.local/bin/kubectl",
     "vscode-kubernetes.minikube-path.linux": "/home/roarc/.local/bin/minikube",
     "vs-kubernetes.crd-code-completion": "disabled",
-    "vscode-kubernetes.minikube-path-linux": "/home/roarc/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube"
+    "vscode-kubernetes.minikube-path-linux": "/home/roarc/.local/state/vs-kubernetes/tools/minikube/linux-amd64/minikube",
+    "vs-kubernetes.knownKubeconfigs": [
+      "/home/roarc/repos/hlab/talos/clusters/firelink/kubeconfig"
+    ],
+    "vs-kubernetes.kubeconfig": "/home/roarc/repos/hlab/talos/clusters/firelink/kubeconfig"
   },
   "shellcheck.run": "onSave",
   "shellcheck.exclude": [
@@ -400,7 +404,8 @@
     "git add": true,
     "printf": true,
     "git commit": true,
-    "git -C /Users/roarc/workspace/console/console": true
+    "git -C /Users/roarc/workspace/console/console": true,
+    "cargo test": true
   },
   "[dockercompose]": {
     "editor.insertSpaces": true,
@@ -416,18 +421,31 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
-  "gitlens.ai.model": "vscode",
-  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
   "chat.mcp.gallery.enabled": true,
   "workbench.iconTheme": "vscode-icons",
   "protobuf.autoDetection.prompted": true,
   "claudeCode.preferredLocation": "panel",
   "chat.viewSessions.orientation": "stacked",
   "chat.tools.urls.autoApprove": {
+    "https://code.visualstudio.com": true,
+    "https://github.com/microsoft/vscode/wiki/*": true,
     "https://raw.githubusercontent.com": {
       "approveRequest": false,
       "approveResponse": true
+    },
+    "http://roarc.duckdns.org": {
+      "approveRequest": true,
+      "approveResponse": false
     }
   },
   "gitlab.duoCodeSuggestions.enabled": true,
+  "geminicodeassist.displayInlineContextHint": false,
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ],
 }

@@ -1,0 +1,9 @@
+/* Nautilus: file/folder labels in icon view */
+.icon-ui-labels-box label {
+  font-size: 0.92em;
+}
+
+/* Wider icon grid cells so labels have more room */
+gridview child {
+  min-width: 150px;
+}

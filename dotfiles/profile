@@ -124,3 +124,15 @@ export GOPRIVATE="github.com/c-wire/*"
 if [ -f "$HOME/workspace/.profile" ]; then
     . "$HOME/workspace/.profile"
 fi
+
+export OLLAMA_VULKAN=1
+
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/roarc/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/roarc/.local/bin:$PATH"
