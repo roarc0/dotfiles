@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+chmod +x ~/.local/appimages/*
+
+~/.local/appimages/LM-Studio-*-x64.AppImage
+

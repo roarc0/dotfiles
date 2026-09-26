@@ -1,0 +1,487 @@
+#!/usr/bin/env bash
+# cleanup — interactive cache cleanup tool
+# Usage: cleanup [--yes] [--all] [--full]
+#   --yes   auto-confirm all prompts
+#   --all   same as --yes
+#   --full  include deeper/more aggressive cleaning (e.g. cargo registry, go mod cache)
+
+set -uo pipefail
+
+# ── colours ──────────────────────────────────────────────────────────────────
+RED='\033[0;31m'; YELLOW='\033[1;33m'; GREEN='\033[0;32m'
+CYAN='\033[0;36m'; BOLD='\033[1m'; RESET='\033[0m'
+
+# ── flags ─────────────────────────────────────────────────────────────────────
+YES=false; FULL=false
+for arg in "$@"; do
+  case "$arg" in
+    --yes|--all) YES=true ;;
+    --full)      FULL=true ;;
+    -h|--help)
+      sed -n '2,4p' "$0" | sed 's/^# //'
+      exit 0 ;;
+  esac
+done
+
+# ── helpers ───────────────────────────────────────────────────────────────────
+du_human() {
+  # returns human-readable size, or "0" if path doesn't exist / is empty
+  local path="$1"
+  if [[ ! -e "$path" ]]; then echo "0"; return; fi
+  du -sh "$path" 2>/dev/null | cut -f1
+}
+
+# size in bytes for sorting / threshold checks
+du_bytes() {
+  local path="$1"
+  if [[ ! -e "$path" ]]; then echo 0; return; fi
+  du -sb "$path" 2>/dev/null | cut -f1
+}
+
+ask() {
+  # ask label size action
+  local label="$1" size="$2"
+  if [[ "$size" == "0" || "$size" == "0B" ]]; then
+    echo -e "  ${CYAN}${label}${RESET} — ${GREEN}already empty, skipping${RESET}"
+    return 1
+  fi
+  if $YES; then
+    echo -e "  ${CYAN}${label}${RESET} — ${YELLOW}${size}${RESET} → ${GREEN}cleaning (--yes)${RESET}"
+    return 0
+  fi
+  echo -ne "  ${BOLD}${label}${RESET} — ${YELLOW}${size}${RESET}  clean? [y/N] "
+  read -r ans
+  [[ "$ans" =~ ^[Yy]$ ]]
+}
+
+find_dirs() {
+  # find_dirs base_path dir_name max_depth
+  local base="$1" name="$2" depth="${3:-6}"
+  find "$base" -maxdepth "$depth" -type d -name "$name" \
+    -not -path '*/.git/*' \
+    -not -path '*/\.*cache*' \
+    2>/dev/null | head -60
+}
+
+section() { echo -e "${BOLD}${CYAN}[$1]${RESET}"; }
+
+removed=0
+
+clean_path() {
+  local path="$1"
+  if [[ -d "$path" ]]; then
+    rm -rf -- "$path"
+  elif [[ -f "$path" ]]; then
+    rm -f -- "$path"
+  fi
+  ((removed++)) || true
+}
+
+# ── entry: collect items ──────────────────────────────────────────────────────
+
+echo -e "${BOLD}cleanup${RESET} — scanning…"
+
+# ─ Trash ──────────────────────────────────────────────────────────────────────
+section "Linux Trash"
+# collect all trash dirs: ~/.local/share/Trash + any .Trash-UID on mount points
+mapfile -t TRASH_DIRS < <(
+  echo "$HOME/.local/share/Trash"
+  find /run/media/"$USER" /media/"$USER" /mnt -maxdepth 2 \
+    -type d -name ".Trash-*" 2>/dev/null || true
+)
+total_trash=0
+for td in "${TRASH_DIRS[@]}"; do
+  [[ -e "$td" ]] || continue
+  b=$(du_bytes "$td"); (( total_trash += b )) || true
+done
+size_trash=$(( total_trash == 0 )) && echo "0" || \
+  echo "$total_trash" | awk '{split("B KB MB GB TB",v); s=1; while($1>=1024){$1/=1024;s++} printf "%.1f %s",$1,v[s]}'
+if ask "Trash (all locations)" "${size_trash:-0}"; then
+  if command -v gio &>/dev/null; then
+    gio trash --empty 2>/dev/null || true
+  fi
+  for td in "${TRASH_DIRS[@]}"; do
+    [[ -e "$td" ]] || continue
+    find "$td/files" -mindepth 1 -delete 2>/dev/null || true
+    find "$td/info"  -mindepth 1 -delete 2>/dev/null || true
+  done
+  echo -e "  ${GREEN}✓ Trash emptied${RESET}"
+fi
+
+# ─ sccache ────────────────────────────────────────────────────────────────────
+section "sccache"
+SCCACHE_DIR="${SCCACHE_DIR:-$HOME/.cache/sccache}"
+size=$(du_human "$SCCACHE_DIR")
+if ask "sccache ($SCCACHE_DIR)" "$size"; then
+  if command -v sccache &>/dev/null; then
+    sccache --stop-server 2>/dev/null || true
+    sccache --zero-stats 2>/dev/null || true
+  fi
+  if $FULL; then
+    clean_path "$SCCACHE_DIR"
+    echo -e "  ${GREEN}✓ sccache directory removed (--full)${RESET}"
+  else
+    rm -rf -- "$SCCACHE_DIR/"* 2>/dev/null || true
+    echo -e "  ${GREEN}✓ sccache cache cleared${RESET}"
+  fi
+fi
+
+# ─ npm cache ──────────────────────────────────────────────────────────────────
+section "npm cache (~/.npm)"
+NPM_CACHE="$HOME/.npm"
+size=$(du_human "$NPM_CACHE")
+if ask "npm cache ($NPM_CACHE)" "$size"; then
+  if command -v npm &>/dev/null && ! $FULL; then
+    npm cache clean --force 2>/dev/null || rm -rf -- "$NPM_CACHE"
+  else
+    clean_path "$NPM_CACHE"
+  fi
+  echo -e "  ${GREEN}✓ npm cache cleaned${RESET}"
+fi
+
+# ─ pip / uv ───────────────────────────────────────────────────────────────────
+section "Python pip cache"
+PIP_CACHE="$HOME/.cache/pip"
+size=$(du_human "$PIP_CACHE")
+if ask "pip cache ($PIP_CACHE)" "$size"; then
+  if command -v pip &>/dev/null && ! $FULL; then
+    pip cache purge 2>/dev/null || rm -rf -- "$PIP_CACHE"
+  else
+    clean_path "$PIP_CACHE"
+  fi
+  echo -e "  ${GREEN}✓ pip cache cleaned${RESET}"
+fi
+
+UV_CACHE="$HOME/.cache/uv"
+size=$(du_human "$UV_CACHE")
+if ask "uv cache ($UV_CACHE)" "$size"; then
+  if command -v uv &>/dev/null && ! $FULL; then
+    uv cache clean 2>/dev/null || rm -rf -- "$UV_CACHE"
+  else
+    clean_path "$UV_CACHE"
+  fi
+  echo -e "  ${GREEN}✓ uv cache cleaned${RESET}"
+fi
+
+# ─ Chrome / Chromium cache ────────────────────────────────────────────────────
+section "Browser caches"
+for browser_cache in \
+  "$HOME/.cache/google-chrome" \
+  "$HOME/.cache/chromium" \
+  "$HOME/.cache/BraveSoftware" \
+  "$HOME/.cache/mozilla/firefox" \
+  "$HOME/.config/google-chrome/Default/Cache" \
+  "$HOME/.config/chromium/Default/Cache"; do
+  [[ -e "$browser_cache" ]] || continue
+  name=$(basename "$(dirname "$browser_cache")")/$(basename "$browser_cache")
+  size=$(du_human "$browser_cache")
+  if ask "Browser cache ($name)" "$size"; then
+    clean_path "$browser_cache"
+    echo -e "  ${GREEN}✓ $name removed${RESET}"
+  fi
+done
+
+# ─ Cargo registry (full only by default, optional otherwise) ──────────────────
+section "Rust / Cargo"
+CARGO_REG="$HOME/.cargo/registry/cache"
+CARGO_GIT="$HOME/.cargo/git/db"
+size=$(du_human "$HOME/.cargo/registry")
+if ask "cargo registry ($HOME/.cargo/registry)" "$size"; then
+  if $FULL; then
+    rm -rf -- "$HOME/.cargo/registry" "$HOME/.cargo/git" 2>/dev/null || true
+    echo -e "  ${GREEN}✓ cargo registry + git cache removed (--full)${RESET}"
+  else
+    rm -rf -- "$CARGO_REG" "$CARGO_GIT" 2>/dev/null || true
+    echo -e "  ${GREEN}✓ cargo download cache removed (src kept)${RESET}"
+  fi
+fi
+
+# ─ Go build cache ─────────────────────────────────────────────────────────────
+section "Go build cache"
+GO_CACHE="${GOCACHE:-$HOME/.cache/go-build}"
+size=$(du_human "$GO_CACHE")
+if ask "go build cache ($GO_CACHE)" "$size"; then
+  if command -v go &>/dev/null && ! $FULL; then
+    go clean -cache 2>/dev/null || rm -rf -- "$GO_CACHE"
+  else
+    clean_path "$GO_CACHE"
+  fi
+  echo -e "  ${GREEN}✓ go build cache cleaned${RESET}"
+fi
+
+if $FULL; then
+  GO_MOD="$HOME/go/pkg/mod/cache"
+  size=$(du_human "$GO_MOD")
+  if ask "go module cache ($GO_MOD)" "$size"; then
+    if command -v go &>/dev/null; then
+      go clean -modcache 2>/dev/null || rm -rf -- "$GO_MOD"
+    else
+      clean_path "$GO_MOD"
+    fi
+    echo -e "  ${GREEN}✓ go module cache cleaned${RESET}"
+  fi
+fi
+
+# ─ Bun ───────────────────────────────────────────────────────────────────────
+section "Bun"
+BUN_CACHE="$HOME/.bun/install/cache"
+size=$(du_human "$BUN_CACHE")
+if ask "bun install cache ($BUN_CACHE)" "$size"; then
+  if command -v bun &>/dev/null && ! $FULL; then
+    bun pm cache rm 2>/dev/null || rm -rf -- "$BUN_CACHE"
+  else
+    clean_path "$BUN_CACHE"
+  fi
+  echo -e "  ${GREEN}✓ bun cache cleaned${RESET}"
+fi
+
+# ─ Gradle ─────────────────────────────────────────────────────────────────────
+section "Gradle"
+GRADLE_CACHE="$HOME/.gradle/caches"
+size=$(du_human "$GRADLE_CACHE")
+if ask "gradle caches ($GRADLE_CACHE)" "$size"; then
+  if $FULL; then
+    clean_path "$HOME/.gradle/caches"
+    clean_path "$HOME/.gradle/wrapper/dists"
+    echo -e "  ${GREEN}✓ gradle caches + wrapper dists removed (--full)${RESET}"
+  else
+    # remove build cache and transforms but keep scripts/checksums
+    rm -rf -- "$HOME/.gradle/caches/build-cache-"* \
+              "$HOME/.gradle/caches/transforms-"* \
+              "$HOME/.gradle/caches/jars-"* 2>/dev/null || true
+    echo -e "  ${GREEN}✓ gradle build/transform caches cleaned${RESET}"
+  fi
+fi
+
+# ─ Maven ──────────────────────────────────────────────────────────────────────
+section "Maven (~/.m2/repository)"
+M2_REPO="$HOME/.m2/repository"
+size=$(du_human "$M2_REPO")
+if ask "maven repository ($M2_REPO)" "$size"; then
+  clean_path "$M2_REPO"
+  echo -e "  ${GREEN}✓ maven repository removed${RESET}"
+fi
+
+# ─ Yarn ───────────────────────────────────────────────────────────────────────
+section "Yarn"
+YARN_CACHE="$HOME/.cache/yarn"
+size=$(du_human "$YARN_CACHE")
+if ask "yarn cache ($YARN_CACHE)" "$size"; then
+  if command -v yarn &>/dev/null && ! $FULL; then
+    yarn cache clean 2>/dev/null || rm -rf -- "$YARN_CACHE"
+  else
+    clean_path "$YARN_CACHE"
+  fi
+  echo -e "  ${GREEN}✓ yarn cache cleaned${RESET}"
+fi
+
+# ─ pnpm ───────────────────────────────────────────────────────────────────────
+section "pnpm store"
+for PNPM_STORE in "$HOME/.local/share/pnpm/store" "$HOME/.pnpm-store"; do
+  [[ -e "$PNPM_STORE" ]] || continue
+  size=$(du_human "$PNPM_STORE")
+  if ask "pnpm store ($PNPM_STORE)" "$size"; then
+    if command -v pnpm &>/dev/null && ! $FULL; then
+      pnpm store prune 2>/dev/null || rm -rf -- "$PNPM_STORE"
+    else
+      clean_path "$PNPM_STORE"
+    fi
+    echo -e "  ${GREEN}✓ pnpm store pruned${RESET}"
+  fi
+done
+
+# ─ Deno ───────────────────────────────────────────────────────────────────────
+section "Deno cache"
+DENO_DIR="${DENO_DIR:-$HOME/.cache/deno}"
+size=$(du_human "$DENO_DIR")
+if ask "deno cache ($DENO_DIR)" "$size"; then
+  clean_path "$DENO_DIR"
+  echo -e "  ${GREEN}✓ deno cache removed${RESET}"
+fi
+
+# ─ Docker buildx ──────────────────────────────────────────────────────────────
+section "Docker buildx cache"
+DOCKER_BUILDX="$HOME/.local/share/docker/buildx"
+[[ ! -e "$DOCKER_BUILDX" ]] && DOCKER_BUILDX="$HOME/.docker/buildx"
+size=$(du_human "$DOCKER_BUILDX")
+if ask "docker buildx cache ($DOCKER_BUILDX)" "$size"; then
+  if command -v docker &>/dev/null && ! $FULL; then
+    docker buildx prune -f 2>/dev/null || rm -rf -- "$DOCKER_BUILDX"
+  else
+    clean_path "$DOCKER_BUILDX"
+  fi
+  echo -e "  ${GREEN}✓ docker buildx cache cleaned${RESET}"
+fi
+
+# ─ HuggingFace / Torch / LLM model caches ────────────────────────────────────
+section "ML model caches"
+for ml_cache in \
+  "$HOME/.cache/huggingface" \
+  "$HOME/.cache/torch" \
+  "$HOME/.ollama/models" \
+  "$HOME/.cache/lm-studio"; do
+  [[ -e "$ml_cache" ]] || continue
+  name=$(basename "$ml_cache")
+  size=$(du_human "$ml_cache")
+  if ask "ML cache $ml_cache" "$size"; then
+    clean_path "$ml_cache"
+    echo -e "  ${GREEN}✓ $ml_cache removed${RESET}"
+  fi
+done
+
+# ─ Playwright / Cypress ───────────────────────────────────────────────────────
+section "Test browser binaries"
+for tb_cache in \
+  "$HOME/.cache/ms-playwright" \
+  "$HOME/.cache/Cypress"; do
+  [[ -e "$tb_cache" ]] || continue
+  name=$(basename "$tb_cache")
+  size=$(du_human "$tb_cache")
+  if ask "$name ($tb_cache)" "$size"; then
+    clean_path "$tb_cache"
+    echo -e "  ${GREEN}✓ $name removed${RESET}"
+  fi
+done
+
+# ─ JetBrains ──────────────────────────────────────────────────────────────────
+section "JetBrains caches"
+JB_CACHE="$HOME/.cache/JetBrains"
+size=$(du_human "$JB_CACHE")
+if ask "JetBrains caches ($JB_CACHE)" "$size"; then
+  clean_path "$JB_CACHE"
+  echo -e "  ${GREEN}✓ JetBrains cache removed${RESET}"
+fi
+
+# ─ pre-commit ─────────────────────────────────────────────────────────────────
+section "pre-commit"
+PRE_COMMIT_CACHE="${PRE_COMMIT_HOME:-$HOME/.cache/pre-commit}"
+size=$(du_human "$PRE_COMMIT_CACHE")
+if ask "pre-commit cache ($PRE_COMMIT_CACHE)" "$size"; then
+  clean_path "$PRE_COMMIT_CACHE"
+  echo -e "  ${GREEN}✓ pre-commit cache removed${RESET}"
+fi
+
+# ─ GNOME thumbnails ───────────────────────────────────────────────────────────
+section "GNOME thumbnails"
+THUMBS="$HOME/.cache/thumbnails"
+size=$(du_human "$THUMBS")
+if ask "thumbnails ($THUMBS)" "$size"; then
+  clean_path "$THUMBS"
+  echo -e "  ${GREEN}✓ thumbnails cache removed${RESET}"
+fi
+
+# ─ Other large ~/.cache subdirs ───────────────────────────────────────────────
+section "Other ~/.cache entries (> 50 MB)"
+SKIP_CACHE_DIRS="sccache|pip|uv|go-build|google-chrome|chromium|mozilla|BraveSoftware|yarn|deno|torch|huggingface|ms-playwright|Cypress|JetBrains|pre-commit|thumbnails|lm-studio"
+while IFS= read -r -d '' dir; do
+  bytes=$(du_bytes "$dir")
+  (( bytes < 52428800 )) && continue   # skip < 50 MB
+  name=$(basename "$dir")
+  [[ "$name" =~ ^($SKIP_CACHE_DIRS)$ ]] && continue
+  size=$(du_human "$dir")
+  if ask "~/.cache/$name" "$size"; then
+    clean_path "$dir"
+    echo -e "  ${GREEN}✓ ~/.cache/$name removed${RESET}"
+  fi
+done < <(find "$HOME/.cache" -maxdepth 1 -mindepth 1 -type d -print0 2>/dev/null)
+
+# ─ node_modules ───────────────────────────────────────────────────────────────
+section "node_modules directories (scanning ~/…)"
+mapfile -t NM_DIRS < <(find_dirs "$HOME" "node_modules" 5)
+
+if [[ ${#NM_DIRS[@]} -eq 0 ]]; then
+  echo -e "  ${GREEN}No node_modules found.${RESET}"
+else
+  # sort by size descending
+  declare -A NM_SIZE
+  for d in "${NM_DIRS[@]}"; do
+    NM_SIZE["$d"]=$(du_bytes "$d")
+  done
+  sorted_nm=( $(for k in "${!NM_SIZE[@]}"; do echo "${NM_SIZE[$k]} $k"; done | sort -rn | awk '{print $2}') )
+
+  for d in "${sorted_nm[@]}"; do
+    bytes="${NM_SIZE[$d]}"
+    (( bytes < 1048576 )) && continue   # skip < 1 MB
+    rel="${d/#$HOME/~}"
+    size=$(du_human "$d")
+    if ask "node_modules $rel" "$size"; then
+      clean_path "$d"
+      echo -e "  ${GREEN}✓ removed $rel${RESET}"
+    fi
+  done
+fi
+
+# ─ Rust target/ directories ───────────────────────────────────────────────────
+section "Rust target/ directories (scanning ~/…)"
+mapfile -t TARGET_DIRS < <(
+  find "$HOME" -maxdepth 6 -type d -name "target" \
+    -not -path '*/.git/*' \
+    -not -path '*/node_modules/*' \
+    2>/dev/null \
+    | while read -r d; do
+        # only include if it looks like a rust target (has CACHEDIR.TAG or release/ or debug/)
+        if [[ -f "$d/CACHEDIR.TAG" ]] || [[ -d "$d/release" ]] || [[ -d "$d/debug" ]]; then
+          echo "$d"
+        fi
+      done \
+    | head -40
+)
+
+if [[ ${#TARGET_DIRS[@]} -eq 0 ]]; then
+  echo -e "  ${GREEN}No Rust target directories found.${RESET}"
+else
+  declare -A TGT_SIZE
+  for d in "${TARGET_DIRS[@]}"; do
+    TGT_SIZE["$d"]=$(du_bytes "$d")
+  done
+  sorted_tgt=( $(for k in "${!TGT_SIZE[@]}"; do echo "${TGT_SIZE[$k]} $k"; done | sort -rn | awk '{print $2}') )
+
+  for d in "${sorted_tgt[@]}"; do
+    bytes="${TGT_SIZE[$d]}"
+    (( bytes < 10485760 )) && continue   # skip < 10 MB
+    rel="${d/#$HOME/~}"
+    size=$(du_human "$d")
+    if ask "target/ $rel" "$size"; then
+      if $FULL; then
+        clean_path "$d"
+        echo -e "  ${GREEN}✓ removed $rel${RESET}"
+      else
+        # incremental: remove deps and incremental dirs but keep final artefacts
+        find "$d" -maxdepth 3 -type d \( -name "incremental" -o -name ".fingerprint" -o -name "deps" \) \
+          -exec rm -rf -- {} + 2>/dev/null || true
+        echo -e "  ${GREEN}✓ cleaned incremental/deps in $rel (use --full to remove entirely)${RESET}"
+      fi
+    fi
+  done
+fi
+
+# ─ __pycache__ ────────────────────────────────────────────────────────────────
+section "__pycache__ directories (scanning ~/…)"
+total_pyc=0
+mapfile -t PYC_DIRS < <(
+  find "$HOME" -maxdepth 8 -type d -name "__pycache__" \
+    -not -path '*/node_modules/*' \
+    -not -path '*/.cargo/*' \
+    2>/dev/null | head -200
+)
+for d in "${PYC_DIRS[@]}"; do
+  b=$(du_bytes "$d"); (( total_pyc += b )) || true
+done
+
+if (( total_pyc == 0 )); then
+  echo -e "  ${GREEN}No __pycache__ found.${RESET}"
+else
+  size_h=$(echo "$total_pyc" | awk '{ split("B K M G T",v); s=1; while($1>1024){$1/=1024;s++} printf "%.1f%s", $1, v[s] }')
+  if ask "__pycache__ (${#PYC_DIRS[@]} dirs total)" "$size_h"; then
+    for d in "${PYC_DIRS[@]}"; do
+      rm -rf -- "$d" 2>/dev/null || true
+    done
+    ((removed++)) || true
+    echo -e "  ${GREEN}✓ ${#PYC_DIRS[@]} __pycache__ directories removed${RESET}"
+  fi
+fi
+
+# ─ Summary ────────────────────────────────────────────────────────────────────
+echo ""
+echo -e "${BOLD}Done.${RESET}  ${GREEN}${removed} item(s) cleaned.${RESET}"
+echo ""
